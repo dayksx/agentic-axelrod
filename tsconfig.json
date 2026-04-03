@@ -1,0 +1,4 @@
+{
+  "files": [],
+  "references": [{ "path": "./ai" }, { "path": "./game" }]
+}
