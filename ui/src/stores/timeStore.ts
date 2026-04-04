@@ -13,8 +13,10 @@ interface TimeState {
   totalSteps: number;
   tournamentData: OrganizedTournament | null;
   derived: TimelineState | null;
+  balances: Map<number, string> | null;
 
   loadTournament: (data: OrganizedTournament) => void;
+  loadBalances: (balances: Map<number, string>) => void;
   forward: () => void;
   back: () => void;
   play: () => void;
@@ -57,6 +59,11 @@ export const useTimeStore = create<TimeState>((set, get) => ({
   totalSteps: 0,
   tournamentData: null,
   derived: null,
+  balances: null,
+
+  loadBalances: (balances) => {
+    set({ balances });
+  },
 
   loadTournament: (data) => {
     clearTimer();

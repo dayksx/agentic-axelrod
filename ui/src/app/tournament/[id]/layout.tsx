@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { fetchTournamentData } from "@/lib/queries";
 import { organizeByRound } from "@/lib/organize";
+import { fetchAgentBalances } from "@/lib/balance";
 import { useTimeStore } from "@/stores/timeStore";
 import { Leaderboard } from "@/components/Leaderboard";
 import { PlaybackControls } from "@/components/PlaybackControls";
@@ -21,6 +22,7 @@ export default function TournamentLayout({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const loadTournament = useTimeStore((s) => s.loadTournament);
+  const loadBalances = useTimeStore((s) => s.loadBalances);
   const derived = useTimeStore((s) => s.derived);
 
   useEffect(() => {
@@ -29,12 +31,14 @@ export default function TournamentLayout({
     setError(null);
 
     fetchTournamentData(tournamentId)
-      .then((raw) => {
+      .then(async (raw) => {
         if (cancelled) return;
         const organized = organizeByRound(raw);
         setData(organized);
         loadTournament(organized);
         setLoading(false);
+        const balances = await fetchAgentBalances(raw.agents);
+        if (!cancelled) loadBalances(balances);
       })
       .catch((err) => {
         if (cancelled) return;

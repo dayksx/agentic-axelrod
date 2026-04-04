@@ -1,3 +1,5 @@
+SPDX-License-Identifier: GPL-3.0-or-later
+
 # AI — HTTP agent (one process per slot)
 
 Each process runs **one** LangGraph-backed **`POST /message/send`** server. The process starts **unconfigured** (`slot1.eth`, empty strategy); send **`phase: "load"`** with real ENS name, domain, and strategy before chat/decision/reveal. For six agents locally or in a cluster, run **six processes** with six ports (or replicas). Entry: `src/main.ts` → `dist/main.js`; loads `.env`; exits cleanly on **SIGINT** / **SIGTERM**.
@@ -31,19 +33,19 @@ node dist/main.js --help
 
 ### Options
 
-| Option         | Description                                                                                          |
-| -------------- | ---------------------------------------------------------------------------------------------------- |
-| `--port <n>`   | Listen port. Default: **`PORT`** env, else **`PORT_BASE`**, else **3100**. CLI wins over env.        |
-| `--host <host>`| Bind address (default: **`HOST`** env or `0.0.0.0`).                                               |
-| `-h`, `--help` | Print usage and exit.                                                                                |
+| Option          | Description                                                                                   |
+| --------------- | --------------------------------------------------------------------------------------------- |
+| `--port <n>`    | Listen port. Default: **`PORT`** env, else **`PORT_BASE`**, else **3100**. CLI wins over env. |
+| `--host <host>` | Bind address (default: **`HOST`** env or `0.0.0.0`).                                          |
+| `-h`, `--help`  | Print usage and exit.                                                                         |
 
 ### Environment (when not set on the CLI)
 
-| Variable    | Default   | Role                          |
-| ----------- | --------- | ----------------------------- |
-| `PORT`      | —         | Common on PaaS; then `3100`.  |
-| `PORT_BASE` | —         | Fallback if `PORT` is unset.  |
-| `HOST`      | `0.0.0.0` | Bind address.                 |
+| Variable    | Default   | Role                         |
+| ----------- | --------- | ---------------------------- |
+| `PORT`      | —         | Common on PaaS; then `3100`. |
+| `PORT_BASE` | —         | Fallback if `PORT` is unset. |
+| `HOST`      | `0.0.0.0` | Bind address.                |
 
 When the process binds `0.0.0.0` or `::`, printed URLs use **`127.0.0.1`** so you can copy them into `curl` or clients on the same machine.
 

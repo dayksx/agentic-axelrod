@@ -77,5 +77,6 @@ export function organizeByRound(data: TournamentData): OrganizedTournament {
     agents: data.agents,
     rounds,
     totalSteps,
+    transactions: data.transactions,
   };
 }
