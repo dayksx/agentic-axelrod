@@ -12,8 +12,10 @@ import {
   type CreateEvmWalletsOptions,
   type WalletSnapshot,
 } from "../../domain/index.js";
-import { createEoa } from "../create-agents-wallets/create-eoa.js";
-import { PLAYER_ENS_SUFFIX } from "../create-agents-wallets/index.js";
+import { createEoa } from "../dynamic-eoa/create-eoa.js";
+
+/** ENS suffix applied to normalized player names from {@link getPlayerWallets}. */
+export const PLAYER_ENS_SUFFIX = ".axelrodtornament.eth";
 
 export type GetPlayerWalletsParams = {
   auth: AuthenticatedEvmClientParams;

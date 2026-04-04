@@ -11,8 +11,6 @@ export const ThresholdScheme = {
 export type ThresholdSchemeName =
   (typeof ThresholdScheme)[keyof typeof ThresholdScheme];
 
-export const DEFAULT_WALLET_COUNT = 6;
-
 export type AuthenticatedEvmClientParams = {
   authToken: string;
   environmentId: string;

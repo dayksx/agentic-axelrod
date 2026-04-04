@@ -1,11 +1,9 @@
 import type { Chain } from "viem";
 import { baseSepolia, sepolia } from "viem/chains";
-import {
-  createAgentsWallets,
-  type CreateAgentsWalletsParams,
-} from "../../../use-cases/create-agents-wallets/index.js";
-import type { Wallet } from "../../../domain/index.js";
-import { ThresholdScheme } from "../../../domain/index.js";
+import { createAuthenticatedEvmClient } from "../../outbound/dynamic/authenticated-client.js";
+import { ThresholdScheme, Wallet } from "../../../domain/index.js";
+import { createEoa } from "../../../use-cases/dynamic-eoa/create-eoa.js";
+import { getPlayerWallets } from "../../../use-cases/get-player-wallets/index.js";
 
 const CHAINS_BY_ID: Record<number, Chain> = {
   [baseSepolia.id]: baseSepolia,
@@ -18,44 +16,52 @@ export type CreateWalletsHttpBody = {
   count: number;
   rpcUrl: string;
   password?: string;
-  /** If omitted, {@link upgradeEoaToSa} defaults to Base Sepolia. */
   chainId?: number;
   playerEnsLabels?: string[];
 };
 
 /**
- * HTTP-friendly wrapper: maps JSON body to {@link createAgentsWallets}.
+ * HTTP-friendly wrapper: named players use persisted {@link getPlayerWallets};
+ * otherwise mints `count` ephemeral EOAs (no `.player-wallets.json`).
  */
 export async function runCreateWalletsFromHttpBody(
   body: CreateWalletsHttpBody,
 ): Promise<Wallet[]> {
   const chain =
-    body.chainId !== undefined
-      ? CHAINS_BY_ID[body.chainId]
-      : undefined;
+    body.chainId !== undefined ? CHAINS_BY_ID[body.chainId] : undefined;
   if (body.chainId !== undefined && chain === undefined) {
     throw new Error(
       `Unsupported chainId ${body.chainId}; extend CHAINS_BY_ID in create-wallets.ts`,
     );
   }
 
-  const params: CreateAgentsWalletsParams = {
-    auth: {
-      authToken: body.authToken,
-      environmentId: body.environmentId,
-    },
-    count: body.count,
-    rpcUrl: body.rpcUrl,
-    createOptions: {
-      password: body.password,
-      thresholdSignatureScheme: ThresholdScheme.TWO_OF_TWO,
-      backUpToClientShareService: true,
-    },
-    ...(chain !== undefined ? { chain } : {}),
-    ...(body.playerEnsLabels !== undefined
-      ? { playerEnsLabels: body.playerEnsLabels }
-      : {}),
+  const auth = {
+    authToken: body.authToken,
+    environmentId: body.environmentId,
+  };
+  const createOptions = {
+    password: body.password,
+    thresholdSignatureScheme: ThresholdScheme.TWO_OF_TWO,
+    backUpToClientShareService: true,
   };
 
-  return createAgentsWallets(params);
+  if (body.playerEnsLabels !== undefined && body.playerEnsLabels.length > 0) {
+    if (body.playerEnsLabels.length !== body.count) {
+      throw new Error(
+        "count must equal playerEnsLabels.length when playerEnsLabels is set",
+      );
+    }
+    const { wallets } = await getPlayerWallets({
+      auth,
+      playerNames: body.playerEnsLabels,
+      createOptions,
+      rpcUrl: body.rpcUrl,
+      ...(chain !== undefined ? { chain } : {}),
+    });
+    return wallets;
+  }
+
+  const client = await createAuthenticatedEvmClient(auth);
+  const created = await createEoa(client, body.count, createOptions);
+  return created.map((w) => Wallet.fromDynamicCreated(w));
 }

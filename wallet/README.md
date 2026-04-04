@@ -39,11 +39,11 @@ flowchart TB
     SDK["SDK barrel\nadapters/inbound/sdk"]
   end
   subgraph usecase["Use cases"]
-    subgraph caw["create-agents-wallets/"]
-      CW["index.ts\ncreateAgentsWallets"]
+    subgraph de["dynamic-eoa/"]
       CE["create-eoa.ts"]
       UP["upgrade-eoa-to-sa.ts"]
     end
+    GPW["get-player-wallets/\ngetPlayerWallets"]
   end
   subgraph outbound["Outbound adapters"]
     DYN["Dynamic authenticated client\nadapters/outbound/dynamic"]
@@ -52,11 +52,12 @@ flowchart TB
     TYPES["Types: CreatedEvmWallet, options…"]
     WALLET["Wallet aggregate"]
   end
-  CLI --> CW
-  HTTP --> CW
+  CLI --> GPW
+  HTTP --> GPW
+  HTTP --> CE
   SDK --> usecase
-  CW --> CE
-  CW --> UP
+  GPW --> CE
+  CE --> UP
   CE --> DYN
   UP --> DYN
   CE --> TYPES
@@ -69,11 +70,11 @@ flowchart TB
 | Layer | Path | Role |
 |-------|------|------|
 | **Inbound adapters** | `src/adapters/inbound/` | **CLI**, **HTTP** (`runCreateWalletsFromHttpBody`), and a small **SDK** re-export (`internal-api`) so other packages can import a stable surface. They parse env/JSON and call the same use case. |
-| **Use cases** | `src/use-cases/` | One folder per workflow: **`create-agents-wallets/`** contains **`index.ts`** (entry: `createAgentsWallets`), plus **`create-eoa.ts`** and **`upgrade-eoa-to-sa.ts`**. Barrel **`use-cases/index.ts`** re-exports for the package. |
+| **Use cases** | `src/use-cases/` | **`get-player-wallets/`** — `getPlayerWallets` (load or create by name, persisted). **`dynamic-eoa/`** — `createEoa` and `upgradeEoaToSa` (Dynamic primitives). Barrel **`use-cases/index.ts`** re-exports. |
 | **Outbound adapters** | `src/adapters/outbound/` | **`createAuthenticatedEvmClient`** and typings for Dynamic’s Node EVM client — how we talk to Dynamic, not business rules. |
 | **Domain** | `src/domain/` | **Types** (`CreatedEvmWallet`, options, thresholds) and the **`Wallet`** aggregate: lifecycle flags and `toJSON()` for responses. |
 
-### Why `createAgentsWallets` does not touch `Wallet` directly
+### Why `createEoa` does not return a full `Wallet` yet
 
 The **`Wallet`** class models **lifecycle after** an EOA exists: delegation signed, set-code tx, smart-account address, optional ENS. Dynamic returns a plain **`CreatedEvmWallet`** row from `createWalletAccount`; there is no `Wallet` instance until the ERC-7702 path starts.
 
@@ -82,7 +83,7 @@ So:
 - **`createEoa`** returns **`CreatedEvmWallet[]`** (Dynamic’s shape).
 - **`upgradeEoaToSa`** builds **`Wallet.fromDynamicCreated`**, then calls **`markDelegationSigned`**, **`recordSetCodeTransaction`**, and **`markSmartAccount`** as each step succeeds — that is where the aggregate is manipulated.
 
-The top-level orchestrator only **sequences** those steps; keeping **`Wallet`** construction and transitions inside the upgrade use case avoids inventing half-upgraded aggregates in the “create EOAs only” path and keeps invariants on the class.
+Use **`getPlayerWallets`** when you need names + persistence; it wraps **`createEoa`** and builds **`Wallet`** snapshots for storage.
 
 ## CLI
 
@@ -95,7 +96,7 @@ pnpm run wallet -- help
 
 | Command | Purpose |
 |--------|---------|
-| `create-agents-wallets` | Create agent EOAs and upgrade to ERC-7702 smart accounts (default **6** wallets, 2-of-2 threshold). Alias: `agents-wallets`. |
+| `get-player-wallets` | Load or create player wallets by name (persists `.player-wallets.json`). |
 | `create-game-master-wallet` | Placeholder: provision a game master EOA. Alias: `game-master`. |
 | `delegate-funds-to-game-master` | Placeholder: agent → game master delegation. Alias: `delegate-funds`. |
 | `transfer-delegated-funds` | Placeholder: game master → any address. Alias: `transfer-delegated`. |
@@ -103,7 +104,7 @@ pnpm run wallet -- help
 Examples:
 
 ```bash
-pnpm run wallet -- create-agents-wallets
+pnpm run wallet -- get-player-wallets alice bob
 pnpm run wallet -- create-game-master-wallet
 pnpm run wallet -- delegate-funds-to-game-master
 pnpm run wallet -- transfer-delegated-funds
@@ -112,8 +113,7 @@ pnpm run wallet -- transfer-delegated-funds
 Shortcuts:
 
 ```bash
-pnpm run create-players-wallets
-pnpm run create-players-wallets:build
+pnpm run get-player-wallets
 pnpm run create-game-master-wallet
 pnpm run create-game-master-wallet:build
 ```
@@ -121,7 +121,7 @@ pnpm run create-game-master-wallet:build
 Compiled binary for any subcommand:
 
 ```bash
-pnpm run wallet:build -- create-agents-wallets
+pnpm run wallet:build -- get-player-wallets alice
 ```
 
 ## Library usage
@@ -134,8 +134,8 @@ pnpm run build
 
 Other packages (or scripts) can import from the package root or from `wallet/internal-api` (see `package.json` `exports`):
 
-- **`createAgentsWallets`** — full flow: auth → create EOAs → ERC-7702 upgrade to smart accounts
-- **`createEoa`** / **`upgradeEoaToSa`** — lower-level steps (`src/use-cases/create-agents-wallets/`)
+- **`getPlayerWallets`** — load or create by player name (persisted state file)
+- **`createEoa`** / **`upgradeEoaToSa`** — Dynamic primitives (`src/use-cases/dynamic-eoa/`)
 - **`createAuthenticatedEvmClient`** — authenticated `DynamicEvmWalletClient`
 - Domain **`Wallet`**, types, **`ThresholdScheme`** — see `src/domain/`
 
@@ -150,7 +150,6 @@ Entry point: `src/index.ts` (exports mirror `dist/` after build).
 | `pnpm run clean` | Remove `dist/` |
 | `pnpm run wallet` | Unified CLI (`tsx` + `.env`); pass `-- help` or a subcommand |
 | `pnpm run wallet:build` | Compiled unified CLI (`node` + `.env`) |
-| `pnpm run create-players-wallets` | Same as `wallet -- create-agents-wallets` |
-| `pnpm run create-players-wallets:build` | Compiled `create-agents-wallets` only |
+| `pnpm run get-player-wallets` | `tsx` CLI: `get-player-wallets` (pass player names after the script) |
 | `pnpm run create-game-master-wallet` | Same as `wallet -- create-game-master-wallet` |
 | `pnpm run create-game-master-wallet:build` | Compiled `create-game-master-wallet` only |

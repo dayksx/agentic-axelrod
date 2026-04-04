@@ -4,7 +4,7 @@ import type {
   CreatedEvmWallet,
   CreateEvmWalletsOptions,
 } from "../../domain/index.js";
-import { createEoa } from "../create-agents-wallets/create-eoa.js";
+import { createEoa } from "../dynamic-eoa/create-eoa.js";
 
 export type ProvisionGameMasterEoaParams = {
   auth: AuthenticatedEvmClientParams;

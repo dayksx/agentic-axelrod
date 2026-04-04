@@ -1,16 +1,18 @@
-/**
- * `pnpm run wallet -- create-agents-wallets bob alice robert …`
- * → each wallet gets `ensName` = `bob.axelrodtornament.eth`, etc.
- */
 import { createPublicClient, formatEther, http, parseEther } from "viem";
 import { sepolia } from "viem/chains";
-import { createAgentsWallets } from "../../../use-cases/create-agents-wallets/index.js";
 import { getGameMasterWallet } from "../../../use-cases/create-game-master-wallet/index.js";
-import { getPlayerWallets } from "../../../use-cases/player-wallets/index.js";
+import {
+  collectTournamentStakeFromPlayers,
+  TOURNAMENT_STAKING_PRICE_ETH,
+} from "../../../use-cases/collect-tournament-stake-from-players/index.js";
+import {
+  distributeTournamentRewardsToAgents,
+  MAX_TOURNAMENT_REWARD_RECIPIENTS,
+} from "../../../use-cases/distribute-tournament-rewards-to-agents/index.js";
+import { getPlayerWallets } from "../../../use-cases/get-player-wallets/index.js";
 import { normalizePlayerName } from "../../../adapters/outbound/fs/player-wallets-file.js";
 import { transferFunds } from "../../../use-cases/transfer-funds/index.js";
 import {
-  DEFAULT_WALLET_COUNT,
   GAME_MASTER_ENS_NAME,
   ThresholdScheme,
   type Wallet,
@@ -173,9 +175,13 @@ function usage(): void {
     Native ETH transfer. <from> and <to> are either a player name or
     "gm" / "game-master" for the game master wallet.
 
-  pnpm run wallet -- create-agents-wallets [player1 player2 …]
-    Lower-level: mint EOAs without the player-wallets store (or use names + ENS only).
-    With no names: WALLET_COUNT (default ${DEFAULT_WALLET_COUNT}), no ENS.
+  pnpm run wallet -- collect-tournament-stake <player1> [player2 …]
+    Each listed player sends ${TOURNAMENT_STAKING_PRICE_ETH} ETH (native) to the game
+    master treasury (sequential transactions). Ensures GM + player wallets exist.
+
+  pnpm run wallet -- distribute-tournament-rewards <agent1> [agent2 [agent3]]
+    Game master sends ${TOURNAMENT_STAKING_PRICE_ETH} ETH to each named agent (1–${MAX_TOURNAMENT_REWARD_RECIPIENTS}
+    recipients, same amount as one stake each). Ensures GM + recipient wallets exist.
 
   Env: DYNAMIC_AUTH_TOKEN, DYNAMIC_ENVIRONMENT_ID
   Optional: WALLET_PASSWORD, RPC_URL (Sepolia; ETH balances in reports), GAME_MASTER_WALLET_FILE, PLAYER_WALLETS_FILE
@@ -430,16 +436,19 @@ async function cmdTransferFunds(args: string[]): Promise<void> {
   console.log("");
 }
 
-async function cmdCreateAgentsWallets(labels: string[]): Promise<void> {
-  /** `pnpm`/npm `--` separator must not be counted as a player name. */
+async function cmdCollectTournamentStake(labels: string[]): Promise<void> {
   const clean = labels.filter((s) => s.length > 0 && s !== "--");
-  const summary =
-    clean.length > 0
-      ? `${clean.length} player${clean.length === 1 ? "" : "s"}`
-      : `default count from env (${DEFAULT_WALLET_COUNT})`;
+  if (clean.length === 0) {
+    throw new Error(
+      "collect-tournament-stake requires at least one player name, e.g. pnpm run wallet -- collect-tournament-stake alice bob",
+    );
+  }
+
   console.log("");
   console.log(hr("═"));
-  console.log(`  ${bold("create-agents-wallets")}  ·  ${summary}  ✨`);
+  console.log(
+    `  ${bold("collect-tournament-stake")}  ·  ${clean.length} player${clean.length === 1 ? "" : "s"}  ·  ${TOURNAMENT_STAKING_PRICE_ETH} ETH each  ✨`,
+  );
   console.log(hr("═"));
   console.log("");
 
@@ -447,64 +456,107 @@ async function cmdCreateAgentsWallets(labels: string[]): Promise<void> {
   const environmentId = requireEnv("DYNAMIC_ENVIRONMENT_ID");
   const password = optionalEnv("WALLET_PASSWORD");
   const rpcUrl = optionalEnv("RPC_URL") ?? sepolia.rpcUrls.default.http[0];
-
-  const count =
-    clean.length > 0
-      ? clean.length
-      : (() => {
-          const c = optionalEnv("WALLET_COUNT");
-          return c !== undefined
-            ? Number.parseInt(c, 10)
-            : DEFAULT_WALLET_COUNT;
-        })();
-
-  if (!Number.isInteger(count) || count < 1) {
-    throw new Error("WALLET_COUNT must be a positive integer");
-  }
+  const gmFile = optionalEnv("GAME_MASTER_WALLET_FILE");
+  const playerStateFile = optionalEnv("PLAYER_WALLETS_FILE");
 
   console.log(
-    dim("  Creating wallets with Dynamic… (may take a minute)"),
+    dim(
+      "  Ensuring game master + player wallets, then collecting stake to GM treasury…",
+    ),
   );
   console.log("");
 
-  const smartAccounts = await createAgentsWallets({
+  const { stakingPriceWei, receipts } = await collectTournamentStakeFromPlayers({
     auth: { authToken, environmentId },
-    count,
+    playerNames: clean,
+    rpcUrl,
+    chain: sepolia,
     createOptions: {
       password,
       thresholdSignatureScheme: ThresholdScheme.TWO_OF_TWO,
       backUpToClientShareService: true,
     },
-    rpcUrl,
-    chain: sepolia,
-    ...(clean.length > 0 ? { playerEnsLabels: clean } : {}),
+    ...(password !== undefined ? { password } : {}),
+    ...(gmFile !== undefined ? { gameMasterStateFilePath: gmFile } : {}),
+    ...(playerStateFile !== undefined
+      ? { playerWalletsStateFilePath: playerStateFile }
+      : {}),
   });
 
-  const agentsEthLines = await Promise.all(
-    smartAccounts.map((w) => fetchEoaEthBalanceLine(rpcUrl, w.eoaAddress)),
-  );
+  console.log(dim(`  Stake per player: ${formatEther(stakingPriceWei)} ETH`));
+  console.log("");
 
-  smartAccounts.forEach((w, index) => {
-    const n = index + 1;
-    const playerTag =
-      clean[index] !== undefined && w.ensName !== undefined
-        ? `${clean[index]} · ${w.ensName}`
-        : clean[index] !== undefined
-          ? `player: ${clean[index]}`
-          : `wallet #${n}`;
-
-    const titleLine = `🎯  Player ${n}  ·  ${playerTag}`;
-    printWalletReport(w, titleLine, agentsEthLines[index]!);
+  receipts.forEach((r) => {
+    console.log(`  ${bold(r.playerName)}  →  tx ${r.transactionHash}`);
   });
 
+  console.log("");
   console.log(hr("═"));
   console.log(
-    `  ${bold("Done.")}  ${smartAccounts.length} wallet${smartAccounts.length === 1 ? "" : "s"} ready.  🎉`,
+    `  ${bold("Done.")}  ${receipts.length} stake transaction${receipts.length === 1 ? "" : "s"} submitted.  🎉`,
   );
+  console.log(hr("═"));
+  console.log("");
+}
+
+async function cmdDistributeTournamentRewards(labels: string[]): Promise<void> {
+  const clean = labels.filter((s) => s.length > 0 && s !== "--");
+  if (clean.length === 0 || clean.length > MAX_TOURNAMENT_REWARD_RECIPIENTS) {
+    throw new Error(
+      `distribute-tournament-rewards requires 1–${MAX_TOURNAMENT_REWARD_RECIPIENTS} agent name(s), e.g. pnpm run wallet -- distribute-tournament-rewards alice bob`,
+    );
+  }
+
+  console.log("");
+  console.log(hr("═"));
+  console.log(
+    `  ${bold("distribute-tournament-rewards")}  ·  ${clean.length} recipient${clean.length === 1 ? "" : "s"}  ·  ${TOURNAMENT_STAKING_PRICE_ETH} ETH each  ✨`,
+  );
+  console.log(hr("═"));
+  console.log("");
+
+  const authToken = requireEnv("DYNAMIC_AUTH_TOKEN");
+  const environmentId = requireEnv("DYNAMIC_ENVIRONMENT_ID");
+  const password = optionalEnv("WALLET_PASSWORD");
+  const rpcUrl = optionalEnv("RPC_URL") ?? sepolia.rpcUrls.default.http[0];
+  const gmFile = optionalEnv("GAME_MASTER_WALLET_FILE");
+  const playerStateFile = optionalEnv("PLAYER_WALLETS_FILE");
+
   console.log(
     dim(
-      "  Tip: fund EOAs on Sepolia before smart-account / set-code steps in your demo.",
+      "  Ensuring game master + recipient wallets, then sending rewards from GM…",
     ),
+  );
+  console.log("");
+
+  const { rewardPerRecipientWei, receipts } = await distributeTournamentRewardsToAgents({
+    auth: { authToken, environmentId },
+    recipientPlayerNames: clean,
+    rpcUrl,
+    chain: sepolia,
+    createOptions: {
+      password,
+      thresholdSignatureScheme: ThresholdScheme.TWO_OF_TWO,
+      backUpToClientShareService: true,
+    },
+    ...(password !== undefined ? { password } : {}),
+    ...(gmFile !== undefined ? { gameMasterStateFilePath: gmFile } : {}),
+    ...(playerStateFile !== undefined
+      ? { playerWalletsStateFilePath: playerStateFile }
+      : {}),
+  });
+
+  console.log(dim(`  Reward per recipient: ${formatEther(rewardPerRecipientWei)} ETH`));
+  console.log("");
+
+  receipts.forEach((r) => {
+    console.log(`  ${bold(r.playerName)}  ←  tx ${r.transactionHash}`);
+  });
+
+  console.log("");
+  console.log(hr("═"));
+  console.log(
+    `  ${bold("Done.")}  ${receipts.length} reward transaction${receipts.length === 1 ? "" : "s"} submitted.  🎉`,
   );
   console.log(hr("═"));
   console.log("");
@@ -533,9 +585,13 @@ async function main(): Promise<void> {
     case "transfer-funds":
       await cmdTransferFunds(parts.slice(1));
       return;
-    case "create-agents-wallets":
-    case "agents-wallets":
-      await cmdCreateAgentsWallets(parts.slice(1));
+    case "collect-tournament-stake":
+    case "collect-tournament-stake-from-players":
+      await cmdCollectTournamentStake(parts.slice(1));
+      return;
+    case "distribute-tournament-rewards":
+    case "distribute-rewards":
+      await cmdDistributeTournamentRewards(parts.slice(1));
       return;
     default:
       console.error(`Unknown command: ${cmd}\n`);

@@ -1,10 +1,4 @@
-export { createEoa } from "./create-agents-wallets/create-eoa.js";
-export { upgradeEoaToSa } from "./create-agents-wallets/upgrade-eoa-to-sa.js";
-export {
-  createAgentsWallets,
-  PLAYER_ENS_SUFFIX,
-  type CreateAgentsWalletsParams,
-} from "./create-agents-wallets/index.js";
+export { createEoa, upgradeEoaToSa } from "./dynamic-eoa/index.js";
 
 export {
   createGameMasterWallet,
@@ -22,14 +16,30 @@ export {
 export {
   getPlayerWallets,
   normalizePlayerName,
+  PLAYER_ENS_SUFFIX,
   type GetPlayerWalletsParams,
   type GetPlayerWalletsResult,
-} from "./player-wallets/index.js";
+} from "./get-player-wallets/index.js";
 export {
   transferFunds,
   type TransferFundsParams,
   type TransferFundsReceipt,
 } from "./transfer-funds/index.js";
+export {
+  collectTournamentStakeFromPlayers,
+  TOURNAMENT_STAKING_PRICE_ETH,
+  TOURNAMENT_STAKING_PRICE_WEI,
+  type CollectTournamentStakeFromPlayersParams,
+  type CollectTournamentStakeFromPlayersResult,
+  type TournamentStakeReceipt,
+} from "./collect-tournament-stake-from-players/index.js";
+export {
+  distributeTournamentRewardsToAgents,
+  MAX_TOURNAMENT_REWARD_RECIPIENTS,
+  type DistributeTournamentRewardsToAgentsParams,
+  type DistributeTournamentRewardsToAgentsResult,
+  type TournamentRewardReceipt,
+} from "./distribute-tournament-rewards-to-agents/index.js";
 
 export {
   delegateFundsToGameMaster,
