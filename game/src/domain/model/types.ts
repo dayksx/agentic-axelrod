@@ -2,6 +2,20 @@
  * Domain types for tournament orchestration (Iterated Prisoner's Dilemma hackathon).
  */
 
+/**
+ * In-memory row for a public line spoken in a specific arena (1v1 match) in a round.
+ * Aligns with `announcements` (tournament_id, round_number, message) plus `arenaId` and `agentName`.
+ */
+export interface ArenaAnnouncement {
+  readonly id: number;
+  readonly tournamentId: number;
+  readonly roundNumber: number;
+  /** Same as {@link Match.arenaId} for the match where the announcement was collected. */
+  readonly arenaId: number;
+  readonly message: string;
+  readonly agentName: string;
+}
+
 /** Player definition supplied at tournament start (e.g. CLI JSON). Mirrors ai-side config conceptually. */
 export interface PlayerConfig {
   name: string;

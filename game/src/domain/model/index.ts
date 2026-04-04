@@ -1,6 +1,7 @@
 export { GameMaster } from "./game-master.js";
 export {
   type PlayerConfig,
+  type ArenaAnnouncement,
   type Cooperation,
   type Match,
   type RoundPhase,

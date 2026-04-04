@@ -1,4 +1,4 @@
-import type { Cooperation } from "../../domain/model/types.js";
+import type { ArenaAnnouncement, Cooperation } from "../../domain/model/types.js";
 
 const REQUEST_TIMEOUT_MS = 120_000;
 
@@ -87,21 +87,23 @@ export interface PostAgentChatParams {
   message: string;
   /** Passed to the agent as round / iteration context (tournament round index). */
   iteration: number;
+  /** Full snapshot of arena-scoped announcements accumulated so far in the tournament (GM syncs on chat/decision/announce). */
+  arenaAnnouncements?: readonly ArenaAnnouncement[];
 }
 
 export async function postAgentChat(
   baseUrl: string,
   params: PostAgentChatParams,
 ): Promise<string> {
-  const parsed = await postMessageSend(
-    baseUrl,
-    {
-      phase: "chat" as const,
-      message: params.message,
-      iteration: params.iteration,
-    },
-    "Agent chat",
-  );
+  const body: Record<string, unknown> = {
+    phase: "chat" as const,
+    message: params.message,
+    iteration: params.iteration,
+  };
+  if (params.arenaAnnouncements !== undefined) {
+    body.arenaAnnouncements = params.arenaAnnouncements;
+  }
+  const parsed = await postMessageSend(baseUrl, body, "Agent chat");
   if (
     parsed === null ||
     typeof parsed !== "object" ||
@@ -115,14 +117,48 @@ export async function postAgentChat(
   return (parsed as { reply: string }).reply;
 }
 
-export async function postAgentDecision(
+export async function postAgentAnnounce(
   baseUrl: string,
-): Promise<Cooperation> {
+  params: {
+    tournamentId: number;
+    roundNumber: number;
+    arenaId: number;
+    arenaAnnouncements: readonly ArenaAnnouncement[];
+  },
+): Promise<string> {
   const parsed = await postMessageSend(
     baseUrl,
-    { phase: "decision" as const },
-    "Agent decision",
+    {
+      phase: "announce" as const,
+      tournamentId: params.tournamentId,
+      roundNumber: params.roundNumber,
+      arenaId: params.arenaId,
+      arenaAnnouncements: params.arenaAnnouncements,
+    },
+    "Agent announce",
   );
+  if (
+    parsed === null ||
+    typeof parsed !== "object" ||
+    (parsed as { phase?: unknown }).phase !== "announce" ||
+    typeof (parsed as { announcement?: unknown }).announcement !== "string"
+  ) {
+    throw new Error(
+      `Agent announce: expected { phase: "announce", announcement: string }, got ${JSON.stringify(parsed)?.slice(0, 200)}`,
+    );
+  }
+  return (parsed as { announcement: string }).announcement;
+}
+
+export async function postAgentDecision(
+  baseUrl: string,
+  options?: { arenaAnnouncements?: readonly ArenaAnnouncement[] },
+): Promise<Cooperation> {
+  const body: Record<string, unknown> = { phase: "decision" as const };
+  if (options?.arenaAnnouncements !== undefined) {
+    body.arenaAnnouncements = options.arenaAnnouncements;
+  }
+  const parsed = await postMessageSend(baseUrl, body, "Agent decision");
   if (
     parsed === null ||
     typeof parsed !== "object" ||
@@ -163,4 +199,9 @@ export async function postAgentReveal(
     },
     "Agent reveal",
   );
+}
+
+/** Clears in-graph tournament announcements (and related thread state) on the agent. */
+export async function postAgentEnd(baseUrl: string): Promise<void> {
+  await postMessageSend(baseUrl, { phase: "end" as const }, "Agent end");
 }

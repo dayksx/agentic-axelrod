@@ -38,6 +38,18 @@ export const RevealRoundPayloadSchema = z.object({
   adversaryScore: z.number().finite(),
 });
 
+/** Matches in-memory `ArenaAnnouncement` (per-arena match row + agentName). */
+export const ArenaAnnouncementSchema = z
+  .object({
+    id: z.number().finite(),
+    tournamentId: z.number().finite(),
+    roundNumber: z.number().finite(),
+    arenaId: z.number().finite(),
+    message: z.string().min(1),
+    agentName: EnsNameSchema,
+  })
+  .strict();
+
 /**
  * Canonical HTTP body after `phase` normalization and optional `reveal` lifting.
  * `.strict()` rejects unknown keys per variant (helps catch typos).
@@ -53,12 +65,27 @@ export const MessageSendRequestSchema = z.discriminatedUnion("phase", [
     .strict(),
   z
     .object({
+      phase: z.literal("announce"),
+      tournamentId: z.number().finite(),
+      roundNumber: z.number().finite(),
+      arenaId: z.number().finite(),
+      arenaAnnouncements: z.array(ArenaAnnouncementSchema).optional(),
+    })
+    .strict(),
+  z
+    .object({
       phase: z.literal("chat"),
       message: z.string().min(1),
       iteration: z.number().finite().optional(),
+      arenaAnnouncements: z.array(ArenaAnnouncementSchema).optional(),
     })
     .strict(),
-  z.object({ phase: z.literal("decision") }).strict(),
+  z
+    .object({
+      phase: z.literal("decision"),
+      arenaAnnouncements: z.array(ArenaAnnouncementSchema).optional(),
+    })
+    .strict(),
   z.object({ phase: z.literal("end") }).strict(),
   z
     .object({
