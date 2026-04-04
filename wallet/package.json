@@ -9,14 +9,22 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./internal-api": {
+      "types": "./dist/adapters/inbound/sdk/internal-api.d.ts",
+      "import": "./dist/adapters/inbound/sdk/internal-api.js"
     }
   },
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",
-    "create-wallets": "tsx --env-file=.env src/adapter/inbound/cli/create-wallets.ts",
-    "create-wallets:build": "pnpm run build && node --env-file=.env dist/adapter/inbound/cli/create-wallets.js"
+    "wallet": "tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts",
+    "wallet:build": "pnpm run build && node --env-file=.env dist/adapters/inbound/cli/wallet-cli.js",
+    "create-players-wallets": "pnpm run wallet -- create-agents-wallets",
+    "create-players-wallets:build": "pnpm run wallet:build -- create-agents-wallets",
+    "create-game-master-wallet": "pnpm run wallet -- create-game-master-wallet",
+    "create-game-master-wallet:build": "pnpm run wallet:build -- create-game-master-wallet"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +40,7 @@
     "@dynamic-labs-wallet/node-evm": "^0.0.322",
     "@dynamic-labs/ethereum": "^4.75.0",
     "@dynamic-labs/sdk-react-core": "^4.75.0",
+    "@metamask/smart-accounts-kit": "^1.0.0",
     "viem": "^2.47.10"
   }
 }

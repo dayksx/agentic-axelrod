@@ -1,15 +1,14 @@
 import { DynamicEvmWalletClient } from "@dynamic-labs-wallet/node-evm";
-import type { AuthenticatedEvmClientParams } from "../../domain/types.js";
+import type { AuthenticatedEvmClientParams } from "../../../domain/index.js";
 
-/** Authenticated EVM client for server-side wallet operations. */
-export const createAuthenticatedEvmClient = async ({
+export async function createAuthenticatedEvmClient({
   authToken,
   environmentId,
-}: AuthenticatedEvmClientParams) => {
+}: AuthenticatedEvmClientParams) {
   const client = new DynamicEvmWalletClient({
     environmentId,
     enableMPCAccelerator: false,
   });
   await client.authenticateApiToken(authToken);
   return client;
-};
+}

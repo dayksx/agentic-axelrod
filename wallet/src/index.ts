@@ -1,3 +1,7 @@
 export * from "./domain/index.js";
-export { createAuthenticatedEvmClient } from "./adapter/outbound/dynamic-authenticated-client.js";
-export { createEvmWallets } from "./application/create-evm-wallets.js";
+export * from "./use-cases/index.js";
+export { createAuthenticatedEvmClient } from "./adapters/outbound/dynamic/authenticated-client.js";
+export {
+  runCreateWalletsFromHttpBody,
+  type CreateWalletsHttpBody,
+} from "./adapters/inbound/http/create-wallets.js";

@@ -1,14 +1,14 @@
 import type { DynamicEvmWalletClient } from "@dynamic-labs-wallet/node-evm";
-import { ThresholdScheme } from "../domain/threshold.js";
-import type {
-  CreatedEvmWallet,
-  CreateEvmWalletsOptions,
-} from "../domain/types.js";
+import {
+  ThresholdScheme,
+  type CreatedEvmWallet,
+  type CreateEvmWalletsOptions,
+} from "../../domain/index.js";
 
 /**
- * Creates `count` separate EVM wallet accounts via Dynamic (each call runs keygen).
+ * Creates `count` separate EOA accounts via Dynamic (each call runs keygen).
  */
-export async function createEvmWallets(
+export async function createEoa(
   client: DynamicEvmWalletClient,
   count: number,
   options: CreateEvmWalletsOptions,
