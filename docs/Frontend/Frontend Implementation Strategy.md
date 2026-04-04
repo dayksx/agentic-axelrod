@@ -267,3 +267,4 @@ These are explicitly out of scope for the initial build:
 - Graffiti / gossip display (data exists in DB, not in design spec yet)
 - Agent profile pages
 - Any mobile responsiveness
+- Wallet creation, signing, or chain transactions (server-side `wallet` package; see [`../wallet-management.md`](../wallet-management.md) — UI may only **display** addresses from the DB later)

@@ -1,4 +1,4 @@
-# Hackathon Build Sequencing — ETHGlobal Cannes 2026
+sat# Hackathon Build Sequencing — ETHGlobal Cannes 2026
 
 > Strategy: Tasks are in series. Scope is gated — each step is a shippable result. Don't start the next until the previous is solid.
 
@@ -35,15 +35,16 @@ Add the **Announcements phase**: a string broadcast available to all players, se
 
 ### Step 5 — Tournament v3 (On-chain Wallets + Settlement)
 
-Add **dynamic wallets** for agents, funded by the Game Master on **Ethereum Sepolia**:
+Add **Dynamic-backed EVM wallets** for agents on a **testnet** (the repo’s `wallet` package supports **Ethereum Sepolia** and **Base Sepolia** where applicable — use one chain consistently with your RPC). Full operations, env vars, CLI, and DB alignment are documented in **[`docs/wallet-management.md`](./wallet-management.md)** (package detail: [`wallet/README.md`](../wallet/README.md)).
 
-- Game Master gets a **smart wallet**
-- Each agent gets a wallet, with **delegation to the Game Master's smart wallet**
-- At tournament end: bottom 3 losers' funds are swept to top 3 winners via the Game Master
+- Game Master: provision once (EOA + ERC-7702 smart account path + persisted state)
+- Each agent: named player wallet; **delegation helpers** exist in the `wallet` library for **delegation to the Game Master’s smart wallet**
+- **Staking / rewards**: the package implements **0.01 ETH** stake collection from players and **0.01 ETH** rewards to up to **3** recipients (see wallet docs)
+- At tournament end: **sweep / settlement** uses the above primitives plus your Game Master orchestration (record txs to DB as in [`API requests to DB.md`](./API requests to DB.md))
 
 ### Step 6 — Tournament v4 (ENS Subdomains)
 
-Each player gets an **ENS subdomain** (e.g. `c3po.axelrodtournament.eth`).
+Each player gets an **ENS-style name** on the wallet aggregate (e.g. `{player}.axelrodtornament.eth`; game master uses `axelrodtornament.eth`). See [`docs/wallet-management.md`](./wallet-management.md). On-chain ENS registration may be additional work beyond name assignment in snapshots.
 
 ### Step 7 — Series v1 (Multi-Tournament + Survivor Logic)
 
@@ -51,7 +52,7 @@ Tournaments now run in a series:
 
 - **Tournament 1**: provide JSON via CLI with 6 strategy prompts + player names
 - **Tournaments 2+**: provide JSON via CLI with 3 new strategy prompts + player names — top 3 survivors from the previous tournament carry forward
-- Smart wallet creation, ENS subdomain assignment, and funding logic becomes conditional on whether it's tournament 1 or a continuation
+- Smart wallet creation, ENS-style names, and funding logic become conditional on whether it's tournament 1 or a continuation (see [`docs/wallet-management.md`](./wallet-management.md))
 
 ---
 

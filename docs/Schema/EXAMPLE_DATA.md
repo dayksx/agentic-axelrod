@@ -24,7 +24,7 @@ Agents are created once and reused across tournaments.
 | 8   | Random          | Randomly choose C or D, unpredictable chat...        | http://localhost:4108 | *(null)*       | *(null)* | 2026-04-05 10:00:00 |
 
 Agents 0-5 created for Tournament 0. Agents 6-8 created for Tournament 1.
-`wallet_address` and `ens_name` are nullable — populated in Steps 5–6 (on-chain wallets and ENS subdomains).
+`wallet_address` and `ens_name` are nullable — populated in Steps 5–6 (on-chain wallets and ENS-style names). See [`../wallet-management.md`](../wallet-management.md).
 
 ---
 
@@ -179,7 +179,7 @@ One per agent per round. Tournament 0, Rounds 1–2 (4 agents shown for brevity)
 
 ## tournament_transactions
 
-`type` values: `entry_fee` (GM → agent at start), `elimination` (agent → GM at end, delegated), `prize` (GM → agent at end).
+`type` values: `entry_fee` (each agent pays stake **to** the game master at start — matches `collect-tournament-stake` in [`../wallet-management.md`](../wallet-management.md)), `elimination` (losing agents → GM at end, often via delegation), `prize` (GM → agent at end).
 
 Tournament 0 — complete (6 entry fees + 3 eliminations + 3 prizes):
 
