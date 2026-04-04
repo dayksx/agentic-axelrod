@@ -34,15 +34,15 @@ export interface TournamentResults {
   scoresByPlayer: Record<string, number>;
 }
 
-/** Simultaneous decision per player in an arena. D = Defect, C = Cooperate. */
-export type Decision = "C" | "D";
+/** Simultaneous move per player in an arena (same literals as `ai` / HTTP `cooperation`). */
+export type Cooperation = "cooperate" | "defect";
 
 /** Lifecycle phases within one tournament round (GM drives all transitions). */
 export type RoundPhase =
   | "LOAD" // GM pushes rules, strategy prompt, score, round meta → each player
   | "ANNOUNCE" // GM collects announcements from players; store; players do not read yet
   | "CHAT" // GM drives alternating via GM, 3 msgs/player, 6 total per arena; order from firstSpeaker
-  | "DECISION" // GM prompts simultaneous C/D prompts; invalid/timeout → C
+  | "DECISION" // GM prompts simultaneous cooperate/defect; invalid/timeout → cooperate
   | "REVEAL" // GM pushes updated cumulative score only; infer opponent move from delta
   | "REVEAL_ANNOUNCEMENT"; // GM broadcasts all 6 announces to all players
 
@@ -54,21 +54,27 @@ export interface ScheduledRound {
 
 /**
  * Payoff matrix (row = you, col = opponent).
- * CC +3/+3, CD +0/+5, DC +5/+0, DD +1/+1.
+ * Both cooperate +3/+3; you cooperate they defect +0/+5; you defect they cooperate +5/+0; both defect +1/+1.
  */
-export function getScoresFromDecisions(
-  you: Decision,
-  opponent: Decision,
+export function getScoresFromCooperation(
+  you: Cooperation,
+  opponent: Cooperation,
 ): { you: number; opponent: number } {
-  if (you === "C" && opponent === "C") return { you: 3, opponent: 3 };
-  if (you === "C" && opponent === "D") return { you: 0, opponent: 5 };
-  if (you === "D" && opponent === "C") return { you: 5, opponent: 0 };
+  if (you === "cooperate" && opponent === "cooperate") {
+    return { you: 3, opponent: 3 };
+  }
+  if (you === "cooperate" && opponent === "defect") {
+    return { you: 0, opponent: 5 };
+  }
+  if (you === "defect" && opponent === "cooperate") {
+    return { you: 5, opponent: 0 };
+  }
   return { you: 1, opponent: 1 };
 }
 
-/** Invalid or timeout outputs default to Cooperate (spec). */
-export function parseDecision(raw: string): Decision {
-  const t = raw.trim().toUpperCase();
-  if (t === "D") return "D";
-  return "C";
+/** Invalid or timeout outputs default to cooperate (spec). */
+export function parseCooperation(raw: string): Cooperation {
+  const t = raw.trim().toLowerCase();
+  if (t === "d" || t === "defect") return "defect";
+  return "cooperate";
 }

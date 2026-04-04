@@ -25,7 +25,7 @@ import {
   buildChatPhaseLlmMessages,
   buildDecisionPhaseLlmMessages,
 } from "./player-context.js";
-import z from "zod";
+import type { GameMove } from "../../domain/types.js";
 
 function threadIdFor(input: Pick<PlayerWorkflowInvokeInput, "name">): string {
   return String(input.name);
@@ -70,21 +70,18 @@ function lastAssistantText(messages: readonly unknown[]): string {
   return "";
 }
 
+/** Plain-text decision (avoids response_format / structured output — many OpenAI-compatible APIs reject it). */
+function parseCooperationFromDecisionText(text: string): GameMove {
+  const t = text.trim().toLowerCase();
+  const hasC = /\bcooperate\b/.test(t);
+  const hasD = /\bdefect\b/.test(t);
+  if (hasD && !hasC) return "defect";
+  if (hasC && !hasD) return "cooperate";
+  return "cooperate";
+}
+
 function buildChatGraph(strategyPrompt: string) {
   const modelWithoutTools = createOpenAiCompatibleChatLlm();
-
-  const DecisionSchema = z
-    .object({
-      move: z
-        .enum(["cooperate", "defect"])
-        .describe("Your simultaneous move in this round's decision phase."),
-    })
-    .describe("Prisoner dilemma decision for the current round.");
-
-  const decisionModel = modelWithoutTools.withStructuredOutput(DecisionSchema, {
-    name: "PrisonerDecision",
-    strict: true,
-  });
 
   const checkpointer = new MemorySaver();
 
@@ -137,7 +134,7 @@ function buildChatGraph(strategyPrompt: string) {
     .addNode(
       "decisionNode",
       async (state: typeof PlayerStateAnnotation.State) => {
-        const result = await decisionModel.invoke(
+        const response = await modelWithoutTools.invoke(
           buildDecisionPhaseLlmMessages({
             strategyPrompt,
             round: state.round,
@@ -145,8 +142,14 @@ function buildChatGraph(strategyPrompt: string) {
             threadMessages: state.messages,
           }),
         );
+        const text =
+          typeof response.content === "string"
+            ? response.content
+            : lastAssistantText([response]);
+        const move = parseCooperationFromDecisionText(text);
         return {
-          lastDecision: result.move,
+          lastDecision: move,
+          messages: [response],
         };
       },
     )
@@ -186,7 +189,7 @@ export class LangGraphPlayerWorkflow implements PlayerWorkflow {
       }
       case "decision": {
         const gamePhase = toGamePhase(input.phase);
-        await this.chatGraph.invoke(
+        const result = await this.chatGraph.invoke(
           { phase: gamePhase },
           {
             configurable: {
@@ -194,7 +197,10 @@ export class LangGraphPlayerWorkflow implements PlayerWorkflow {
             },
           },
         );
-        return { phase: "decision", cooperation: "cooperate" };
+        const move = result.lastDecision;
+        const cooperation =
+          move === "defect" || move === "cooperate" ? move : "cooperate";
+        return { phase: "decision", cooperation };
       }
       case "reveal": {
         const gamePhase = toGamePhase(input.phase);

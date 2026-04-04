@@ -68,7 +68,7 @@ export function buildDecisionPhaseLlmMessages(options: {
   return [
     new SystemMessage(buildSystemPreamble(options.strategyPrompt)),
     new SystemMessage(
-      `Round ${options.round}. Decision phase — choose cooperate or defect for this round.`,
+      `Round ${options.round}. Decision phase — choose cooperate or defect for this round. Reply with a single word only: cooperate or defect.`,
     ),
     ...historicalMessagesForPrompt(options.historicalMessages),
     ...options.threadMessages,
