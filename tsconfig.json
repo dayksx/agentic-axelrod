@@ -1,4 +1,4 @@
 {
   "files": [],
-  "references": [{ "path": "./ai" }, { "path": "./game" }]
+  "references": [{ "path": "./ai" }, { "path": "./game" }, { "path": "./wallet" }]
 }

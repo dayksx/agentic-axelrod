@@ -1,0 +1,49 @@
+{
+  "name": "wallet",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./internal-api": {
+      "types": "./dist/adapters/inbound/sdk/internal-api.d.ts",
+      "import": "./dist/adapters/inbound/sdk/internal-api.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "wallet": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts",
+    "wallet:build": "pnpm run build && node --env-file=.env dist/adapters/inbound/cli/wallet-cli.js",
+    "create-game-master-wallet": "pnpm run wallet -- create-game-master-wallet",
+    "create-game-master-wallet:build": "pnpm run wallet:build -- create-game-master-wallet",
+    "get-game-master-wallet": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts get-game-master-wallet",
+    "get-player-wallets": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts get-player-wallets",
+    "transfer-funds": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts transfer-funds",
+    "collect-tournament-stake": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts collect-tournament-stake",
+    "distribute-tournament-rewards": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts distribute-tournament-rewards"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.6.5",
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "@dynamic-labs-wallet/core": "^0.0.322",
+    "@dynamic-labs-wallet/node-evm": "^0.0.322",
+    "@dynamic-labs/ethereum": "^4.75.0",
+    "@dynamic-labs/sdk-react-core": "^4.75.0",
+    "@metamask/smart-accounts-kit": "^1.0.0",
+    "viem": "^2.47.10"
+  }
+}
