@@ -45,19 +45,30 @@ Add **dynamic wallets** for agents, funded by the Game Master on **Ethereum Sepo
 
 Each player gets an **ENS subdomain** (e.g. `c3po.axelrodtournament.eth`).
 
-### Step 7 — Series v1 (Multi-Tournament + Survivor Logic)
+### Step 7 — Game Master HTTP API (Express)
+
+Expose the Game Master as an **Express server** so the **UI** (and other clients) can start tournaments without the CLI:
+
+- **Run**: `pnpm --filter game gm-server` (default `http://127.0.0.1:3200`; configure `GM_HTTP_PORT` / `GM_HTTP_HOST` in `game/.env`)
+- **Start a tournament**: `POST /tournaments/runs` with **`Content-Type: application/json`** and the **full tournament config in the body** (same shape as the CLI file: `players` × 6, optional `totalRounds`, `arenasPerRound`, `announceMaxChars`, per-player `rosterRole` for series)
+- **Poll**: `GET /tournaments/runs/:jobId` for `pending` → `running` → `completed` / `failed` and final `scoresByPlayer`
+- **Health**: `GET /health`
+
+The CLI tournament runner can remain for local scripts and debugging; the API is the primary integration surface for the frontend.
+
+### Step 8 — Series v1 (Multi-Tournament + Survivor Logic)
 
 Tournaments now run in a series:
 
-- **Tournament 1**: provide JSON via CLI with 6 strategy prompts + player names
-- **Tournaments 2+**: provide JSON via CLI with 3 new strategy prompts + player names — top 3 survivors from the previous tournament carry forward
+- **Tournament 1**: provide config via **HTTP API** (JSON body) or CLI — 6 strategy prompts + player names
+- **Tournaments 2+**: 3 new strategy prompts + player names — top 3 survivors from the previous tournament carry forward (config still hand-authored or later loaded from DB)
 - Smart wallet creation, ENS subdomain assignment, and funding logic becomes conditional on whether it's tournament 1 or a continuation
 
 ---
 
 ## Frontend (Parallel Track)
 
-Implemented up to Step 7, but without onchain features (wallets, transactions, ENS subdomains)
+Implemented up to Step 8, but without onchain features (wallets, transactions, ENS subdomains). The UI should call the **Step 7** Game Master API to start tournaments and poll for results.
 
 ---
 
@@ -86,4 +97,7 @@ These are not fully scoped yet — pick up only if core track is ahead of schedu
 | 4    | Tournament v2 + Announcements |      ✅      |    ✗     |                       |
 | 5    | Tournament v3 + Wallets       |      ✅      |    ✅    |                       |
 | 6    | Tournament v4 + ENS           |      ✅      |    ✅    |                       |
-| 7    | Series v1 + Survivor logic    |      ✅      |    ✅    |                       |
+| 7    | Game Master HTTP API (Express)|      ✅      |    ✗\*   |                       |
+| 8    | Series v1 + Survivor logic    |      ✅      |    ✅    |                       |
+
+\*Step 7 API reuses existing GM + DB writes when Supabase env is set; no new on-chain work in that step alone.
