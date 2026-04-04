@@ -1,66 +1,28 @@
 /**
- * One Express app per {@link Player}. Entry: `POST /message/send`.
+ * One Express app per {@link Player}.
+ * - `POST /message/send` — phases (load, chat, …)
+ * - `GET /player` — current name, domain, strategy (read-only snapshot)
  */
 
 import express, { type Request, type Response } from "express";
-import type { A2aMessageSendUrlOptions, RevealRoundDocument, WorkflowPhase } from "../../domain/types.js";
-import { WORKFLOW_PHASES } from "../../domain/types.js";
+import type {
+  A2aMessageSendUrlOptions,
+  ArenaAnnouncement,
+  EnsName,
+} from "../../domain/types.js";
 import type { Player } from "../../domain/player.js";
+import { parseMessageSendBody } from "./message-send.schema.js";
 
-/** Optional spellings mapped to {@link WorkflowPhase} before invoke. */
-const WORKFLOW_PHASE_ALIASES: Readonly<Record<string, WorkflowPhase>> = {
-  decide: "decision",
-  discussion: "chat",
-  game_end: "end",
-};
-
-function resolveWorkflowPhase(raw: unknown): WorkflowPhase | undefined {
-  if (typeof raw !== "string") return undefined;
-  const s = raw.trim().toLowerCase();
-  if ((WORKFLOW_PHASES as readonly string[]).includes(s)) {
-    return s as WorkflowPhase;
-  }
-  return WORKFLOW_PHASE_ALIASES[s];
-}
-
-function workflowPhaseErrorText(): string {
-  const canonical = WORKFLOW_PHASES.join(", ");
-  const aliasHint = Object.entries(WORKFLOW_PHASE_ALIASES)
-    .map(([alias, phase]) => `${alias}→${phase}`)
-    .join(", ");
-  return `body.phase must be one of: ${canonical}. Accepted aliases: ${aliasHint}.`;
-}
-
-function jsonError(res: Response, status: number, error: string): void {
-  res.status(status).json({ error });
-}
-
-function isCooperation(v: unknown): v is RevealRoundDocument["yourMove"] {
-  return v === "cooperate" || v === "defect";
-}
-
-function parseRevealRoundDocument(body: unknown): RevealRoundDocument | undefined {
-  if (body === null || typeof body !== "object") return undefined;
-  const b = body as Record<string, unknown>;
-  const raw =
-    b.reveal !== undefined && typeof b.reveal === "object" && b.reveal !== null
-      ? (b.reveal as Record<string, unknown>)
-      : b;
-  const round = raw.round;
-  const yourMove = raw.yourMove;
-  const adversaryMove = raw.adversaryMove;
-  const yourScore = raw.yourScore;
-  const adversaryScore = raw.adversaryScore;
-  if (typeof round !== "number" || !Number.isFinite(round)) return undefined;
-  if (!isCooperation(yourMove) || !isCooperation(adversaryMove)) return undefined;
-  if (typeof yourScore !== "number" || !Number.isFinite(yourScore)) return undefined;
-  if (typeof adversaryScore !== "number" || !Number.isFinite(adversaryScore)) return undefined;
-  return { round, yourMove, adversaryMove, yourScore, adversaryScore };
+function jsonError(
+  res: Response,
+  status: number,
+  payload: { error: string; issues?: unknown },
+): void {
+  res.status(status).json(payload);
 }
 
 export function a2aMessageSendUrl(options: A2aMessageSendUrlOptions): string {
   const protocol = options.protocol ?? "http";
-  const name = String(options.ensName);
   return `${protocol}://${options.hostForClient}:${options.port}/message/send`;
 }
 
@@ -68,49 +30,97 @@ export function createPlayerHttpApp(player: Player): express.Express {
   const app = express();
   app.use(express.json());
 
+  app.get("/player", (_req: Request, res: Response) => {
+    res.json({
+      name: player.name,
+      domain: player.domain,
+      strategy: player.strategy,
+    });
+  });
+
   app.post("/message/send", async (req: Request, res: Response) => {
-    const phase = resolveWorkflowPhase(req.body?.phase);
-    if (phase === undefined) {
-      jsonError(res, 400, workflowPhaseErrorText());
+    const parsed = parseMessageSendBody(req.body);
+    if (!parsed.ok) {
+      jsonError(res, parsed.status, {
+        error: parsed.error,
+        ...(parsed.issues !== undefined ? { issues: parsed.issues } : {}),
+      });
       return;
     }
 
     try {
-      if (phase === "reveal") {
-        const reveal = parseRevealRoundDocument(req.body);
-        if (reveal === undefined) {
-          jsonError(
-            res,
-            400,
-            'reveal phase requires round outcome: { "reveal": { "round", "yourMove", "adversaryMove", "yourScore", "adversaryScore" } } (or same fields at top level)',
-          );
+      const body = parsed.body;
+      switch (body.phase) {
+        case "load": {
+          const result = await player.invoke("load", {
+            playerConfig: {
+              name: body.name as EnsName,
+              domain: body.domain,
+              strategy: body.strategy,
+            },
+          });
+          res.json(result);
           return;
         }
-        const result = await player.invoke(phase, { reveal });
-        res.json(result);
-        return;
+        case "reveal": {
+          const result = await player.invoke("reveal", { reveal: body.reveal });
+          res.json(result);
+          return;
+        }
+        case "announce": {
+          const pubs = (body.arenaAnnouncements ??
+            []) as readonly ArenaAnnouncement[];
+          const result = await player.invoke("announce", {
+            tournamentId: body.tournamentId,
+            roundNumber: body.roundNumber,
+            arenaId: body.arenaId,
+            arenaAnnouncements: pubs,
+          });
+          res.json(result);
+          return;
+        }
+        case "decision": {
+          const result =
+            body.arenaAnnouncements !== undefined
+              ? await player.invoke("decision", {
+                  arenaAnnouncements:
+                    body.arenaAnnouncements as readonly ArenaAnnouncement[],
+                })
+              : await player.invoke("decision", {});
+          res.json(result);
+          return;
+        }
+        case "end": {
+          const result = await player.invoke("end", {});
+          res.json(result);
+          return;
+        }
+        case "chat": {
+          const result =
+            body.arenaAnnouncements !== undefined
+              ? await player.invoke("chat", {
+                  message: body.message,
+                  iteration: body.iteration ?? 1,
+                  arenaAnnouncements:
+                    body.arenaAnnouncements as readonly ArenaAnnouncement[],
+                })
+              : await player.invoke("chat", {
+                  message: body.message,
+                  iteration: body.iteration ?? 1,
+                });
+          res.json(result);
+          return;
+        }
+        default: {
+          const _exhaustive: never = body;
+          void _exhaustive;
+          jsonError(res, 500, { error: "unreachable phase" });
+        }
       }
-
-      if (phase === "decision" || phase === "end") {
-        const result = await player.invoke(phase, {});
-        res.json(result);
-        return;
-      }
-
-      const iterationRaw = req.body?.iteration;
-      const iteration =
-        typeof iterationRaw === "number" && Number.isFinite(iterationRaw)
-          ? iterationRaw
-          : undefined;
-      const result = await player.invoke(phase, {
-        message: req.body?.message,
-        ...(iteration !== undefined ? { iteration } : {}),
-      });
-      res.json(result);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "unknown error";
       const status = /required/.test(msg) ? 400 : 500;
-      jsonError(res, status, msg);
+      jsonError(res, status, { error: msg });
     }
   });
 

@@ -1,4 +1,9 @@
 packages:
   - "ai"
   - "game"
+  - "ui"
   - "wallet"
+
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver

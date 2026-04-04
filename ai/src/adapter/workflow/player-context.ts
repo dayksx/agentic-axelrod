@@ -4,6 +4,7 @@
 
 import type { BaseMessage } from "@langchain/core/messages";
 import { SystemMessage } from "@langchain/core/messages";
+import type { ArenaAnnouncement } from "../../domain/types.js";
 
 /** Rules + strategy block prepended to every chat and decision call. */
 export function buildSystemPreamble(strategyPrompt: string): string {
@@ -13,6 +14,7 @@ export function buildSystemPreamble(strategyPrompt: string): string {
     "Decision: choose simultaneously; moves are only cooperate or defect.",
     "Payoffs (you, them): (C,C)→(3,3) (D,D)→(1,1) (C,D)→(0,5) (D,C)→(5,0). So 5>3>1>0; mutual (3,3) beats mutual (1,1).",
     "In decision phase output exactly one action: cooperate or defect.",
+    "Announcements: before each match, in your arena, you post one public line for that pairing. The GM shows every arena's announcements to all players until the tournament ends.",
     "",
     "Strategy and behavior (follow this in every reply):",
     strategyPrompt,
@@ -21,6 +23,21 @@ export function buildSystemPreamble(strategyPrompt: string): string {
 
 export const CHAT_PHASE_INSTRUCTION =
   "Chat phase: talk with your adversary (coordinate, influence, persuade, or bluff) to maximize your points under the payoffs in the rules.";
+
+export function formatArenaAnnouncementsForPrompt(
+  rows: readonly ArenaAnnouncement[],
+): string {
+  if (rows.length === 0) {
+    return "Arena announcements (per match): (none yet).";
+  }
+  return [
+    "Arena announcements (each row is one player's line for a specific match in a round; all players see this combined list until the tournament ends):",
+    ...rows.map(
+      (r) =>
+        `  [id ${r.id}] round ${r.roundNumber} arena ${r.arenaId} — ${r.agentName}: ${r.message}`,
+    ),
+  ].join("\n");
+}
 
 /** Prior rounds' chat/decision transcripts, chronologically, for LLM context. */
 export function historicalMessagesForPrompt(
@@ -49,10 +66,18 @@ export function buildChatPhaseLlmMessages(options: {
   readonly round: number;
   readonly historicalMessages: Readonly<Record<number, BaseMessage[]>>;
   readonly threadMessages: readonly BaseMessage[];
+  readonly arenaAnnouncements?: readonly ArenaAnnouncement[];
 }): BaseMessage[] {
   return [
     new SystemMessage(buildSystemPreamble(options.strategyPrompt)),
     new SystemMessage(`Round ${options.round}.`),
+    ...(options.arenaAnnouncements !== undefined
+      ? [
+          new SystemMessage(
+            formatArenaAnnouncementsForPrompt(options.arenaAnnouncements),
+          ),
+        ]
+      : []),
     new SystemMessage(CHAT_PHASE_INSTRUCTION),
     ...historicalMessagesForPrompt(options.historicalMessages),
     ...options.threadMessages,
@@ -64,11 +89,44 @@ export function buildDecisionPhaseLlmMessages(options: {
   readonly round: number;
   readonly historicalMessages: Readonly<Record<number, BaseMessage[]>>;
   readonly threadMessages: readonly BaseMessage[];
+  readonly arenaAnnouncements?: readonly ArenaAnnouncement[];
 }): BaseMessage[] {
   return [
     new SystemMessage(buildSystemPreamble(options.strategyPrompt)),
     new SystemMessage(
-      `Round ${options.round}. Decision phase — choose cooperate or defect for this round.`,
+      `Round ${options.round}. Decision phase — choose cooperate or defect for this round. Reply with a single word only: cooperate or defect.`,
+    ),
+    ...(options.arenaAnnouncements !== undefined
+      ? [
+          new SystemMessage(
+            formatArenaAnnouncementsForPrompt(options.arenaAnnouncements),
+          ),
+        ]
+      : []),
+    ...historicalMessagesForPrompt(options.historicalMessages),
+    ...options.threadMessages,
+  ];
+}
+
+export function buildAnnouncePhaseLlmMessages(options: {
+  readonly strategyPrompt: string;
+  readonly round: number;
+  readonly tournamentId: number;
+  readonly arenaId: number;
+  readonly historicalMessages: Readonly<Record<number, BaseMessage[]>>;
+  readonly threadMessages: readonly BaseMessage[];
+  readonly arenaAnnouncements: readonly ArenaAnnouncement[];
+}): BaseMessage[] {
+  return [
+    new SystemMessage(buildSystemPreamble(options.strategyPrompt)),
+    new SystemMessage(
+      `Tournament id ${options.tournamentId}. Round ${options.round}, arena ${options.arenaId} — announcement phase for this match only.`,
+    ),
+    new SystemMessage(
+      formatArenaAnnouncementsForPrompt(options.arenaAnnouncements),
+    ),
+    new SystemMessage(
+      "Write one short public announcement (one or two sentences) for this match. Other players will see it in the shared arena-announcement list until the tournament ends. No private chat with your opponent yet.",
     ),
     ...historicalMessagesForPrompt(options.historicalMessages),
     ...options.threadMessages,

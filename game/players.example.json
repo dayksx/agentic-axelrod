@@ -1,0 +1,35 @@
+{
+  "notes": "Top 3 winners: copy name, strategyPrompt, and url into the next tournament so each stays on the same agent process. New players can omit url and use AGENT_SLOT_*_URL from .env for their roster indices.",
+  "players": [
+    {
+      "name": "alice.eth",
+      "url": "http://127.0.0.1:3100",
+      "strategyPrompt": "Play tit-for-tat: cooperate first, then copy the opponent's previous move."
+    },
+    {
+      "name": "bob.eth",
+      "url": "http://127.0.0.1:3101",
+      "strategyPrompt": "Always cooperate unless they defected twice in a row; then defect once."
+    },
+    {
+      "name": "carol.eth",
+      "url": "http://127.0.0.1:3102",
+      "strategyPrompt": "Grim trigger: cooperate until the first defect, then always defect."
+    },
+    {
+      "name": "dave.eth",
+      "url": "http://127.0.0.1:3103",
+      "strategyPrompt": "Alternate cooperate and defect regardless of history."
+    },
+    {
+      "name": "erin.eth",
+      "url": "http://127.0.0.1:3104",
+      "strategyPrompt": "Randomly choose cooperate or defect with equal probability each round."
+    },
+    {
+      "name": "frank.eth",
+      "url": "http://127.0.0.1:3105",
+      "strategyPrompt": "Always defect."
+    }
+  ]
+}

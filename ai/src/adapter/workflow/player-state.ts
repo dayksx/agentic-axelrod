@@ -4,7 +4,11 @@
 
 import type { BaseMessage } from "@langchain/core/messages";
 import { Annotation, messagesStateReducer } from "@langchain/langgraph";
-import type { GameMove, GamePhase } from "../../domain/types.js";
+import type {
+  ArenaAnnouncement,
+  GameMove,
+  GamePhase,
+} from "../../domain/types.js";
 
 export type { GameMove, GamePhase };
 
@@ -40,6 +44,16 @@ export const PlayerStateAnnotation = Annotation.Root({
     reducer: (prev, next) => (next !== undefined ? next : prev),
     default: () => 0,
   }),
+  /** Tournament id from GM (for prompts; matches future `announcements.tournament_id`). */
+  tournamentId: Annotation<number>({
+    reducer: (prev, next) => (next !== undefined ? next : prev),
+    default: () => 0,
+  }),
+  /** Arena (1v1 match slot) within the round — for announce-phase prompts. */
+  arenaId: Annotation<number>({
+    reducer: (prev, next) => (next !== undefined ? next : prev),
+    default: () => 0,
+  }),
   chatMessageCount: Annotation<number>({
     reducer: (prev, next) => (next !== undefined ? next : prev),
     default: () => 0,
@@ -56,5 +70,15 @@ export const PlayerStateAnnotation = Annotation.Root({
   sharedMatchContext: Annotation<string>({
     reducer: (prev, next) => (next !== undefined ? next : prev),
     default: () => "",
+  }),
+  /** Set by decision phase (plain-text parse; no JSON schema / response_format on the LLM). */
+  lastDecision: Annotation<GameMove | undefined>({
+    reducer: (prev, next) => (next !== undefined ? next : prev),
+    default: () => undefined,
+  }),
+  /** Full snapshot from GM; replaced when the client sends `arenaAnnouncements`. Cleared on `end`. */
+  arenaAnnouncements: Annotation<ArenaAnnouncement[]>({
+    reducer: (prev, next) => (next !== undefined ? [...next] : prev),
+    default: () => [],
   }),
 });
