@@ -9,6 +9,7 @@ import type {
   ChatMessageRow,
   ScoreRow,
   AnnouncementRow,
+  TournamentTransactionRow,
 } from "@/types/models";
 
 export async function fetchTournamentList(): Promise<TournamentSummary[]> {
@@ -68,7 +69,7 @@ export async function fetchTournamentList(): Promise<TournamentSummary[]> {
 export async function fetchTournamentData(
   tournamentId: number,
 ): Promise<TournamentData> {
-  const [tournamentRes, taRes, matchesRes, scoresRes, announcementsRes] =
+  const [tournamentRes, taRes, matchesRes, scoresRes, announcementsRes, txRes] =
     await Promise.all([
       supabase.from("tournaments").select("*").eq("id", tournamentId).single(),
       supabase
@@ -92,6 +93,11 @@ export async function fetchTournamentData(
         .select("*")
         .eq("tournament_id", tournamentId)
         .order("round_number"),
+      supabase
+        .from("tournament_transactions")
+        .select("*")
+        .eq("tournament_id", tournamentId)
+        .order("created_at"),
     ]);
 
   if (tournamentRes.error) throw tournamentRes.error;
@@ -99,12 +105,14 @@ export async function fetchTournamentData(
   if (matchesRes.error) throw matchesRes.error;
   if (scoresRes.error) throw scoresRes.error;
   if (announcementsRes.error) throw announcementsRes.error;
+  if (txRes.error) throw txRes.error;
 
   const tournament = tournamentRes.data as TournamentRow;
   const tournamentAgents = taRes.data as TournamentAgentRow[];
   const matches = matchesRes.data as MatchRow[];
   const scores = scoresRes.data as ScoreRow[];
   const announcements = announcementsRes.data as AnnouncementRow[];
+  const transactions = txRes.data as TournamentTransactionRow[];
 
   // Fetch agents for this tournament
   const agentIds = tournamentAgents.map((ta) => ta.agent_id);
@@ -136,5 +144,6 @@ export async function fetchTournamentData(
     chatMessages,
     scores,
     announcements,
+    transactions,
   };
 }
