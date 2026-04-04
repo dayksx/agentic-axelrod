@@ -9,6 +9,7 @@ export {
 export {
   createGameMasterWallet,
   ensureGameMasterWallet,
+  getGameMasterWallet,
   type CreateGameMasterWalletParams,
   type EnsureGameMasterWalletParams,
   type EnsureGameMasterWalletResult,
@@ -18,6 +19,17 @@ export {
   provisionGameMasterEoa,
   type ProvisionGameMasterEoaParams,
 } from "./create-game-master-wallet/provision-eoa.js";
+export {
+  getPlayerWallets,
+  normalizePlayerName,
+  type GetPlayerWalletsParams,
+  type GetPlayerWalletsResult,
+} from "./player-wallets/index.js";
+export {
+  transferFunds,
+  type TransferFundsParams,
+  type TransferFundsReceipt,
+} from "./transfer-funds/index.js";
 
 export {
   delegateFundsToGameMaster,

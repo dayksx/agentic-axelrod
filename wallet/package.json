@@ -19,12 +19,15 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",
-    "wallet": "tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts",
+    "wallet": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts",
     "wallet:build": "pnpm run build && node --env-file=.env dist/adapters/inbound/cli/wallet-cli.js",
     "create-players-wallets": "pnpm run wallet -- create-agents-wallets",
     "create-players-wallets:build": "pnpm run wallet:build -- create-agents-wallets",
     "create-game-master-wallet": "pnpm run wallet -- create-game-master-wallet",
-    "create-game-master-wallet:build": "pnpm run wallet:build -- create-game-master-wallet"
+    "create-game-master-wallet:build": "pnpm run wallet:build -- create-game-master-wallet",
+    "get-game-master-wallet": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts get-game-master-wallet",
+    "get-player-wallets": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts get-player-wallets",
+    "transfer-funds": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts transfer-funds"
   },
   "keywords": [],
   "author": "",

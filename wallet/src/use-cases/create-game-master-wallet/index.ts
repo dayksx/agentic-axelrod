@@ -6,6 +6,15 @@ import {
 
 export type { EnsureGameMasterWalletParams, EnsureGameMasterWalletResult };
 export { ensureGameMasterWallet };
+
+/**
+ * Load or create the persisted game master wallet (alias of {@link ensureGameMasterWallet}).
+ */
+export async function getGameMasterWallet(
+  params: EnsureGameMasterWalletParams,
+): Promise<EnsureGameMasterWalletResult> {
+  return ensureGameMasterWallet(params);
+}
 export {
   provisionGameMasterEoa,
   type ProvisionGameMasterEoaParams,
