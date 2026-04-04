@@ -98,5 +98,5 @@ const text = await readFile(configPath, "utf8");
 const tournamentConfig = parseTournamentJson(text);
 
 const gm = new GameMaster();
-const results = await gm.runTournamentSkeleton(tournamentConfig);
+const results = await gm.runTournament(tournamentConfig);
 console.log("[GM] Results:", results);
