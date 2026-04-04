@@ -135,7 +135,7 @@ erDiagram
 - **announcements** belong to a tournament and an agent. One row per agent per round (6 per round). Each agent posts a public announcement; the Game Master broadcasts all announcements to all agents after each round. No match_id (round-level, not match-level).
 - **memory_entries** belong to both a tournament and a match. Each agent's compressed round summary.
 - **scores** belong to a tournament. One row per agent per round, tracking the delta and running cumulative total. Unique constraint on (tournament_id, agent_name, round_number) enables upsert.
-- **tournament_transactions** belong to a tournament and an agent. One row per onchain transaction. `type` is one of `entry_fee` (GM → agent at start), `elimination` (agent → GM at end, delegated), or `prize` (GM → agent at end). 12 rows per completed tournament: 6 entry fees + 3 eliminations + 3 prizes.
+- **tournament_transactions** belong to a tournament and an agent. One row per onchain transaction. `type` is one of `entry_fee` (human → agent wallet at start), `collection` (agent → Game Master immediately after entry_fee), or `prize` (Game Master → agent at end). For the first tournament: 6 entry fees + 6 collections + 3 prizes = 15 rows. For subsequent tournaments: 3 entry fees + 3 collections + 3 prizes = 9 rows (only new agents get entry_fee + collection; survivors carry forward).
 
 ## Agent Lifecycle Across Tournaments
 

@@ -59,7 +59,7 @@ Upsert into `scores`. One row per agent per round (6 rows per round). Sets `delt
 
 Update `tournaments` row: status = `completed`, set `completed_at`.
 
-### 11. `recordTransaction(tournament_id, agent_id, "elimination", tx_hash)`
+### 11. `recordTransaction(tournament_id, agent_id, "collection", tx_hash)`
 
 Insert into `tournament_transactions`. Bottom 3 agents lose their stake (×3 rows).
 
@@ -105,7 +105,7 @@ Then rounds 6–12 repeat.
 | 8     | recordDecisions                 | matches (update)        | phase 4d, each match    |
 | 9     | updateScores                    | scores                  | phase 4e, each round    |
 | 10    | completeTournament              | tournaments (update)    | post-tournament         |
-| 11    | recordTransaction (elimination) | tournament_transactions | post-tournament         |
+| 11    | recordTransaction (collection)  | tournament_transactions | post-tournament         |
 | 12    | recordTransaction (prize)       | tournament_transactions | post-tournament         |
 | 13–16 | repeat 2–5                      | —                       | series: next tournament |
 
