@@ -66,11 +66,11 @@ Temperature is fixed at `0` in code.
 
 LangGraph / LangChain picks up standard LangSmith environment variables. To send traces to [LangSmith](https://smith.langchain.com/), set in `.env`:
 
-| Variable | Role |
-|----------|------|
-| `LANGCHAIN_TRACING_V2` | Set to `true` to enable tracing. |
-| `LANGSMITH_API_KEY` | API key from LangSmith settings. |
-| `LANGSMITH_PROJECT` | Project name (must match or create a project in LangSmith). |
+| Variable               | Role                                                        |
+| ---------------------- | ----------------------------------------------------------- |
+| `LANGCHAIN_TRACING_V2` | Set to `true` to enable tracing.                            |
+| `LANGSMITH_API_KEY`    | API key from LangSmith settings.                            |
+| `LANGSMITH_PROJECT`    | Project name (must match or create a project in LangSmith). |
 
 Optional: `LANGSMITH_ENDPOINT` if you use a custom or self-hosted endpoint (see `.env.example`).
 
@@ -123,14 +123,33 @@ node dist/main.js -n 2 --host 127.0.0.1 --port-base 4000
 
 ## After launch
 
-The process logs each agent’s **message/send** URL. Example **chat** request (replace path with the printed ENS segment):
+The process logs each agent’s **message/send** URL. Bodies are validated with a **Zod discriminated union** on `phase` (typed shapes, like LangGraph-style structured inputs) — see `src/adapter/http/message-send.schema.ts`. Unknown keys are rejected (`.strict()` per variant). Invalid bodies return **400** with `error` and optional `issues` (Zod issue list).
+
+Example **chat** (each player has its own port from the printed URL; default first port is `3100`):
 
 ```bash
 curl -sS -X POST "http://127.0.0.1:3100/message/send" \
   -H "Content-Type: application/json" \
-  -d '{"phase":"chat","message":"Hello"}'
+  -d '{"phase":"chat","message":"Hello","iteration":1}'
 ```
 
-Other workflow phases use `body.phase` (for example `decision` for the decision step; `reveal` expects a round outcome in the body — see `src/adapter/http/agent-server.ts`).
+**decision** / **end**: `{"phase":"decision"}` or `{"phase":"end"}` only (no extra fields).
+
+**reveal** — preferred shape:
+
+```json
+{
+  "phase": "reveal",
+  "reveal": {
+    "round": 1,
+    "yourMove": "cooperate",
+    "adversaryMove": "defect",
+    "yourScore": 0,
+    "adversaryScore": 5
+  }
+}
+```
+
+Legacy: the same five fields may be sent at the top level next to `"phase":"reveal"`; they are normalized before validation.
 
 Stop the fleet with **Ctrl+C** (SIGINT) or `SIGTERM`.
