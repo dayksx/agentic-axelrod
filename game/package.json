@@ -21,6 +21,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@supabase/supabase-js": "^2.101.1",
     "ai": "workspace:*",
     "dotenv": "^17.4.0"
   },

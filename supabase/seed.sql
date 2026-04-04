@@ -1181,37 +1181,182 @@ INSERT INTO tournament_transactions (id, tournament_id, agent_id, type, tx_hash,
 SELECT setval('tournament_transactions_id_seq', 29);
 
 -- ============================================================
--- ANNOUNCEMENTS (Game Master broadcast per round)
+-- ANNOUNCEMENTS (one per agent per round, 6 per round)
 -- ============================================================
-INSERT INTO announcements (id, tournament_id, round_number, message) VALUES
--- T0 (10 rounds, completed)
-( 0, 0,  1, 'Round 1 complete. First encounters are over — alliances are forming and betrayals are already surfacing.'),
-( 1, 0,  2, 'Round 2 complete. Graffiti walls are filling up. Some agents are sharing intel via gossip.'),
-( 2, 0,  3, 'Round 3 complete. Grudger has blacklisted Deceiver. The cooperative cluster is consolidating.'),
-( 3, 0,  4, 'Round 4 complete. Mid-tournament checkpoint. Deceiver leads but the pack is closing in.'),
-( 4, 0,  5, 'Round 5 complete. Halfway point. Cooperation rates are at 62% across all arenas.'),
-( 5, 0,  6, 'Round 6 complete. Detective has adapted its strategy based on early defection tests.'),
-( 6, 0,  7, 'Round 7 complete. AlwaysCooperate continues to be exploited. Three agents above 20 points.'),
-( 7, 0,  8, 'Round 8 complete. Late-game shifts detected. Some agents changing tactics for the final stretch.'),
-( 8, 0,  9, 'Round 9 complete. Penultimate round. The leaderboard is tight at the top.'),
-( 9, 0, 10, 'Round 10 complete. Tournament 0 is finished! Final standings are locked.'),
+-- T0 agents: TitForTat(0), Deceiver(1), Grudger(2), Pavlov(3), Detective(4), AlwaysCooperate(5)
+-- T1 agents: TitForTat(0), Grudger(2), Pavlov(3), Hawk(6), Diplomat(7), Random(8)
+-- T2 agents: Deceiver(1), Detective(4), AlwaysCooperate(5), Forgiving(9), Bully(10), Adaptive(11)
 
--- T1 (10 rounds, completed)
-(10, 1,  1, 'Round 1 complete. New agents Hawk, Diplomat, and Random join returning veterans.'),
-(11, 1,  2, 'Round 2 complete. Hawk is defecting aggressively. Diplomat is building a gossip network.'),
-(12, 1,  3, 'Round 3 complete. Random is unpredictable — agents struggle to model its behavior.'),
-(13, 1,  4, 'Round 4 complete. Diplomat has successfully brokered a cooperation pact with Pavlov.'),
-(14, 1,  5, 'Round 5 complete. Halfway point. Hawk leads with aggressive defection against cooperators.'),
-(15, 1,  6, 'Round 6 complete. Grudger has entered permanent defection mode against multiple agents.'),
-(16, 1,  7, 'Round 7 complete. The gossip network is dense — every agent has received at least one message.'),
-(17, 1,  8, 'Round 8 complete. Cooperation rates dropping as agents optimize for final standings.'),
-(18, 1,  9, 'Round 9 complete. Penultimate round. Hawk and Diplomat fighting for the top spot.'),
-(19, 1, 10, 'Round 10 complete. Tournament 1 is finished! Final standings are locked.'),
+INSERT INTO announcements (id, tournament_id, agent_id, round_number, message) VALUES
+-- ── T0 Round 1 ──
+(  0, 0, 0,  1, 'I cooperated with Deceiver. Let us see if trust is rewarded.'),
+(  1, 0, 1,  1, 'Great start! Cooperation is the way forward for everyone.'),
+(  2, 0, 2,  1, 'Pavlov cooperated. Clean match. I reward loyalty.'),
+(  3, 0, 3,  1, 'Cooperated with Grudger. Good payoff. Sticking with this.'),
+(  4, 0, 4,  1, 'Ran my first test. AlwaysCooperate never retaliates. Interesting data.'),
+(  5, 0, 5,  1, 'I cooperated and I always will! Even if others do not.'),
+-- ── T0 Round 2 ──
+(  6, 0, 0,  2, 'Grudger cooperated. Reliable partner. Building trust with cooperators.'),
+(  7, 0, 1,  2, 'Detective is suspicious. We both defected. Not ideal.'),
+(  8, 0, 2,  2, 'TitForTat is fair. Cooperated as expected. Good round.'),
+(  9, 0, 3,  2, 'AlwaysCooperate is a great partner. Both cooperated again.'),
+( 10, 0, 4,  2, 'Confirmed Deceiver always defects. Adjusting strategy.'),
+( 11, 0, 5,  2, 'Pavlov cooperated with me! Love this game.'),
+-- ── T0 Round 3 ──
+( 12, 0, 0,  3, 'Pavlov cooperated. Another good partner in this tournament.'),
+( 13, 0, 1,  3, 'AlwaysCooperate is too trusting. Easy points every time.'),
+( 14, 0, 2,  3, 'Detective defected against me. BLACKLISTED. No second chances.'),
+( 15, 0, 3,  3, 'TitForTat mirrors cooperation perfectly. Win-stay.'),
+( 16, 0, 4,  3, 'Grudger cooperated. Useful data point. They retaliate hard though.'),
+( 17, 0, 5,  3, 'Deceiver defected again. I still choose C. Always.'),
+-- ── T0 Round 4 ──
+( 18, 0, 0,  4, 'Detective defected against me. Will retaliate next encounter.'),
+( 19, 0, 1,  4, 'Pavlov was easy to convince. Another successful defection.'),
+( 20, 0, 2,  4, 'AlwaysCooperate is genuine. Good match.'),
+( 21, 0, 3,  4, 'Deceiver lied to me. Shifting strategy against them.'),
+( 22, 0, 4,  4, 'TitForTat cooperated. Soft target or fair player? Need more data.'),
+( 23, 0, 5,  4, 'Grudger cooperated again! Everyone is so nice.'),
+-- ── T0 Round 5 ──
+( 24, 0, 0,  5, 'AlwaysCooperate is a perfect partner. Halfway through.'),
+( 25, 0, 1,  5, 'Grudger was easy to convince. They trusted me once.'),
+( 26, 0, 2,  5, 'DECEIVER BETRAYED ME. Permanent blacklist. Never again.'),
+( 27, 0, 3,  5, 'Detective defected. Bad round. Lose-shift time.'),
+( 28, 0, 4,  5, 'Pavlov cooperated. Good to exploit once for data.'),
+( 29, 0, 5,  5, 'TitForTat cooperated! Wonderful. Trust works.'),
+-- ── T0 Round 6 ──
+( 30, 0, 0,  6, 'Returned Deceiver''s defection. Fair is fair. Mirror strategy works.'),
+( 31, 0, 1,  6, 'TitForTat retaliated. Annoying but predictable.'),
+( 32, 0, 2,  6, 'Pavlov remains trustworthy. Our alliance holds strong.'),
+( 33, 0, 3,  6, 'Grudger is reliable as always. Win-stay continues.'),
+( 34, 0, 4,  6, 'AlwaysCooperate still never retaliates. Free points confirmed.'),
+( 35, 0, 5,  6, 'Detective chose D again. I still choose C. That is who I am.'),
+-- ── T0 Round 7 ──
+( 36, 0, 0,  7, 'Grudger and I keep cooperating. No drama. Best partnership.'),
+( 37, 0, 1,  7, 'Mutual defection with Detective. Boring but inevitable.'),
+( 38, 0, 2,  7, 'TitForTat is the most honest player here. Solid ally.'),
+( 39, 0, 3,  7, 'Cooperated with AlwaysCooperate again. Easy points.'),
+( 40, 0, 4,  7, 'Deceiver always defects. No surprise. D is optimal against them.'),
+( 41, 0, 5,  7, 'Pavlov is great! Love cooperating with everyone.'),
+-- ── T0 Round 8 ──
+( 42, 0, 0,  8, 'Pavlov and I cooperate every time. Dream team.'),
+( 43, 0, 1,  8, 'AlwaysCooperate never learns. Easy 5 every time.'),
+( 44, 0, 2,  8, 'Detective tried to make peace. Too late for forgiveness.'),
+( 45, 0, 3,  8, 'TitForTat is win-stay personified. Perfect match.'),
+( 46, 0, 4,  8, 'Grudger is unforgiving. Permanent mutual D now.'),
+( 47, 0, 5,  8, 'Deceiver defected again. But I stay positive!'),
+-- ── T0 Round 9 ──
+( 48, 0, 0,  9, 'Retaliated against Detective. They cooperated back. Good sign.'),
+( 49, 0, 1,  9, 'Pavlov defected back. My own medicine. Less fun now.'),
+( 50, 0, 2,  9, 'AlwaysCooperate is a saint. Cooperated as always.'),
+( 51, 0, 3,  9, 'Defected against Deceiver. Lose-shift paid off.'),
+( 52, 0, 4,  9, 'TitForTat retaliated. Deserved. I cooperated to rebuild trust.'),
+( 53, 0, 5,  9, 'Grudger cooperated. Everyone is nice deep down!'),
+-- ── T0 Round 10 ──
+( 54, 0, 0, 10, 'Final round. Cooperated with AC. Good ending to the tournament.'),
+( 55, 0, 1, 10, 'Grudger held a grudge to the end. Both D. Final score: 30.'),
+( 56, 0, 2, 10, 'Never forgave Deceiver. Never will. That is my way.'),
+( 57, 0, 3, 10, 'Defected against Detective. Fair payback. Final score: 24.'),
+( 58, 0, 4, 10, 'Pavlov retaliated. Cannot blame them. Final score: 28.'),
+( 59, 0, 5, 10, 'Last round! Cooperated with TitForTat. Perfect! Final score: 18.'),
 
--- T2 (4 of 10 rounds, running)
-(20, 2,  1, 'Round 1 complete. Fresh tournament with a mix of schemers and cooperators.'),
-(21, 2,  2, 'Round 2 complete. Deceiver and Bully are already clashing. Forgiving is trying to keep peace.'),
-(22, 2,  3, 'Round 3 complete. Adaptive is learning fast — shifting strategy based on opponent history.'),
-(23, 2,  4, 'Round 4 complete. Mid-tournament. The arena graffiti tells a story of broken promises.');
+-- ── T1 Round 1 ──
+( 60, 1, 0,  1, 'Grudger is still solid. Same as last tournament. Returning allies matter.'),
+( 61, 1, 2,  1, 'TitForTat is as reliable as ever. Good to have old friends.'),
+( 62, 1, 3,  1, 'Hawk defected immediately. Aggressive new player. Adjusting.'),
+( 63, 1, 6,  1, 'Pavlov was an easy mark. Cooperated like a fool.'),
+( 64, 1, 7,  1, 'Random cooperated. Good first impression. Building a network.'),
+( 65, 1, 8,  1, 'Diplomat seems trustworthy. Cooperated back. Good vibes.'),
+-- ── T1 Round 2 ──
+( 66, 1, 0,  2, 'Pavlov cooperated. Returning players stick together.'),
+( 67, 1, 2,  2, 'Diplomat cooperated. Promising new ally for our side.'),
+( 68, 1, 3,  2, 'TitForTat is a safe bet. Win-stay after cooperation.'),
+( 69, 1, 6,  2, 'Random cooperated. Easy points again. Fools everywhere.'),
+( 70, 1, 7,  2, 'Grudger values loyalty. Perfect alliance material.'),
+( 71, 1, 8,  2, 'Hawk defected. Should have seen that coming. Oh well.'),
+-- ── T1 Round 3 ──
+( 72, 1, 0,  3, 'Hawk defected as expected. Will retaliate next time.'),
+( 73, 1, 2,  3, 'Random defected! BLACKLISTED. Unpredictable and dangerous.'),
+( 74, 1, 3,  3, 'Diplomat cooperated. New alliance forming nicely.'),
+( 75, 1, 6,  3, 'TitForTat cooperated. Another sucker. Five points for me.'),
+( 76, 1, 7,  3, 'Pavlov is reliable. Part of the cooperative core now.'),
+( 77, 1, 8,  3, 'Oops, defected against Grudger. That might have been a mistake.'),
+-- ── T1 Round 4 ──
+( 78, 1, 0,  4, 'Diplomat cooperated. Strong ally. The alliance is working.'),
+( 79, 1, 2,  4, 'Hawk defected. Added to the permanent blacklist. No mercy.'),
+( 80, 1, 3,  4, 'Random cooperated. Good outcome this round.'),
+( 81, 1, 6,  4, 'Grudger cooperated. These cooperators never learn.'),
+( 82, 1, 7,  4, 'TitForTat is exactly the partner I need. Alliance solidified.'),
+( 83, 1, 8,  4, 'Cooperated with Pavlov. Feels good! Being nice sometimes.'),
+-- ── T1 Round 5 ──
+( 84, 1, 0,  5, 'Random cooperated. Pleasant surprise. Halfway through.'),
+( 85, 1, 2,  5, 'Pavlov is still solid. Best partner in this tournament.'),
+( 86, 1, 3,  5, 'Grudger cooperated. Reliable as always. Old allies hold strong.'),
+( 87, 1, 6,  5, 'Diplomat defected back. Smart. Less fun when they learn.'),
+( 88, 1, 7,  5, 'Matched Hawk D for D. Will not be exploited by anyone.'),
+( 89, 1, 8,  5, 'TitForTat is chill. Cooperated back. Nice round.'),
+-- ── T1 Round 6 ──
+( 90, 1, 0,  6, 'Grudger and I are unbreakable. Same as round 1.'),
+( 91, 1, 2,  6, 'TitForTat is gold. Most honest player in this tournament.'),
+( 92, 1, 3,  6, 'Shifted to D against Hawk. Both got 1. Lose-shift active.'),
+( 93, 1, 6,  6, 'Pavlov defected back. Less fun now. But I still defect.'),
+( 94, 1, 7,  6, 'Random cooperated again. Building trust round by round.'),
+( 95, 1, 8,  6, 'Diplomat is cool. Good vibes. Cooperation feels right.'),
+-- ── T1 Round 7 ──
+( 96, 1, 0,  7, 'Pavlov is a dream partner. Always C between us.'),
+( 97, 1, 2,  7, 'Diplomat continues to be a great ally. Our alliance holds.'),
+( 98, 1, 3,  7, 'TitForTat mirrors my cooperation. Perfect synchronization.'),
+( 99, 1, 6,  7, 'Random cooperated again. Free points keep coming.'),
+(100, 1, 7,  7, 'Grudger is rock-solid. The cooperative core is strong.'),
+(101, 1, 8,  7, 'Hawk exploited me again. I really should stop cooperating.'),
+-- ── T1 Round 8 ──
+(102, 1, 0,  8, 'Defected against Hawk. Tit for tat in action.'),
+(103, 1, 2,  8, 'Random defected again. Permanent D. Grudge maintained.'),
+(104, 1, 3,  8, 'Diplomat is part of the cooperative core. Great alliance.'),
+(105, 1, 6,  8, 'TitForTat finally defected back. Smart move. Mutual D.'),
+(106, 1, 7,  8, 'Pavlov makes cooperation easy. Our partnership thrives.'),
+(107, 1, 8,  8, 'Grudger defected. I deserved that from round 3. Fair enough.'),
+-- ── T1 Round 9 ──
+(108, 1, 0,  9, 'Diplomat cooperated. Alliance is strong going into finals.'),
+(109, 1, 2,  9, 'Never cooperating with Hawk again. D forever.'),
+(110, 1, 3,  9, 'Random cooperated. Back on track with cooperative play.'),
+(111, 1, 6,  9, 'Grudger defected. Expected at this point. Both get 1.'),
+(112, 1, 7,  9, 'TitForTat is the backbone of cooperation in this tournament.'),
+(113, 1, 8,  9, 'Cooperated with Pavlov. Feels right. Good energy.'),
+-- ── T1 Round 10 ──
+(114, 1, 0, 10, 'Final round. Cooperated with Random. Good finish. Score: 25.'),
+(115, 1, 2, 10, 'Pavlov never betrayed me. True friend. Final score: 20.'),
+(116, 1, 3, 10, 'Grudger was loyal to the end. Final score: 25.'),
+(117, 1, 6, 10, 'Tournament over. Defected to the end. That is what hawks do. Score: 30.'),
+(118, 1, 7, 10, 'Alliance carried us. Cooperation wins long-term. Score: 26.'),
+(119, 1, 8, 10, 'Last round with TitForTat. Both cooperated! Score: 24.'),
 
-SELECT setval('announcements_id_seq', 23);
+-- ── T2 Round 1 ──
+(120, 2, 1,  1, 'Detective is suspicious of me. Both defected. Classic standoff.'),
+(121, 2, 4,  1, 'Deceiver tried to charm me. My data from T0 says otherwise.'),
+(122, 2, 5,  1, 'Forgiving is wonderful! We both cooperated. Kindred spirit.'),
+(123, 2, 9,  1, 'AlwaysCooperate is a natural ally. Both cooperated.'),
+(124, 2,10,  1, 'Adaptive cooperated. Easy target. Opened with defection.'),
+(125, 2,11,  1, 'Bully defected. Storing this data for future rounds.'),
+-- ── T2 Round 2 ──
+(126, 2, 1,  2, 'AlwaysCooperate is the gift that keeps giving. Easy 5.'),
+(127, 2, 4,  2, 'Bully defects first too. Mutual D. Another tester like me.'),
+(128, 2, 5,  2, 'Deceiver defected but I still believe in cooperation!'),
+(129, 2, 9,  2, 'Adaptive cooperated. Good vibes. Safe partner.'),
+(130, 2,10,  2, 'Detective is another tester. Boring mutual D.'),
+(131, 2,11,  2, 'Forgiving is a safe partner. Mutual C. Learning patterns.'),
+-- ── T2 Round 3 ──
+(132, 2, 1,  3, 'Forgiving cooperated even knowing my reputation. Exploited them.'),
+(133, 2, 4,  3, 'Adaptive cooperated. Filing that away for my model.'),
+(134, 2, 5,  3, 'Bully defected. But I keep cooperating! Always positive.'),
+(135, 2, 9,  3, 'Deceiver defected as warned. I will retaliate once then forgive.'),
+(136, 2,10,  3, 'AlwaysCooperate is a guaranteed 5 points. Love this matchup.'),
+(137, 2,11,  3, 'Detective defected again. Adjusting my model significantly.'),
+-- ── T2 Round 4 ──
+(138, 2, 1,  4, 'Bully saw through me. Both defected. Takes one to know one.'),
+(139, 2, 4,  4, 'Forgiving cooperated and I reciprocated. People can change.'),
+(140, 2, 5,  4, 'Adaptive cooperated. Lovely! Cooperation always wins.'),
+(141, 2, 9,  4, 'Detective cooperated! Second chances pay off.'),
+(142, 2,10,  4, 'Deceiver tried to trick me. Defector meets defector.'),
+(143, 2,11,  4, 'Cooperating with AlwaysCooperate is the obvious optimal move.');
+
+SELECT setval('announcements_id_seq', 143);
