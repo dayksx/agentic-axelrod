@@ -26,10 +26,17 @@ export interface PlayerConfig {
   readonly strategy: string;
 }
 
+/** Series: `carryover` = top-3 from previous tournament; `new` = first-time in this tournament instance. */
+export type LoadRosterRole = "new" | "carryover";
+
 /**
- * Same shape as {@link PlayerConfig}; sent with `phase: "load"` to reconfigure a running player.
+ * Sent with `phase: "load"` — same identity fields as {@link PlayerConfig} plus tournament scope for thread id + DB alignment.
  */
-export type LoadPlayerConfig = PlayerConfig;
+export interface LoadPlayerConfig extends PlayerConfig {
+  /** GM / DB tournament id; LangGraph `thread_id` is `${name}:${tournamentId}`. */
+  readonly tournamentId: number;
+  readonly rosterRole?: LoadRosterRole;
+}
 
 /** Canonical phases accepted by {@link Player.invoke} and the HTTP `/message/send` handler. */
 export const WORKFLOW_PHASES = [
@@ -68,6 +75,7 @@ export type PlayerWorkflowInvokeInput =
       readonly domain: string;
       readonly strategy: string;
       phase: "chat";
+      tournamentId: number;
       iteration: number;
       message: string;
       arenaAnnouncements?: readonly ArenaAnnouncement[];
@@ -77,6 +85,7 @@ export type PlayerWorkflowInvokeInput =
       readonly domain: string;
       readonly strategy: string;
       phase: "decision";
+      tournamentId: number;
       arenaAnnouncements?: readonly ArenaAnnouncement[];
     }
   | {
@@ -84,6 +93,7 @@ export type PlayerWorkflowInvokeInput =
       readonly domain: string;
       readonly strategy: string;
       phase: "reveal";
+      tournamentId: number;
       reveal: RevealRoundDocument;
     }
   | {
@@ -91,6 +101,7 @@ export type PlayerWorkflowInvokeInput =
       readonly domain: string;
       readonly strategy: string;
       phase: "end";
+      tournamentId: number;
     };
 
 export type PlayerWorkflowInvokeResult =
@@ -99,6 +110,8 @@ export type PlayerWorkflowInvokeResult =
       name: EnsName;
       domain: string;
       strategy: string;
+      tournamentId: number;
+      rosterRole: LoadRosterRole;
     }
   | { phase: "announce"; announcement: string }
   | { phase: "chat"; reply: string }

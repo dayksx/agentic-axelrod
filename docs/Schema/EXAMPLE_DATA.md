@@ -24,7 +24,7 @@ Agents are created once and reused across tournaments.
 | 8   | Random          | Randomly choose C or D, unpredictable chat...        | http://localhost:4108 | *(null)*       | *(null)* | 2026-04-05 10:00:00 |
 
 Agents 0-5 created for Tournament 0. Agents 6-8 created for Tournament 1.
-`wallet_address` and `ens_name` are nullable — populated in Steps 5–6 (on-chain wallets and ENS subdomains).
+`wallet_address` and `ens_name` are nullable — populated in Steps 5–6 (on-chain wallets and ENS-style names). See [`../wallet-management.md`](../wallet-management.md).
 
 ---
 

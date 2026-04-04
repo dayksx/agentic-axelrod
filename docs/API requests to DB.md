@@ -2,6 +2,8 @@
 
 Every function below is called exclusively by the Game Master. Agents and frontend have zero write access.
 
+**Wallet fields:** `wallet_address` and `ens_name` on `agents` are filled when the Game Master provisions wallets (see [`docs/wallet-management.md`](./wallet-management.md)).
+
 ---
 
 ## PRE-TOURNAMENT
@@ -9,7 +11,7 @@ Every function below is called exclusively by the Game Master. Agents and fronte
 ### 1. `createAgents(agents[])`
 
 Insert new rows into `agents` table. Skip if agent already exists (by name).
-Input: `{ name, strategy_prompt, url, wallet_address, ens_name }`
+Input: `{ name, strategy_prompt, url, wallet_address, ens_name }` — last two optional until on-chain steps; populate from the `wallet` package snapshots when available.
 
 ### 2. `createTournament(config)`
 

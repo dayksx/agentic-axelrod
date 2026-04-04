@@ -3,32 +3,34 @@
  * then POSTs `phase: load` to each agent (per-player `url` overrides `AGENT_SLOT_*_URL` for that index).
  *
  * Usage (from repo root or `game/`):
- *   pnpm --filter game tournament -- --config players.json
+ *   pnpm --filter game tournament -- game/players.json
  *   pnpm --filter game tournament -- players.json
+ * From `game/`, both `players.json` and `game/players.json` resolve correctly.
+ * (`pnpm` inserts `--` before args; we skip it.)
  */
+import { existsSync } from "node:fs";
 import { config as loadEnv } from "dotenv";
 import { readFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { parseTournamentConfigJson } from "../application/parse-tournament-config.js";
 import { GameMaster } from "../domain/model/game-master.js";
-import type {
-  PlayerConfig,
-  TournamentConfig,
-} from "../domain/model/types.js";
 
 const gameRoot = join(dirname(fileURLToPath(import.meta.url)), "../..");
 loadEnv({ path: join(gameRoot, ".env") });
 
 function parseConfigPath(argv: string[]): string {
-  const i = argv.indexOf("--config");
+  const args = argv.filter((a) => a !== "--");
+  const i = args.indexOf("--config");
   if (i >= 0) {
-    const p = argv[i + 1];
+    const p = args[i + 1];
     if (typeof p === "string" && p.length > 0) return p;
     throw new Error("Missing value after --config");
   }
-  const first = argv[0];
-  if (typeof first === "string" && first.length > 0 && !first.startsWith("-")) {
+  const positional = args.filter((a) => !a.startsWith("-"));
+  const first = positional[0];
+  if (typeof first === "string" && first.length > 0) {
     return first;
   }
   throw new Error(
@@ -36,66 +38,27 @@ function parseConfigPath(argv: string[]): string {
   );
 }
 
-function parseTournamentJson(text: string): TournamentConfig {
-  let raw: unknown;
-  try {
-    raw = JSON.parse(text) as unknown;
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : String(e);
-    throw new Error(`Invalid JSON: ${msg}`);
+/**
+ * Resolve config path for `readFile`. If cwd is `game/` but the arg is `game/foo.json`
+ * (copy-paste from repo root), avoid `game/game/foo.json`.
+ */
+function resolveConfigAbsolutePath(raw: string): string {
+  const cwd = process.cwd();
+  const primary = resolve(cwd, raw);
+  if (existsSync(primary)) return primary;
+  if (raw.startsWith("game/")) {
+    const stripped = resolve(cwd, raw.slice("game/".length));
+    if (existsSync(stripped)) return stripped;
   }
-  if (raw === null || typeof raw !== "object") {
-    throw new Error("Config root must be a JSON object");
-  }
-  const o = raw as Record<string, unknown>;
-  if (!Array.isArray(o.players)) {
-    throw new Error('Config must include a "players" array');
-  }
-  if (o.players.length !== 6) {
-    throw new Error(`Expected exactly 6 players, got ${o.players.length}`);
-  }
-
-  const players: PlayerConfig[] = [];
-  for (let i = 0; i < o.players.length; i++) {
-    const p = o.players[i];
-    if (p === null || typeof p !== "object") {
-      throw new Error(`players[${i}] must be an object`);
-    }
-    const pl = p as Record<string, unknown>;
-    if (typeof pl.name !== "string" || pl.name.length === 0) {
-      throw new Error(`players[${i}].name must be a non-empty string`);
-    }
-    if (typeof pl.strategyPrompt !== "string") {
-      throw new Error(`players[${i}].strategyPrompt must be a string`);
-    }
-    if (pl.url !== undefined && typeof pl.url !== "string") {
-      throw new Error(`players[${i}].url must be a string when set`);
-    }
-    const pc: PlayerConfig = {
-      name: pl.name,
-      strategyPrompt: pl.strategyPrompt,
-    };
-    if (typeof pl.url === "string" && pl.url.length > 0) {
-      pc.url = pl.url;
-    }
-    players.push(pc);
-  }
-
-  const cfg: TournamentConfig = { players };
-  if (typeof o.totalRounds === "number") cfg.totalRounds = o.totalRounds;
-  if (typeof o.arenasPerRound === "number") {
-    cfg.arenasPerRound = o.arenasPerRound;
-  }
-  if (typeof o.announceMaxChars === "number") {
-    cfg.announceMaxChars = o.announceMaxChars;
-  }
-  return cfg;
+  const underPackage = resolve(gameRoot, raw.replace(/^game\//, ""));
+  if (existsSync(underPackage)) return underPackage;
+  return primary;
 }
 
 const argv = process.argv.slice(2);
-const configPath = resolve(process.cwd(), parseConfigPath(argv));
+const configPath = resolveConfigAbsolutePath(parseConfigPath(argv));
 const text = await readFile(configPath, "utf8");
-const tournamentConfig = parseTournamentJson(text);
+const tournamentConfig = parseTournamentConfigJson(text);
 
 const gm = new GameMaster();
 const results = await gm.runTournament(tournamentConfig);

@@ -1,5 +1,7 @@
 # Database Entity Relationship Diagram
 
+On-chain fields on **`agents`** (`wallet_address`, `ens_name`) are documented with the provisioning flow in [`../wallet-management.md`](../wallet-management.md).
+
 ```mermaid
 erDiagram
     agents {
@@ -125,7 +127,7 @@ erDiagram
 
 ## Relationships
 
-- **agents** are standalone entities. They persist across tournaments. Each agent has a unique name, strategy prompt, and default URL. `wallet_address` and `ens_name` are nullable (populated in Steps 5-6). Created once, reused in future tournaments.
+- **agents** are standalone entities. They persist across tournaments. Each agent has a unique name, strategy prompt, and default URL. `wallet_address` and `ens_name` are nullable (populated in Steps 5-6 from the `wallet` package). Created once, reused in future tournaments.
 - **tournaments** represent a single tournament run (10 rounds, 6 agents).
 - **tournament_agents** is the join table linking agents to tournaments. The `url` column stores the agent's deployment URL for that specific tournament (may differ from the default if redeployed). Unique constraint on (tournament_id, agent_id).
 - **matches** belong to a tournament. Each match records the two agents, arena, round, decisions, and score deltas. Decisions and deltas are nullable — matches are inserted with the schedule before play begins, then updated with decisions after each round.

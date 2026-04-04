@@ -1,11 +1,12 @@
 import type {
+  ArenaAnnouncement,
   EnsName,
   LoadPlayerConfig,
+  LoadRosterRole,
   PlayerConfig,
   PlayerWorkflow,
   PlayerWorkflowFactory,
   PlayerWorkflowInvokeResult,
-  ArenaAnnouncement,
   RevealRoundDocument,
   WorkflowPhase,
 } from "./types.js";
@@ -20,6 +21,14 @@ export class Player {
   domain: string;
   /** Updated by constructor and `phase: "load"` only. */
   strategy: string;
+
+  /**
+   * Set on `phase: "load"` from `playerConfig.tournamentId`. LangGraph thread id is `${name}:${activeTournamentId}`.
+   */
+  activeTournamentId = 0;
+
+  /** Set on `phase: "load"` — series roster hint from GM (`new` vs `carryover`). */
+  rosterRole: LoadRosterRole = "new";
 
   /**
    * @param workflow - Initial graph; omit only when `createWorkflow` is provided.
@@ -71,13 +80,23 @@ export class Player {
       this.name = s.name;
       this.domain = s.domain;
       this.strategy = s.strategy;
+      this.activeTournamentId = s.tournamentId;
+      this.rosterRole = s.rosterRole ?? "new";
       this.workflow = this.createWorkflow(s.strategy);
       return {
         phase: "load",
         name: this.name,
         domain: this.domain,
         strategy: this.strategy,
+        tournamentId: this.activeTournamentId,
+        rosterRole: this.rosterRole,
       };
+    }
+
+    if (this.activeTournamentId === 0) {
+      throw new Error(
+        'phase: "load" with tournamentId is required before other phases',
+      );
     }
 
     const identity = {
@@ -85,6 +104,8 @@ export class Player {
       domain: this.domain,
       strategy: this.strategy,
     } as const;
+
+    const tid = this.activeTournamentId;
 
     if (phase === "announce") {
       if (
@@ -94,6 +115,11 @@ export class Player {
       ) {
         throw new Error(
           "announce phase requires tournamentId, roundNumber, and arenaId",
+        );
+      }
+      if (args.tournamentId !== this.activeTournamentId) {
+        throw new Error(
+          `announce tournamentId ${args.tournamentId} does not match loaded tournament ${this.activeTournamentId}`,
         );
       }
       return this.workflow.invoke({
@@ -113,6 +139,7 @@ export class Player {
       return this.workflow.invoke({
         ...identity,
         phase: "chat",
+        tournamentId: tid,
         message: args.message,
         iteration: args.iteration ?? 0,
         ...(args.arenaAnnouncements !== undefined
@@ -125,6 +152,7 @@ export class Player {
       return this.workflow.invoke({
         ...identity,
         phase: "decision",
+        tournamentId: tid,
         ...(args.arenaAnnouncements !== undefined
           ? { arenaAnnouncements: args.arenaAnnouncements }
           : {}),
@@ -138,6 +166,7 @@ export class Player {
       return this.workflow.invoke({
         ...identity,
         phase: "reveal",
+        tournamentId: tid,
         reveal: args.reveal,
       });
     }
@@ -146,6 +175,7 @@ export class Player {
       return this.workflow.invoke({
         ...identity,
         phase: "end",
+        tournamentId: tid,
       });
     }
 
