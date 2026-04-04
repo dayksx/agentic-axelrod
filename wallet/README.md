@@ -36,61 +36,27 @@ It also includes **game master** provisioning (ENS-backed, persisted), **named p
 
 The package follows **hexagonal-style** layering: **inbound adapters** call **use cases**, which orchestrate **outbound adapters** and the **domain** model.
 
-```mermaid
-flowchart TB
-  subgraph inbound["Inbound adapters"]
-    CLI["CLI\nadapters/inbound/cli"]
-    HTTP["HTTP helper\nadapters/inbound/http"]
-    SDK["SDK barrel\nwallet/internal-api"]
-  end
-  subgraph usecase["Use cases"]
-    GM["create-game-master-wallet/\ngetGameMasterWallet"]
-    GPW["get-player-wallets/\ngetPlayerWallets"]
-    TF["transfer-funds"]
-    CTS["collect-tournament-stake-from-players"]
-    DTR["distribute-tournament-rewards-to-agents"]
-    subgraph de["dynamic-eoa/"]
-      CE["create-eoa.ts"]
-      UP["upgrade-eoa-to-sa.ts"]
-    end
-    subgraph libonly["Library-only primitives"]
-      DF["delegate-funds-to-game-master"]
-      TDF["transfer-delegated-funds"]
-    end
-  end
-  subgraph outbound["Outbound adapters"]
-    DYN["Dynamic authenticated client\nadapters/outbound/dynamic"]
-    FS["JSON state files\nadapters/outbound/fs"]
-  end
-  subgraph domain["Domain"]
-    TYPES["Types: CreatedEvmWallet, options…"]
-    WALLET["Wallet aggregate / WalletSnapshot"]
-  end
-  CLI --> GM
-  CLI --> GPW
-  CLI --> TF
-  CLI --> CTS
-  CLI --> DTR
-  HTTP --> GPW
-  HTTP --> CE
-  SDK --> GPW
-  SDK --> GM
-  SDK --> TF
-  SDK --> CTS
-  SDK --> DTR
-  GPW --> CE
-  GPW --> UP
-  GM --> CE
-  GM --> UP
-  TF --> DYN
-  CTS --> DYN
-  DTR --> DYN
-  CE --> DYN
-  UP --> DYN
-  GM --> FS
-  GPW --> FS
-  CE --> TYPES
-  UP --> WALLET
+```text
+  ┌──────────────────────────────────────────────────────────────────────┐
+  │ Inbound adapters                                                      │
+  │   CLI (adapters/inbound/cli)  HTTP  SDK (wallet/internal-api)        │
+  └────────────────────────────────┬─────────────────────────────────────┘
+                                   │
+                                   ▼
+  ┌──────────────────────────────────────────────────────────────────────┐
+  │ Use cases                                                             │
+  │   Game master · Player wallets · Transfers · Tournament stake/reward │
+  │   dynamic-eoa/: create-eoa · upgrade-eoa-to-sa                        │
+  │   Library: delegate-funds-to-game-master · transfer-delegated-funds  │
+  └───────────────┬──────────────────────────────────────┬─────────────────┘
+                  │                                      │
+        ┌─────────▼─────────┐                    ┌───────▼────────┐
+        │ Outbound          │                    │ Domain         │
+        │ Dynamic client ·  │                    │ Types · Wallet │
+        │ JSON state (fs)   │                    │ snapshot       │
+        └───────────────────┘                    └────────────────┘
+
+  Flow: inbound → use cases → Dynamic + filesystem; EOA/upgrade → domain types & Wallet.
 ```
 
 ### Layers (what lives where)
@@ -147,6 +113,8 @@ pnpm run wallet -- help
 | `transfer-funds` | — | Native ETH transfer: `transfer-funds <from> <to> <amountEth>`. **`from`** / **`to`**: player name or `gm` / `game-master` / `gamemaster`. |
 | `collect-tournament-stake` | `collect-tournament-stake-from-players` | Each listed player sends **0.01 ETH** (native) to the game master treasury (sequential txs). Ensures GM + player wallets exist. |
 | `distribute-tournament-rewards` | `distribute-rewards` | Game master sends **0.01 ETH** to each named agent (**1–3** recipients). Ensures GM + recipient wallets exist. |
+
+For a **text diagram** of the full series (initial six-player round, then survivors plus paid new entrants, and the collect → play → distribute loop), see [`docs/wallet-management.md`](../docs/wallet-management.md#series-payment-flow-diagram).
 
 Examples:
 

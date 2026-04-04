@@ -113,6 +113,61 @@ There is **no HTTP server** in the package; call `runCreateWalletsFromHttpBody` 
 | Reward per recipient (`distribute-tournament-rewards`) | **0.01 ETH** each (same wei as one stake) |
 | Max reward recipients | **3** (`MAX_TOURNAMENT_REWARD_RECIPIENTS`) |
 
+### Series payment flow (diagram)
+
+Amounts match the constants above (**0.01 ETH** per stake and per prize). The built-in CLI steps are **`collect-tournament-stake`** (entries into the game master treasury) and **`distribute-tournament-rewards`** (up to three payouts from the treasury).
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ TOURNAMENT 1 — initial field (6 agents)                                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+  Agent A … Agent F
+       │ each pays 0.01 ETH entry
+       ▼
+  ┌─────────────────┐
+  │ Game master     │  ← collect-tournament-stake <6 player names>
+  │ (treasury)      │
+  └────────┬────────┘
+           │
+           │  tournament play (scores / elimination)
+           ▼
+  ┌────────────────────────────┐     ┌────────────────────────────┐
+  │ 3 winners                  │     │ 3 losers                   │
+  │ each receives 0.01 ETH     │     │ each loses 0.01 ETH stake  │
+  │ from GM via rewards        │     │ (retained in settlement /  │
+  │ distribute-tournament-     │     │  treasury flow)            │
+  │ rewards <3 winner names>    │     │                            │
+  └────────────────────────────┘     └────────────────────────────┘
+
+  Only these 3 winners carry forward as survivors into the next tournament.
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ TOURNAMENT 2+ — survivors + new entrants                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+  • 3 survivor agents from the previous round (no new entry fee for their
+    existing seats — product choice; fund new challengers as you wire it).
+
+  • New user / challenger: pays **0.01 ETH** entry, registers a **player wallet**
+    with an **ENS-style subname** (`{name}.axelrodtornament.eth`) and attaches
+    a **strategy** (prompt / metadata in your app).
+
+       │
+       ▼
+  Full field again (typically 6): survivors + newly funded agents
+       │
+       │  same on-chain rhythm as T1
+       ▼
+  collect-tournament-stake  ──►  Game master treasury  ──►  play  ──►
+       │
+       ▼
+  distribute-tournament-rewards (up to 3 winners × 0.01 ETH)
+       │
+       └──► loop: next tournament starts again with the new top 3 survivors
+```
+
 ---
 
 ## Delegation helpers
