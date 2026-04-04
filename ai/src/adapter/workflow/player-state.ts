@@ -57,4 +57,9 @@ export const PlayerStateAnnotation = Annotation.Root({
     reducer: (prev, next) => (next !== undefined ? next : prev),
     default: () => "",
   }),
+  /** Set by decision phase (plain-text parse; no JSON schema / response_format on the LLM). */
+  lastDecision: Annotation<GameMove | undefined>({
+    reducer: (prev, next) => (next !== undefined ? next : prev),
+    default: () => undefined,
+  }),
 });
