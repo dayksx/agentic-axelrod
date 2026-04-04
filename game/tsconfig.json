@@ -41,8 +41,8 @@
     "skipLibCheck": true,
 
     "moduleResolution": "nodenext",
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
   "include": ["./src/**/*.ts"],
-  "references": [{ "path": "../ai" }]
+  "references": []
 }
