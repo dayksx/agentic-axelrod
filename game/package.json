@@ -20,7 +20,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.6.5",
   "dependencies": {
     "ai": "workspace:*",
     "dotenv": "^17.4.0"
