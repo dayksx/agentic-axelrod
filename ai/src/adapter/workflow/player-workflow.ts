@@ -2,8 +2,8 @@
  * LangGraph implementation of {@link PlayerWorkflow}.
  */
 
-import { ChatOpenAI } from "@langchain/openai";
 import { AIMessage, HumanMessage, RemoveMessage } from "@langchain/core/messages";
+import { createOpenAiCompatibleChatLlm } from "../../config/llm-env.js";
 import { END, MemorySaver, REMOVE_ALL_MESSAGES, START, StateGraph } from "@langchain/langgraph";
 import type {
   PlayerWorkflow,
@@ -60,16 +60,8 @@ function lastAssistantText(messages: readonly unknown[]): string {
   return "";
 }
 
-function llmApiKey(): string | undefined {
-  return process.env.LLM_API_KEY ?? process.env.OPENAI_API_KEY;
-}
-
 function buildChatGraph(strategyPrompt: string) {
-  const modelWithoutTools = new ChatOpenAI({
-    model: "gpt-4o-mini",
-    temperature: 0,
-    apiKey: llmApiKey(),
-  });
+  const modelWithoutTools = createOpenAiCompatibleChatLlm();
 
   const DecisionSchema = z
     .object({

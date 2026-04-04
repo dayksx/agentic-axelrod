@@ -5,7 +5,7 @@ This package runs **one HTTP server per agent** (each is a LangGraph-backed play
 ## Prerequisites
 
 - Node.js and [pnpm](https://pnpm.io/) (workspace uses `pnpm@10.6.5`).
-- Copy `.env.example` to `.env` and set at least **`LLM_API_KEY`** (and any provider options your stack expects). See `.env.example` for optional tracing (LangSmith).
+- Copy `.env.example` to `.env` and set at least **`LLM_API_KEY`** (or **`OPENAI_API_KEY`**). The runtime uses **`ChatOpenAI`** against an **OpenAI-compatible** HTTP API, so you can point **`LLM_BASE_URL`** / **`LLM_MODEL`** at OpenAI, DeepSeek, Groq, a local gateway, etc. Optional **`LLM_PROFILE`** (`openai` | `deepseek` | `groq`) picks sensible defaults when you omit URL/model. See `.env.example` and the “LLM configuration” section below. LangSmith vars are optional.
 
 ## Build and run
 
@@ -17,7 +17,7 @@ pnpm build
 pnpm start
 ```
 
-`pnpm start` runs `node dist/main.js`. Pass CLI flags after `--` (e.g. `pnpm start -- --help`).
+`pnpm start` runs `tsx src/main.ts` (TypeScript entry). After `pnpm build`, you can run `node dist/main.js` instead. Pass CLI flags after `--` (e.g. `pnpm start -- --help`).
 
 ## CLI — launch an agent
 
@@ -31,24 +31,34 @@ node dist/main.js --help
 
 ### Main options
 
-| Option | Description |
-|--------|-------------|
-| `--name <ens>` | Agent ENS name. Repeat once per agent. If the value has no `.eth` suffix, **`.eth` is appended**. |
-| `--strategy <prompt>` | Strategy / behavior string. Repeat per agent, or pass a single `--strategy` to reuse for every agent in the fleet. |
+| Option                | Description                                                                                                                      |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `--name <ens>`        | Agent ENS name. Repeat once per agent. If the value has no `.eth` suffix, **`.eth` is appended**.                                |
+| `--strategy <prompt>` | Strategy / behavior string. Repeat per agent, or pass a single `--strategy` to reuse for every agent in the fleet.               |
 | `-n`, `--players <n>` | Fleet size (default: `PLAYER_COUNT` env or **1**). Automatically at least the number of `--name` / `--strategy` values you pass. |
-| `--port-base <n>` | First port; agents use `port-base`, `port-base+1`, … (default: env or `3100`). |
-| `--host <host>` | Bind address (default: env or `0.0.0.0`). |
-| `-h`, `--help` | Print usage and exit. |
+| `--port-base <n>`     | First port; agents use `port-base`, `port-base+1`, … (default: env or `3100`).                                                   |
+| `--host <host>`       | Bind address (default: env or `0.0.0.0`).                                                                                        |
+| `-h`, `--help`        | Print usage and exit.                                                                                                            |
 
 **Precedence:** explicit CLI flags override environment variables; env overrides built-in defaults.
 
 ### Environment defaults (when not set on the CLI)
 
-| Variable | Default | Role |
-|----------|---------|------|
-| `PLAYER_COUNT` | `1` | Fleet size if `-n` is omitted. |
-| `PORT_BASE` | `3100` | First port if `--port-base` is omitted. |
-| `HOST` | `0.0.0.0` | Bind address if `--host` is omitted. |
+| Variable       | Default   | Role                                    |
+| -------------- | --------- | --------------------------------------- |
+| `PLAYER_COUNT` | `1`       | Fleet size if `-n` is omitted.          |
+| `PORT_BASE`    | `3100`    | First port if `--port-base` is omitted. |
+| `HOST`         | `0.0.0.0` | Bind address if `--host` is omitted.    |
+
+### LLM configuration (`src/config/llm-env.ts`)
+
+| Variable                     | Role                                                                       |
+| ---------------------------- | -------------------------------------------------------------------------- |
+| `LLM_PROFILE`                | `openai` (default), `deepseek`, or `groq` — sets default base URL + model. |
+| `LLM_API_KEY`                | API key (`OPENAI_API_KEY` used if unset).                                  |
+| `LLM_BASE_URL` / `LLM_MODEL` | Optional overrides for any OpenAI-compatible endpoint.                     |
+
+Temperature is fixed at `0` in code.
 
 When the process binds `0.0.0.0` or `::`, printed URLs use **`127.0.0.1`** so you can copy them into `curl` or clients on the same machine.
 
@@ -104,7 +114,7 @@ node dist/main.js -n 2 --host 127.0.0.1 --port-base 4000
 The process logs each agent’s **message/send** URL. Example **chat** request (replace path with the printed ENS segment):
 
 ```bash
-curl -sS -X POST "http://127.0.0.1:3100/alice.eth/message/send" \
+curl -sS -X POST "http://127.0.0.1:3100/message/send" \
   -H "Content-Type: application/json" \
   -d '{"phase":"chat","message":"Hello"}'
 ```
