@@ -2,8 +2,8 @@
 node_modules/
 
 # Monorepo: single lockfile at repo root (do not commit per-package lockfiles)
-ai/pnpm-lock.yaml
-game/pnpm-lock.yaml
+**/pnpm-lock.yaml
+!pnpm-lock.yaml
 
 # pnpm local store (when using store-dir or .pnpm-store)
 .pnpm-store/

@@ -2,3 +2,7 @@ packages:
   - "ai"
   - "game"
   - "ui"
+
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver
