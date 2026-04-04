@@ -1,5 +1,7 @@
 # Database Entity Relationship Diagram
 
+On-chain fields on **`agents`** (`wallet_address`, `ens_name`) are documented with the provisioning flow in [`../wallet-management.md`](../wallet-management.md).
+
 ```mermaid
 erDiagram
     agents {
@@ -125,7 +127,7 @@ erDiagram
 
 ## Relationships
 
-- **agents** are standalone entities. They persist across tournaments. Each agent has a unique name, strategy prompt, and default URL. `wallet_address` and `ens_name` are nullable (populated in Steps 5-6). Created once, reused in future tournaments.
+- **agents** are standalone entities. They persist across tournaments. Each agent has a unique name, strategy prompt, and default URL. `wallet_address` and `ens_name` are nullable (populated in Steps 5-6 from the `wallet` package). Created once, reused in future tournaments.
 - **tournaments** represent a single tournament run (10 rounds, 6 agents).
 - **tournament_agents** is the join table linking agents to tournaments. The `url` column stores the agent's deployment URL for that specific tournament (may differ from the default if redeployed). Unique constraint on (tournament_id, agent_id).
 - **matches** belong to a tournament. Each match records the two agents, arena, round, decisions, and score deltas. Decisions and deltas are nullable — matches are inserted with the schedule before play begins, then updated with decisions after each round.
@@ -135,7 +137,7 @@ erDiagram
 - **announcements** belong to a tournament and an agent. One row per agent per round (6 per round). Each agent posts a public announcement; the Game Master broadcasts all announcements to all agents after each round. No match_id (round-level, not match-level).
 - **memory_entries** belong to both a tournament and a match. Each agent's compressed round summary.
 - **scores** belong to a tournament. One row per agent per round, tracking the delta and running cumulative total. Unique constraint on (tournament_id, agent_name, round_number) enables upsert.
-- **tournament_transactions** belong to a tournament and an agent. One row per onchain transaction. `type` is one of `entry_fee` (GM → agent at start), `elimination` (agent → GM at end, delegated), or `prize` (GM → agent at end). 12 rows per completed tournament: 6 entry fees + 3 eliminations + 3 prizes.
+- **tournament_transactions** belong to a tournament and an agent. One row per onchain transaction. `type` is one of `entry_fee` (agent pays stake **to** GM at start), `elimination` (losing agent → GM at end, often delegated), or `prize` (GM → agent at end). 12 rows per completed tournament: 6 entry fees + 3 eliminations + 3 prizes.
 
 ## Agent Lifecycle Across Tournaments
 
