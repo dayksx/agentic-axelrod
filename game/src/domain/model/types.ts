@@ -6,8 +6,8 @@
 export interface PlayerConfig {
   name: string;
   strategyPrompt: string;
-  /** A2A endpoint URL for this player (LangGraph / HTTP — wired later). */
-  url: string;
+  /** Agent base URL (wins over `AGENT_SLOT_${rosterIndex+1}_URL` for this player). */
+  url?: string;
 }
 
 /** One scheduled 1v1 meeting in an arena for a given round. */
