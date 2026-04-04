@@ -7,6 +7,7 @@ import type { WorkflowPhase } from "../../domain/types.js";
 import { WORKFLOW_PHASES } from "../../domain/types.js";
 
 export const WORKFLOW_PHASE_ALIASES: Readonly<Record<string, WorkflowPhase>> = {
+  configure: "load",
   decide: "decision",
   discussion: "chat",
   game_end: "end",
@@ -22,6 +23,13 @@ export function workflowPhaseHintText(): string {
 
 const CooperationSchema = z.enum(["cooperate", "defect"]);
 
+const EnsNameSchema = z
+  .string()
+  .min(1)
+  .refine((s) => s.endsWith(".eth"), {
+    message: "name must end with .eth",
+  });
+
 export const RevealRoundPayloadSchema = z.object({
   round: z.number().finite(),
   yourMove: CooperationSchema,
@@ -35,6 +43,14 @@ export const RevealRoundPayloadSchema = z.object({
  * `.strict()` rejects unknown keys per variant (helps catch typos).
  */
 export const MessageSendRequestSchema = z.discriminatedUnion("phase", [
+  z
+    .object({
+      phase: z.literal("load"),
+      name: EnsNameSchema,
+      domain: z.string().min(1),
+      strategy: z.string(),
+    })
+    .strict(),
   z
     .object({
       phase: z.literal("chat"),
