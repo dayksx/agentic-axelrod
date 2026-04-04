@@ -5,7 +5,7 @@ This package runs **one HTTP server per agent** (each is a LangGraph-backed play
 ## Prerequisites
 
 - Node.js and [pnpm](https://pnpm.io/) (workspace uses `pnpm@10.6.5`).
-- Copy `.env.example` to `.env` and set at least **`LLM_API_KEY`** (or **`OPENAI_API_KEY`**). The runtime uses **`ChatOpenAI`** against an **OpenAI-compatible** HTTP API, so you can point **`LLM_BASE_URL`** / **`LLM_MODEL`** at OpenAI, DeepSeek, Groq, a local gateway, etc. Optional **`LLM_PROFILE`** (`openai` | `deepseek` | `groq`) picks sensible defaults when you omit URL/model. See `.env.example` and the “LLM configuration” section below. LangSmith vars are optional.
+- Copy `.env.example` to `.env` and set at least **`LLM_API_KEY`** (or **`OPENAI_API_KEY`**). The runtime uses **`ChatOpenAI`** against an **OpenAI-compatible** HTTP API, so you can point **`LLM_BASE_URL`** / **`LLM_MODEL`** at OpenAI, DeepSeek, Groq, a local gateway, etc. Optional **`LLM_PROFILE`** (`openai` | `deepseek` | `groq`) picks sensible defaults when you omit URL/model. See `.env.example` and the sections below. **LangSmith** tracing is optional (set **`LANGCHAIN_TRACING_V2`**, **`LANGSMITH_API_KEY`**, **`LANGSMITH_PROJECT`**).
 
 ## Build and run
 
@@ -50,6 +50,8 @@ node dist/main.js --help
 | `PORT_BASE`    | `3100`    | First port if `--port-base` is omitted. |
 | `HOST`         | `0.0.0.0` | Bind address if `--host` is omitted.    |
 
+When the process binds `0.0.0.0` or `::`, printed URLs use **`127.0.0.1`** so you can copy them into `curl` or clients on the same machine.
+
 ### LLM configuration (`src/config/llm-env.ts`)
 
 | Variable                     | Role                                                                       |
@@ -60,7 +62,17 @@ node dist/main.js --help
 
 Temperature is fixed at `0` in code.
 
-When the process binds `0.0.0.0` or `::`, printed URLs use **`127.0.0.1`** so you can copy them into `curl` or clients on the same machine.
+### LangSmith tracing (optional)
+
+LangGraph / LangChain picks up standard LangSmith environment variables. To send traces to [LangSmith](https://smith.langchain.com/), set in `.env`:
+
+| Variable | Role |
+|----------|------|
+| `LANGCHAIN_TRACING_V2` | Set to `true` to enable tracing. |
+| `LANGSMITH_API_KEY` | API key from LangSmith settings. |
+| `LANGSMITH_PROJECT` | Project name (must match or create a project in LangSmith). |
+
+Optional: `LANGSMITH_ENDPOINT` if you use a custom or self-hosted endpoint (see `.env.example`).
 
 ### Strategy prompts (`--strategy`)
 
