@@ -15,7 +15,8 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",
-    "tournament": "tsx src/cli/run-tournament.ts"
+    "tournament": "tsx src/cli/run-tournament.ts",
+    "gm-server": "tsx src/adapter/http/gm-server.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,9 +24,11 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.101.1",
     "ai": "workspace:*",
-    "dotenv": "^17.4.0"
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "^25.5.2",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2"

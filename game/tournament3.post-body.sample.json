@@ -1,0 +1,40 @@
+{
+  "players": [
+    {
+      "name": "henry.eth",
+      "url": "http://127.0.0.1:3101",
+      "strategyPrompt": "Defect on the first round only, then mirror the opponent's last move.",
+      "rosterRole": "carryover"
+    },
+    {
+      "name": "dave.eth",
+      "url": "http://127.0.0.1:3103",
+      "strategyPrompt": "Alternate cooperate and defect regardless of history.",
+      "rosterRole": "carryover"
+    },
+    {
+      "name": "ivy.eth",
+      "url": "http://127.0.0.1:3102",
+      "strategyPrompt": "Cooperate if cumulative score is behind the opponent's; otherwise defect.",
+      "rosterRole": "carryover"
+    },
+    {
+      "name": "jack.eth",
+      "url": "http://127.0.0.1:3105",
+      "strategyPrompt": "Tit-for-tat with occasional random cooperate to probe trust.",
+      "rosterRole": "new"
+    },
+    {
+      "name": "kelly.eth",
+      "url": "http://127.0.0.1:3104",
+      "strategyPrompt": "Defect if opponent defected last round; otherwise cooperate.",
+      "rosterRole": "new"
+    },
+    {
+      "name": "liam.eth",
+      "url": "http://127.0.0.1:3100",
+      "strategyPrompt": "Start cooperating; after two consecutive opponent defects, always defect.",
+      "rosterRole": "new"
+    }
+  ]
+}

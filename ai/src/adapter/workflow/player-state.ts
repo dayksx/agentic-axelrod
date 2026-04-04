@@ -12,21 +12,50 @@ import type {
 
 export type { GameMove, GamePhase };
 
+/** Internal: `end` phase clears accumulated logs in one update. */
+export const GAME_LOGS_CLEAR = { __gameLogsClear: true } as const;
+
+export type GameLogsReducerInput =
+  | readonly string[]
+  | typeof GAME_LOGS_CLEAR
+  | undefined;
+
 /** One round/settlement document appended as received (opaque string). */
 export function appendGameLogs(
   prev: string[],
-  next: string[] | undefined,
+  next: GameLogsReducerInput,
 ): string[] {
-  if (next === undefined || next.length === 0) return prev;
-  return [...prev, ...next];
+  if (next === undefined) return prev;
+  if (typeof next === "object" && next !== null && "__gameLogsClear" in next) {
+    return [];
+  }
+  const arr = next as readonly string[];
+  if (arr.length === 0) return prev;
+  return [...prev, ...arr];
 }
+
+/** Internal: `end` phase clears all archived round threads. */
+export const HISTORICAL_MESSAGES_CLEAR = { __historicalClear: true } as const;
+
+export type HistoricalMessagesReducerInput =
+  | Record<number, BaseMessage[]>
+  | typeof HISTORICAL_MESSAGES_CLEAR
+  | undefined;
 
 /** Merge per-round message archives (reveal phase snapshots chat/decision thread for that round). */
 export function mergeHistoricalMessages(
   prev: Readonly<Record<number, BaseMessage[]>>,
-  next: Record<number, BaseMessage[]> | undefined,
+  next: HistoricalMessagesReducerInput,
 ): Record<number, BaseMessage[]> {
-  if (next === undefined || Object.keys(next).length === 0) return { ...prev };
+  if (next === undefined) return { ...prev };
+  if (
+    typeof next === "object" &&
+    next !== null &&
+    "__historicalClear" in next
+  ) {
+    return {};
+  }
+  if (Object.keys(next).length === 0) return { ...prev };
   return { ...prev, ...next };
 }
 
@@ -71,9 +100,12 @@ export const PlayerStateAnnotation = Annotation.Root({
     reducer: (prev, next) => (next !== undefined ? next : prev),
     default: () => "",
   }),
-  /** Set by decision phase (plain-text parse; no JSON schema / response_format on the LLM). */
-  lastDecision: Annotation<GameMove | undefined>({
-    reducer: (prev, next) => (next !== undefined ? next : prev),
+  /** Set by decision phase (plain-text parse; no JSON schema / response_format on the LLM). `null` clears (used by `end`). */
+  lastDecision: Annotation<GameMove | undefined | null>({
+    reducer: (prev, next) => {
+      if (next === null) return undefined;
+      return next !== undefined ? next : prev;
+    },
     default: () => undefined,
   }),
   /** Full snapshot from GM; replaced when the client sends `arenaAnnouncements`. Cleared on `end`. */

@@ -16,12 +16,17 @@ export interface ArenaAnnouncement {
   readonly agentName: string;
 }
 
+/** Series: GM marks top-3 returnees vs fresh entrants (sent on `phase: "load"`). */
+export type RosterRole = "new" | "carryover";
+
 /** Player definition supplied at tournament start (e.g. CLI JSON). Mirrors ai-side config conceptually. */
 export interface PlayerConfig {
   name: string;
   strategyPrompt: string;
   /** Agent base URL (wins over `AGENT_SLOT_${rosterIndex+1}_URL` for this player). */
   url?: string;
+  /** Omit or `"new"` for first tournament; `"carryover"` for top-3 continuing in a series. */
+  rosterRole?: RosterRole;
 }
 
 /** One scheduled 1v1 meeting in an arena for a given round. */
