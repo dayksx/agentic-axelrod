@@ -1179,3 +1179,39 @@ INSERT INTO tournament_transactions (id, tournament_id, agent_id, type, tx_hash,
 (29, 2, 11, 'entry_fee',  '0xe0f5a6b7c8d9e0f5a6b7c8d9e0f5a6b7c8d9e0f5a6b7c8d9e0f5a6b7c8d9e0', '2026-04-10 16:00:06');
 
 SELECT setval('tournament_transactions_id_seq', 29);
+
+-- ============================================================
+-- ANNOUNCEMENTS (Game Master broadcast per round)
+-- ============================================================
+INSERT INTO announcements (id, tournament_id, round_number, message) VALUES
+-- T0 (10 rounds, completed)
+( 0, 0,  1, 'Round 1 complete. First encounters are over — alliances are forming and betrayals are already surfacing.'),
+( 1, 0,  2, 'Round 2 complete. Graffiti walls are filling up. Some agents are sharing intel via gossip.'),
+( 2, 0,  3, 'Round 3 complete. Grudger has blacklisted Deceiver. The cooperative cluster is consolidating.'),
+( 3, 0,  4, 'Round 4 complete. Mid-tournament checkpoint. Deceiver leads but the pack is closing in.'),
+( 4, 0,  5, 'Round 5 complete. Halfway point. Cooperation rates are at 62% across all arenas.'),
+( 5, 0,  6, 'Round 6 complete. Detective has adapted its strategy based on early defection tests.'),
+( 6, 0,  7, 'Round 7 complete. AlwaysCooperate continues to be exploited. Three agents above 20 points.'),
+( 7, 0,  8, 'Round 8 complete. Late-game shifts detected. Some agents changing tactics for the final stretch.'),
+( 8, 0,  9, 'Round 9 complete. Penultimate round. The leaderboard is tight at the top.'),
+( 9, 0, 10, 'Round 10 complete. Tournament 0 is finished! Final standings are locked.'),
+
+-- T1 (10 rounds, completed)
+(10, 1,  1, 'Round 1 complete. New agents Hawk, Diplomat, and Random join returning veterans.'),
+(11, 1,  2, 'Round 2 complete. Hawk is defecting aggressively. Diplomat is building a gossip network.'),
+(12, 1,  3, 'Round 3 complete. Random is unpredictable — agents struggle to model its behavior.'),
+(13, 1,  4, 'Round 4 complete. Diplomat has successfully brokered a cooperation pact with Pavlov.'),
+(14, 1,  5, 'Round 5 complete. Halfway point. Hawk leads with aggressive defection against cooperators.'),
+(15, 1,  6, 'Round 6 complete. Grudger has entered permanent defection mode against multiple agents.'),
+(16, 1,  7, 'Round 7 complete. The gossip network is dense — every agent has received at least one message.'),
+(17, 1,  8, 'Round 8 complete. Cooperation rates dropping as agents optimize for final standings.'),
+(18, 1,  9, 'Round 9 complete. Penultimate round. Hawk and Diplomat fighting for the top spot.'),
+(19, 1, 10, 'Round 10 complete. Tournament 1 is finished! Final standings are locked.'),
+
+-- T2 (4 of 10 rounds, running)
+(20, 2,  1, 'Round 1 complete. Fresh tournament with a mix of schemers and cooperators.'),
+(21, 2,  2, 'Round 2 complete. Deceiver and Bully are already clashing. Forgiving is trying to keep peace.'),
+(22, 2,  3, 'Round 3 complete. Adaptive is learning fast — shifting strategy based on opponent history.'),
+(23, 2,  4, 'Round 4 complete. Mid-tournament. The arena graffiti tells a story of broken promises.');
+
+SELECT setval('announcements_id_seq', 23);

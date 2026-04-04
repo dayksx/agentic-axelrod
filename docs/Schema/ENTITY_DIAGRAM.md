@@ -71,6 +71,13 @@ erDiagram
         int round_number
     }
 
+    announcements {
+        serial id PK
+        int tournament_id FK
+        int round_number
+        text message
+    }
+
     memory_entries {
         serial id PK
         int tournament_id FK
@@ -106,6 +113,7 @@ erDiagram
     tournaments ||--o{ graffiti_entries : "has"
     tournaments ||--o{ gossip_entries : "has"
     tournaments ||--o{ memory_entries : "has"
+    tournaments ||--o{ announcements : "has"
     tournaments ||--o{ scores : "has"
     matches ||--o{ chat_messages : "has"
     matches ||--o{ graffiti_entries : "produced in"
@@ -122,6 +130,7 @@ erDiagram
 - **chat_messages** belong to a match. 6 messages per match (3 per agent, strict alternating).
 - **graffiti_entries** belong to both a tournament and a match. Persists across rounds within an arena.
 - **gossip_entries** belong to both a tournament and a match. Private messages between agents.
+- **announcements** belong to a tournament. One row per round — a broadcast string from the Game Master sent to all agents after each round. No match_id (round-level, not match-level).
 - **memory_entries** belong to both a tournament and a match. Each agent's compressed round summary.
 - **scores** belong to a tournament. One row per agent per round, tracking the delta and running cumulative total.
 - **tournament_transactions** belong to a tournament and an agent. One row per onchain transaction. `type` is one of `entry_fee` (GM → agent at start), `elimination` (agent → GM at end, delegated), or `prize` (GM → agent at end). 12 rows per completed tournament: 6 entry fees + 3 eliminations + 3 prizes.
@@ -172,4 +181,5 @@ flowchart LR
 | Arena graffiti history | `graffiti_entries` WHERE arena_id = N | Arena sidebar |
 | Gossip network | `gossip_entries` | Gossip graph visualization |
 | Agent memory timeline | `memory_entries` WHERE agent_name = X | Agent detail view |
+| Round announcement | `announcements` WHERE round_number = N | Announcement phase in arena view |
 | Cross-tournament stats | `scores` GROUP BY agent_name across tournaments | Agent career stats |

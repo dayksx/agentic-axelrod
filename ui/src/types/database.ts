@@ -209,6 +209,26 @@ export interface Database {
           round_number?: number;
         };
       };
+      announcements: {
+        Row: {
+          id: number;
+          tournament_id: number;
+          round_number: number;
+          message: string;
+        };
+        Insert: {
+          id?: number;
+          tournament_id: number;
+          round_number: number;
+          message: string;
+        };
+        Update: {
+          id?: number;
+          tournament_id?: number;
+          round_number?: number;
+          message?: string;
+        };
+      };
       memory_entries: {
         Row: {
           id: number;
