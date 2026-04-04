@@ -5,7 +5,11 @@
  */
 
 import express, { type Request, type Response } from "express";
-import type { A2aMessageSendUrlOptions, EnsName } from "../../domain/types.js";
+import type {
+  A2aMessageSendUrlOptions,
+  ArenaAnnouncement,
+  EnsName,
+} from "../../domain/types.js";
 import type { Player } from "../../domain/player.js";
 import { parseMessageSendBody } from "./message-send.schema.js";
 
@@ -63,8 +67,26 @@ export function createPlayerHttpApp(player: Player): express.Express {
           res.json(result);
           return;
         }
+        case "announce": {
+          const pubs = (body.arenaAnnouncements ??
+            []) as readonly ArenaAnnouncement[];
+          const result = await player.invoke("announce", {
+            tournamentId: body.tournamentId,
+            roundNumber: body.roundNumber,
+            arenaId: body.arenaId,
+            arenaAnnouncements: pubs,
+          });
+          res.json(result);
+          return;
+        }
         case "decision": {
-          const result = await player.invoke("decision", {});
+          const result =
+            body.arenaAnnouncements !== undefined
+              ? await player.invoke("decision", {
+                  arenaAnnouncements:
+                    body.arenaAnnouncements as readonly ArenaAnnouncement[],
+                })
+              : await player.invoke("decision", {});
           res.json(result);
           return;
         }
@@ -74,10 +96,18 @@ export function createPlayerHttpApp(player: Player): express.Express {
           return;
         }
         case "chat": {
-          const result = await player.invoke("chat", {
-            message: body.message,
-            iteration: body.iteration ?? 1,
-          });
+          const result =
+            body.arenaAnnouncements !== undefined
+              ? await player.invoke("chat", {
+                  message: body.message,
+                  iteration: body.iteration ?? 1,
+                  arenaAnnouncements:
+                    body.arenaAnnouncements as readonly ArenaAnnouncement[],
+                })
+              : await player.invoke("chat", {
+                  message: body.message,
+                  iteration: body.iteration ?? 1,
+                });
           res.json(result);
           return;
         }

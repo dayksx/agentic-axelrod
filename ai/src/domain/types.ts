@@ -6,6 +6,20 @@ export type EnsName = `${string}.eth`;
 
 export type Cooperation = "cooperate" | "defect";
 
+/**
+ * Public announcement for a specific arena (1v1 match) in a round — not a single “tournament” proclamation.
+ * Aligns with `announcements` (tournament_id, round_number, message) plus `arenaId` and `agentName` until DB stores them.
+ */
+export interface ArenaAnnouncement {
+  readonly id: number;
+  readonly tournamentId: number;
+  readonly roundNumber: number;
+  /** Which arena in the round (same as GM `Match.arenaId`). */
+  readonly arenaId: number;
+  readonly message: string;
+  readonly agentName: EnsName;
+}
+
 export interface PlayerConfig {
   readonly name: EnsName;
   readonly domain: string;
@@ -18,7 +32,14 @@ export interface PlayerConfig {
 export type LoadPlayerConfig = PlayerConfig;
 
 /** Canonical phases accepted by {@link Player.invoke} and the HTTP `/message/send` handler. */
-export const WORKFLOW_PHASES = ["load", "chat", "decision", "reveal", "end"] as const;
+export const WORKFLOW_PHASES = [
+  "load",
+  "announce",
+  "chat",
+  "decision",
+  "reveal",
+  "end",
+] as const;
 
 export type WorkflowPhase = (typeof WORKFLOW_PHASES)[number];
 
@@ -36,15 +57,27 @@ export type PlayerWorkflowInvokeInput =
       readonly name: EnsName;
       readonly domain: string;
       readonly strategy: string;
+      phase: "announce";
+      tournamentId: number;
+      roundNumber: number;
+      arenaId: number;
+      arenaAnnouncements: readonly ArenaAnnouncement[];
+    }
+  | {
+      readonly name: EnsName;
+      readonly domain: string;
+      readonly strategy: string;
       phase: "chat";
       iteration: number;
       message: string;
+      arenaAnnouncements?: readonly ArenaAnnouncement[];
     }
   | {
       readonly name: EnsName;
       readonly domain: string;
       readonly strategy: string;
       phase: "decision";
+      arenaAnnouncements?: readonly ArenaAnnouncement[];
     }
   | {
       readonly name: EnsName;
@@ -67,6 +100,7 @@ export type PlayerWorkflowInvokeResult =
       domain: string;
       strategy: string;
     }
+  | { phase: "announce"; announcement: string }
   | { phase: "chat"; reply: string }
   | { phase: "decision"; cooperation: Cooperation }
   | { phase: "reveal" }
@@ -80,7 +114,7 @@ export interface PlayerWorkflow {
 /** Builds a new workflow when {@link Player} handles `phase: "load"` (fresh graph / memory per session). */
 export type PlayerWorkflowFactory = (strategy: string) => PlayerWorkflow;
 
-export type GamePhase = "chat" | "decision" | "reveal" | "end";
+export type GamePhase = "announce" | "chat" | "decision" | "reveal" | "end";
 
 export type GameMove = Cooperation;
 

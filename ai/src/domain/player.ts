@@ -5,6 +5,7 @@ import type {
   PlayerWorkflow,
   PlayerWorkflowFactory,
   PlayerWorkflowInvokeResult,
+  ArenaAnnouncement,
   RevealRoundDocument,
   WorkflowPhase,
 } from "./types.js";
@@ -51,6 +52,10 @@ export class Player {
       iteration?: number;
       reveal?: RevealRoundDocument;
       playerConfig?: LoadPlayerConfig;
+      tournamentId?: number;
+      roundNumber?: number;
+      arenaId?: number;
+      arenaAnnouncements?: readonly ArenaAnnouncement[];
     },
   ): Promise<PlayerWorkflowInvokeResult> {
     if (phase === "load") {
@@ -81,6 +86,26 @@ export class Player {
       strategy: this.strategy,
     } as const;
 
+    if (phase === "announce") {
+      if (
+        args.tournamentId === undefined ||
+        args.roundNumber === undefined ||
+        args.arenaId === undefined
+      ) {
+        throw new Error(
+          "announce phase requires tournamentId, roundNumber, and arenaId",
+        );
+      }
+      return this.workflow.invoke({
+        ...identity,
+        phase: "announce",
+        tournamentId: args.tournamentId,
+        roundNumber: args.roundNumber,
+        arenaId: args.arenaId,
+        arenaAnnouncements: args.arenaAnnouncements ?? [],
+      });
+    }
+
     if (phase === "chat") {
       if (typeof args.message !== "string" || args.message.length === 0) {
         throw new Error("message required for chat phase");
@@ -90,11 +115,20 @@ export class Player {
         phase: "chat",
         message: args.message,
         iteration: args.iteration ?? 0,
+        ...(args.arenaAnnouncements !== undefined
+          ? { arenaAnnouncements: args.arenaAnnouncements }
+          : {}),
       });
     }
 
     if (phase === "decision") {
-      return this.workflow.invoke({ ...identity, phase: "decision" });
+      return this.workflow.invoke({
+        ...identity,
+        phase: "decision",
+        ...(args.arenaAnnouncements !== undefined
+          ? { arenaAnnouncements: args.arenaAnnouncements }
+          : {}),
+      });
     }
 
     if (phase === "reveal") {

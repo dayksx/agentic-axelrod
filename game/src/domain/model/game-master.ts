@@ -2,8 +2,10 @@
  * Game Master: orchestrates rounds, phases, and scoring hooks (HTTP / DB later).
  */
 import {
+  postAgentAnnounce,
   postAgentChat,
   postAgentDecision,
+  postAgentEnd,
   postAgentLoad,
   postAgentReveal,
 } from "../../adapter/http/agent-client.js";
@@ -14,6 +16,7 @@ import {
   type Cooperation,
   type Match,
   type ScheduledRound,
+  type ArenaAnnouncement,
   type TournamentConfig,
   type TournamentResults,
 } from "./types.js";
@@ -27,7 +30,23 @@ const MATCH_PHASES = [
   "REVEAL",
 ] as const;
 
+/** In-memory tournament id until persistence (`announcements.tournament_id`). */
+const DEFAULT_TOURNAMENT_ID = 1;
+
 export class GameMaster {
+  private readonly tournamentId = DEFAULT_TOURNAMENT_ID;
+  private nextAnnouncementId = 1;
+  private arenaAnnouncements: ArenaAnnouncement[] = [];
+
+  private snapshotArenaAnnouncements(): readonly ArenaAnnouncement[] {
+    return [...this.arenaAnnouncements];
+  }
+
+  private truncateAnnouncement(text: string, maxChars: number | undefined): string {
+    if (maxChars === undefined || text.length <= maxChars) return text;
+    return text.slice(0, maxChars);
+  }
+
   /**
    * High-level flow: load agents (HTTP) → scheduled rounds (chat / decision / reveal to agents).
    */
@@ -35,6 +54,9 @@ export class GameMaster {
     config: TournamentConfig,
   ): Promise<TournamentResults> {
     console.log("[GM] === Tournament start ===", config);
+
+    this.nextAnnouncementId = 1;
+    this.arenaAnnouncements = [];
 
     const tournament = new Tournament(config);
     const players = tournament.getPlayers();
@@ -82,8 +104,24 @@ export class GameMaster {
 
     // Run rounds
     for (const round of schedule) {
-      await this.runRound(round, nameToAgentUrl, scores);
+      await this.runRound(
+        round,
+        nameToAgentUrl,
+        scores,
+        config.announceMaxChars,
+      );
     }
+
+    await Promise.all(
+      players.map((p, i) => {
+        const u = agentBaseUrls[i];
+        if (u === undefined) {
+          throw new Error(`Missing agent base URL for player index ${i}`);
+        }
+        return postAgentEnd(u);
+      }),
+    );
+    console.log("[GM] Tournament end: cleared announcement state on all agents");
 
     console.log("[GM] === Tournament end ===", scores);
     return { scoresByPlayer: { ...scores } };
@@ -97,6 +135,7 @@ export class GameMaster {
     round: ScheduledRound,
     nameToAgentUrl: ReadonlyMap<string, string>,
     scores: Record<string, number>,
+    announceMaxChars: number | undefined,
   ): Promise<void> {
     console.log(`\n[GM] --- Round ${round.roundIndex} ---`);
     for (const m of round.matches) {
@@ -109,7 +148,13 @@ export class GameMaster {
       console.log(
         `\n[GM]   — Match (arena ${match.arenaId}: ${match.playerA} vs ${match.playerB}) —`,
       );
-      await this.runMatch(round.roundIndex, match, nameToAgentUrl, scores);
+      await this.runMatch(
+        round.roundIndex,
+        match,
+        nameToAgentUrl,
+        scores,
+        announceMaxChars,
+      );
     }
 
     console.log(
@@ -123,6 +168,7 @@ export class GameMaster {
     match: Match,
     nameToAgentUrl: ReadonlyMap<string, string>,
     scores: Record<string, number>,
+    announceMaxChars: number | undefined,
   ): Promise<void> {
     let movesForReveal: { moveA: Cooperation; moveB: Cooperation } | null =
       null;
@@ -134,6 +180,7 @@ export class GameMaster {
         matchPhase,
         nameToAgentUrl,
         scores,
+        announceMaxChars,
         (d) => {
           movesForReveal = d;
         },
@@ -148,6 +195,7 @@ export class GameMaster {
     matchPhase: (typeof MATCH_PHASES)[number],
     nameToAgentUrl: ReadonlyMap<string, string>,
     scores: Record<string, number>,
+    announceMaxChars: number | undefined,
     setMoves: (d: { moveA: Cooperation; moveB: Cooperation }) => void,
     getMoves: () => { moveA: Cooperation; moveB: Cooperation } | null,
   ): Promise<void> {
@@ -160,12 +208,22 @@ export class GameMaster {
         );
         return;
       case "ANNOUNCE":
-        console.log(
-          `[GM]     ANNOUNCE ${tag}: each of the two players posts one public message; GM stores; neither reads others yet`,
+        await this.runArenaAnnouncePhase(
+          roundIndex,
+          match,
+          nameToAgentUrl,
+          announceMaxChars,
+          tag,
         );
         return;
       case "CHAT":
-        await this.runArenaChatPhase(roundIndex, match, nameToAgentUrl, tag);
+        await this.runArenaChatPhase(
+          roundIndex,
+          match,
+          nameToAgentUrl,
+          tag,
+          this.snapshotArenaAnnouncements(),
+        );
         return;
       case "DECISION": {
         console.log(
@@ -178,9 +236,10 @@ export class GameMaster {
             `[GM] Missing agent URL for ${match.playerA} or ${match.playerB}`,
           );
         }
+        const pubs = this.snapshotArenaAnnouncements();
         const [moveA, moveB] = await Promise.all([
-          postAgentDecision(urlA),
-          postAgentDecision(urlB),
+          postAgentDecision(urlA, { arenaAnnouncements: pubs }),
+          postAgentDecision(urlB, { arenaAnnouncements: pubs }),
         ]);
         // Store moves for reveal phase
         setMoves({ moveA, moveB });
@@ -215,11 +274,47 @@ export class GameMaster {
     }
   }
 
+  private async runArenaAnnouncePhase(
+    roundIndex: number,
+    match: Match,
+    nameToAgentUrl: ReadonlyMap<string, string>,
+    announceMaxChars: number | undefined,
+    tag: string,
+  ): Promise<void> {
+    const order = [match.playerA, match.playerB] as const;
+    for (const player of order) {
+      const url = nameToAgentUrl.get(player);
+      if (url === undefined) {
+        throw new Error(`[GM] Missing agent URL for announce ${player}`);
+      }
+      const raw = await postAgentAnnounce(url, {
+        tournamentId: this.tournamentId,
+        roundNumber: roundIndex,
+        arenaId: match.arenaId,
+        arenaAnnouncements: this.snapshotArenaAnnouncements(),
+      });
+      const message = this.truncateAnnouncement(raw, announceMaxChars);
+      const row: ArenaAnnouncement = {
+        id: this.nextAnnouncementId++,
+        tournamentId: this.tournamentId,
+        roundNumber: roundIndex,
+        arenaId: match.arenaId,
+        message,
+        agentName: player,
+      };
+      this.arenaAnnouncements.push(row);
+      const preview =
+        message.length > 120 ? `${message.slice(0, 120)}…` : message;
+      console.log(`[GM]     ANNOUNCE ${tag} ${player}: ${preview}`);
+    }
+  }
+
   private async runArenaChatPhase(
     roundIndex: number,
     match: Match,
     nameToAgentUrl: ReadonlyMap<string, string>,
     tag: string,
+    arenaAnnouncements: readonly ArenaAnnouncement[],
   ): Promise<void> {
     const urlA = nameToAgentUrl.get(match.playerA);
     const urlB = nameToAgentUrl.get(match.playerB);
@@ -254,6 +349,7 @@ export class GameMaster {
       const reply = await postAgentChat(url, {
         message,
         iteration: roundIndex,
+        arenaAnnouncements,
       });
       // Preview message for logging
       const preview = reply.length > 160 ? `${reply.slice(0, 160)}…` : reply;
@@ -314,7 +410,7 @@ export class GameMaster {
 
   private runRevealAnnouncementPhase(roundIndex: number): void {
     console.log(
-      `[GM]     REVEAL_ANNOUNCEMENT (round ${roundIndex}): broadcast all six players' announces from this round to everyone`,
+      `[GM]     REVEAL_ANNOUNCEMENT (round ${roundIndex}): ${this.arenaAnnouncements.length} arena announcement row(s) in GM + agent context (synced on each chat/decision/announce)`,
     );
   }
 }
