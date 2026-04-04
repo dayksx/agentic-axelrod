@@ -1,6 +1,6 @@
-# AI — multi-agent HTTP fleet
+# AI — HTTP agent (one process per slot)
 
-This package runs **one HTTP server per agent** (each is a LangGraph-backed player). The CLI entrypoint is `src/main.ts` (compiled to `dist/main.js`): it parses arguments, loads `.env`, starts the servers, prints **A2A** `POST …/message/send` URLs, and exits cleanly on **SIGINT** / **SIGTERM**.
+Each process runs **one** LangGraph-backed **`POST /message/send`** server. The process starts **unconfigured** (`slot1.eth`, empty strategy); send **`phase: "load"`** with real ENS name, domain, and strategy before chat/decision/reveal. For six agents locally or in a cluster, run **six processes** with six ports (or replicas). Entry: `src/main.ts` → `dist/main.js`; loads `.env`; exits cleanly on **SIGINT** / **SIGTERM**.
 
 ## Prerequisites
 
@@ -19,9 +19,9 @@ pnpm start
 
 `pnpm start` runs `tsx src/main.ts` (TypeScript entry). After `pnpm build`, you can run `node dist/main.js` instead. Pass CLI flags after `--` (e.g. `pnpm start -- --help`).
 
-## CLI — launch an agent
+## CLI — one listener per process
 
-Required ideas are **`--name`** (ENS identifier) and **`--strategy`** (behavior string). Both can be repeated for multiple agents, in order.
+Placeholder identity (`slot1.eth`) until **`load`**. Options are inlined in `src/main.ts` (no separate CLI module).
 
 Show help:
 
@@ -29,26 +29,21 @@ Show help:
 node dist/main.js --help
 ```
 
-### Main options
+### Options
 
-| Option                | Description                                                                                                                      |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `--name <ens>`        | Agent ENS name. Repeat once per agent. If the value has no `.eth` suffix, **`.eth` is appended**.                                |
-| `--strategy <prompt>` | Strategy / behavior string. Repeat per agent, or pass a single `--strategy` to reuse for every agent in the fleet.               |
-| `-n`, `--players <n>` | Fleet size (default: `PLAYER_COUNT` env or **1**). Automatically at least the number of `--name` / `--strategy` values you pass. |
-| `--port-base <n>`     | First port; agents use `port-base`, `port-base+1`, … (default: env or `3100`).                                                   |
-| `--host <host>`       | Bind address (default: env or `0.0.0.0`).                                                                                        |
-| `-h`, `--help`        | Print usage and exit.                                                                                                            |
+| Option         | Description                                                                                          |
+| -------------- | ---------------------------------------------------------------------------------------------------- |
+| `--port <n>`   | Listen port. Default: **`PORT`** env, else **`PORT_BASE`**, else **3100**. CLI wins over env.        |
+| `--host <host>`| Bind address (default: **`HOST`** env or `0.0.0.0`).                                               |
+| `-h`, `--help` | Print usage and exit.                                                                                |
 
-**Precedence:** explicit CLI flags override environment variables; env overrides built-in defaults.
+### Environment (when not set on the CLI)
 
-### Environment defaults (when not set on the CLI)
-
-| Variable       | Default   | Role                                    |
-| -------------- | --------- | --------------------------------------- |
-| `PLAYER_COUNT` | `1`       | Fleet size if `-n` is omitted.          |
-| `PORT_BASE`    | `3100`    | First port if `--port-base` is omitted. |
-| `HOST`         | `0.0.0.0` | Bind address if `--host` is omitted.    |
+| Variable    | Default   | Role                          |
+| ----------- | --------- | ----------------------------- |
+| `PORT`      | —         | Common on PaaS; then `3100`.  |
+| `PORT_BASE` | —         | Fallback if `PORT` is unset.  |
+| `HOST`      | `0.0.0.0` | Bind address.                 |
 
 When the process binds `0.0.0.0` or `::`, printed URLs use **`127.0.0.1`** so you can copy them into `curl` or clients on the same machine.
 
@@ -74,60 +69,62 @@ LangGraph / LangChain picks up standard LangSmith environment variables. To send
 
 Optional: `LANGSMITH_ENDPOINT` if you use a custom or self-hosted endpoint (see `.env.example`).
 
-### Strategy prompts (`--strategy`)
-
-- **No `--strategy`:** each agent gets a generic default strategy string.
-- **Exactly one `--strategy` and multiple agents:** that string is **reused for all** agents.
-- **Several `--strategy` values:** applied in order; any extra slots get generic defaults.
-- **More `--strategy` than fleet size:** error (trim flags or increase `-n`).
-
-### ENS names (`--name`)
-
-- **No `--name`:** identities are `player1.eth`, `player2.eth`, …
-- **Exactly one `--name` and multiple agents (`-n` > 1):** not allowed (ambiguous). Either pass **one `--name` per agent** or omit `--name` and use the defaults above.
-- **Several `--name` values:** applied in order; remaining slots get `player{k}.eth`.
-
 ### Examples
 
-One agent with explicit ENS and strategy:
+Default port **3100**:
 
 ```bash
-node dist/main.js --name alice.eth --strategy "Tit-for-tat: cooperate first, then mirror."
+pnpm start
 ```
 
-Shorthand (`.eth` added if omitted):
+Six local agents (six terminals or a process manager):
 
 ```bash
-node dist/main.js --name alice --strategy "Always cooperate."
+pnpm start -- --port 3100
+pnpm start -- --port 3101
+# … through 3105
 ```
 
-Two agents:
+Platform-assigned port:
 
 ```bash
-node dist/main.js \
-  --name alice.eth --strategy "Always cooperate." \
-  --name bob.eth --strategy "Grim trigger after one betrayal."
+PORT=8080 pnpm start
 ```
 
-Three agents sharing one strategy; names default to `player1.eth`, …:
+### Configure a slot (`phase: "load"`)
 
-```bash
-node dist/main.js -n 3 --strategy "Same prompt for every agent."
+After start, each port accepts:
+
+```json
+{
+  "phase": "load",
+  "name": "alice.eth",
+  "domain": "https://alice.example",
+  "strategy": "Tit-for-tat: cooperate first, then mirror."
+}
 ```
 
-Custom bind and port range:
-
-```bash
-node dist/main.js -n 2 --host 127.0.0.1 --port-base 4000
-```
+Until **`load`**, the process keeps placeholder **`slot1.eth`** and empty strategy. **`load`** replaces the LangGraph workflow so memory starts fresh for that session.
 
 ## After launch
 
-The process logs each agent’s **message/send** URL. Bodies are validated with a **Zod discriminated union** on `phase` (typed shapes, like LangGraph-style structured inputs) — see `src/adapter/http/message-send.schema.ts`. Unknown keys are rejected (`.strict()` per variant). Invalid bodies return **400** with `error` and optional `issues` (Zod issue list).
+The process logs **`POST …/message/send`** and **`GET …/player`**. **`GET /player`** returns the current **`name`**, **`domain`**, and **`strategy`** (after **`load`**, use it to confirm identity).
 
-Example **chat** (each player has its own port from the printed URL; default first port is `3100`):
+Bodies for **`/message/send`** are validated with a **Zod discriminated union** on `phase` — see `src/adapter/http/message-send.schema.ts`. Unknown keys are rejected (`.strict()` per variant). Invalid bodies return **400** with `error` and optional `issues` (Zod issue list).
 
 ```bash
+curl -sS "http://127.0.0.1:3100/player"
+```
+
+Copy-paste **`load`** curls for a six-port fleet: **[USEFUL-PROMPTS.md](./USEFUL-PROMPTS.md)**.
+
+Example **`load`** then **chat** (each slot has its own port; default first port is `3100`):
+
+```bash
+curl -sS -X POST "http://127.0.0.1:3100/message/send" \
+  -H "Content-Type: application/json" \
+  -d '{"phase":"load","name":"alice.eth","domain":"https://alice.local","strategy":"Cooperate unless provoked."}'
+
 curl -sS -X POST "http://127.0.0.1:3100/message/send" \
   -H "Content-Type: application/json" \
   -d '{"phase":"chat","message":"Hello","iteration":1}'

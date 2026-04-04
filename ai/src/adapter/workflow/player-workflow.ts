@@ -2,9 +2,19 @@
  * LangGraph implementation of {@link PlayerWorkflow}.
  */
 
-import { AIMessage, HumanMessage, RemoveMessage } from "@langchain/core/messages";
+import {
+  AIMessage,
+  HumanMessage,
+  RemoveMessage,
+} from "@langchain/core/messages";
 import { createOpenAiCompatibleChatLlm } from "../../config/llm-env.js";
-import { END, MemorySaver, REMOVE_ALL_MESSAGES, START, StateGraph } from "@langchain/langgraph";
+import {
+  END,
+  MemorySaver,
+  REMOVE_ALL_MESSAGES,
+  START,
+  StateGraph,
+} from "@langchain/langgraph";
 import type {
   PlayerWorkflow,
   PlayerWorkflowInvokeInput,
@@ -79,31 +89,37 @@ function buildChatGraph(strategyPrompt: string) {
   const checkpointer = new MemorySaver();
 
   return new StateGraph(PlayerStateAnnotation)
-    .addNode("phaseEntryNode", async (_state: typeof PlayerStateAnnotation.State) => {
-      if (_state.phase === "end") {
-        return {
-          messages: [new RemoveMessage({ id: REMOVE_ALL_MESSAGES })],
-        };
-      }
-      if (_state.phase === "reveal") {
-        const doc = _state.sharedMatchContext;
-        const round = _state.round;
-        const archived = _state.messages.slice();
-        return {
-          messages: [new RemoveMessage({ id: REMOVE_ALL_MESSAGES })],
-          historicalMessages: { [round]: archived },
-          ...(doc.length > 0 ? { gameLogs: [doc] } : {}),
-        };
-      }
-      return {};
-    })
-    .addConditionalEdges("phaseEntryNode", (state: typeof PlayerStateAnnotation.State) => {
-      if (state.phase === "end") return END;
-      if (state.phase === "reveal") return END;
-      if (state.phase === "chat") return "chatNode";
-      if (state.phase === "decision") return "decisionNode";
-      return END;
-    })
+    .addNode(
+      "phaseEntryNode",
+      async (_state: typeof PlayerStateAnnotation.State) => {
+        if (_state.phase === "end") {
+          return {
+            messages: [new RemoveMessage({ id: REMOVE_ALL_MESSAGES })],
+          };
+        }
+        if (_state.phase === "reveal") {
+          const doc = _state.sharedMatchContext;
+          const round = _state.round;
+          const archived = _state.messages.slice();
+          return {
+            messages: [new RemoveMessage({ id: REMOVE_ALL_MESSAGES })],
+            historicalMessages: { [round]: archived },
+            ...(doc.length > 0 ? { gameLogs: [doc] } : {}),
+          };
+        }
+        return {};
+      },
+    )
+    .addConditionalEdges(
+      "phaseEntryNode",
+      (state: typeof PlayerStateAnnotation.State) => {
+        if (state.phase === "end") return END;
+        if (state.phase === "reveal") return END;
+        if (state.phase === "chat") return "chatNode";
+        if (state.phase === "decision") return "decisionNode";
+        return END;
+      },
+    )
     .addNode("chatNode", async (state: typeof PlayerStateAnnotation.State) => {
       const response = await modelWithoutTools.invoke(
         buildChatPhaseLlmMessages({
@@ -118,19 +134,22 @@ function buildChatGraph(strategyPrompt: string) {
         chatMessageCount: state.chatMessageCount + 1,
       };
     })
-    .addNode("decisionNode", async (state: typeof PlayerStateAnnotation.State) => {
-      const result = await decisionModel.invoke(
-        buildDecisionPhaseLlmMessages({
-          strategyPrompt,
-          round: state.round,
-          historicalMessages: state.historicalMessages,
-          threadMessages: state.messages,
-        }),
-      );
-      return {
-        lastDecision: result.move,
-      };
-    })
+    .addNode(
+      "decisionNode",
+      async (state: typeof PlayerStateAnnotation.State) => {
+        const result = await decisionModel.invoke(
+          buildDecisionPhaseLlmMessages({
+            strategyPrompt,
+            round: state.round,
+            historicalMessages: state.historicalMessages,
+            threadMessages: state.messages,
+          }),
+        );
+        return {
+          lastDecision: result.move,
+        };
+      },
+    )
     .addEdge(START, "phaseEntryNode")
     .addEdge("chatNode", END)
     .addEdge("decisionNode", END)
@@ -144,7 +163,9 @@ export class LangGraphPlayerWorkflow implements PlayerWorkflow {
     this.chatGraph = buildChatGraph(strategyPrompt);
   }
 
-  async invoke(input: PlayerWorkflowInvokeInput): Promise<PlayerWorkflowInvokeResult> {
+  async invoke(
+    input: PlayerWorkflowInvokeInput,
+  ): Promise<PlayerWorkflowInvokeResult> {
     switch (input.phase) {
       case "chat": {
         const gamePhase = toGamePhase(input.phase);

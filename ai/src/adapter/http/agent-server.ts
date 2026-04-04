@@ -1,9 +1,11 @@
 /**
- * One Express app per {@link Player}. Entry: `POST /message/send`.
+ * One Express app per {@link Player}.
+ * - `POST /message/send` — phases (load, chat, …)
+ * - `GET /player` — current name, domain, strategy (read-only snapshot)
  */
 
 import express, { type Request, type Response } from "express";
-import type { A2aMessageSendUrlOptions } from "../../domain/types.js";
+import type { A2aMessageSendUrlOptions, EnsName } from "../../domain/types.js";
 import type { Player } from "../../domain/player.js";
 import { parseMessageSendBody } from "./message-send.schema.js";
 
@@ -17,13 +19,20 @@ function jsonError(
 
 export function a2aMessageSendUrl(options: A2aMessageSendUrlOptions): string {
   const protocol = options.protocol ?? "http";
-  const name = String(options.ensName);
   return `${protocol}://${options.hostForClient}:${options.port}/message/send`;
 }
 
 export function createPlayerHttpApp(player: Player): express.Express {
   const app = express();
   app.use(express.json());
+
+  app.get("/player", (_req: Request, res: Response) => {
+    res.json({
+      name: player.name,
+      domain: player.domain,
+      strategy: player.strategy,
+    });
+  });
 
   app.post("/message/send", async (req: Request, res: Response) => {
     const parsed = parseMessageSendBody(req.body);
@@ -38,6 +47,17 @@ export function createPlayerHttpApp(player: Player): express.Express {
     try {
       const body = parsed.body;
       switch (body.phase) {
+        case "load": {
+          const result = await player.invoke("load", {
+            playerConfig: {
+              name: body.name as EnsName,
+              domain: body.domain,
+              strategy: body.strategy,
+            },
+          });
+          res.json(result);
+          return;
+        }
         case "reveal": {
           const result = await player.invoke("reveal", { reveal: body.reveal });
           res.json(result);

@@ -78,7 +78,9 @@ export class GameMaster {
       }
     }
 
-    console.log(`\n[GM]   — End of round ${round.roundIndex} (all matches done) —`);
+    console.log(
+      `\n[GM]   — End of round ${round.roundIndex} (all matches done) —`,
+    );
     this.runRevealAnnouncementPhase(round.roundIndex);
   }
 

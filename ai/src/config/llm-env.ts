@@ -6,7 +6,10 @@ import { ChatOpenAI } from "@langchain/openai";
 const PROFILES = {
   openai: { baseURL: undefined as string | undefined, model: "gpt-4o-mini" },
   deepseek: { baseURL: "https://api.deepseek.com", model: "deepseek-chat" },
-  groq: { baseURL: "https://api.groq.com/openai/v1", model: "llama-3.3-70b-versatile" },
+  groq: {
+    baseURL: "https://api.groq.com/openai/v1",
+    model: "llama-3.3-70b-versatile",
+  },
 } as const;
 
 type Profile = keyof typeof PROFILES;

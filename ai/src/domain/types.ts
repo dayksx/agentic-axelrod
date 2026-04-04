@@ -12,8 +12,13 @@ export interface PlayerConfig {
   readonly strategy: string;
 }
 
+/**
+ * Same shape as {@link PlayerConfig}; sent with `phase: "load"` to reconfigure a running player.
+ */
+export type LoadPlayerConfig = PlayerConfig;
+
 /** Canonical phases accepted by {@link Player.invoke} and the HTTP `/message/send` handler. */
-export const WORKFLOW_PHASES = ["chat", "decision", "reveal", "end"] as const;
+export const WORKFLOW_PHASES = ["load", "chat", "decision", "reveal", "end"] as const;
 
 export type WorkflowPhase = (typeof WORKFLOW_PHASES)[number];
 
@@ -56,6 +61,12 @@ export type PlayerWorkflowInvokeInput =
     };
 
 export type PlayerWorkflowInvokeResult =
+  | {
+      phase: "load";
+      name: EnsName;
+      domain: string;
+      strategy: string;
+    }
   | { phase: "chat"; reply: string }
   | { phase: "decision"; cooperation: Cooperation }
   | { phase: "reveal" }
@@ -66,28 +77,12 @@ export interface PlayerWorkflow {
   invoke(input: PlayerWorkflowInvokeInput): Promise<PlayerWorkflowInvokeResult>;
 }
 
+/** Builds a new workflow when {@link Player} handles `phase: "load"` (fresh graph / memory per session). */
+export type PlayerWorkflowFactory = (strategy: string) => PlayerWorkflow;
+
 export type GamePhase = "chat" | "decision" | "reveal" | "end";
 
 export type GameMove = Cooperation;
-
-export type ParsedLaunchCli =
-  | { readonly kind: "help" }
-  | {
-      readonly kind: "ok";
-      readonly playersFromCli?: number;
-      readonly portBaseFromCli?: number;
-      readonly hostFromCli?: string;
-      readonly ensNames: readonly string[];
-      readonly strategyPrompts: readonly string[];
-    };
-
-export type ResolvedLaunchOptions = {
-  readonly players: number;
-  readonly portBase: number;
-  readonly host: string;
-  readonly ensNames: readonly string[];
-  readonly strategyPrompts: readonly string[];
-};
 
 export type LaunchHttpPlayersOptions = {
   readonly count: number;

@@ -15,7 +15,8 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",
-    "start": "tsx src/main.ts"
+    "start": "tsx src/main.ts",
+    "start:six": "tsx src/run-six-players.ts"
   },
   "keywords": [],
   "author": "",
