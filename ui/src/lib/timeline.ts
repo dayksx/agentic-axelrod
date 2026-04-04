@@ -61,16 +61,20 @@ export function deriveState(
     phase = "announcement";
   }
 
-  const showDecisions = phase === "decision_revealed" || phase === "scoring" || phase === "announcement";
+  const showDecisions =
+    phase === "decision_revealed" ||
+    phase === "scoring" ||
+    phase === "announcement";
   const showDeltas = phase === "scoring" || phase === "announcement";
 
   const arenas: DerivedArenaState[] = round.arenas.map((arena) => ({
     arenaId: arena.arenaId,
     agentA: arena.match.agent_a,
     agentB: arena.match.agent_b,
-    visibleMessages: phase === "chat" ? arena.messages.slice(0, chatStep + 1) : arena.messages,
-    decisionA: showDecisions ? arena.match.decision_a : "sealed",
-    decisionB: showDecisions ? arena.match.decision_b : "sealed",
+    visibleMessages:
+      phase === "chat" ? arena.messages.slice(0, chatStep + 1) : arena.messages,
+    decisionA: showDecisions ? (arena.match.decision_a ?? "sealed") : "sealed",
+    decisionB: showDecisions ? (arena.match.decision_b ?? "sealed") : "sealed",
     deltaA: showDeltas ? arena.match.delta_a : null,
     deltaB: showDeltas ? arena.match.delta_b : null,
   }));

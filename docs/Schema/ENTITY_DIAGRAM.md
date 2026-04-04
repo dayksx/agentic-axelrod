@@ -7,8 +7,8 @@ erDiagram
         varchar name UK
         text strategy_prompt
         text url
-        varchar wallet_address UK
-        varchar ens_name UK
+        varchar wallet_address UK "nullable"
+        varchar ens_name UK "nullable"
         timestamp created_at
     }
 
@@ -36,10 +36,10 @@ erDiagram
         varchar agent_a
         varchar agent_b
         varchar first_speaker
-        varchar decision_a
-        varchar decision_b
-        int delta_a
-        int delta_b
+        varchar decision_a "nullable"
+        varchar decision_b "nullable"
+        int delta_a "nullable"
+        int delta_b "nullable"
         timestamp created_at
     }
 
@@ -74,6 +74,7 @@ erDiagram
     announcements {
         serial id PK
         int tournament_id FK
+        int agent_id FK
         int round_number
         text message
     }
@@ -107,6 +108,7 @@ erDiagram
 
     agents ||--o{ tournament_agents : "participates in"
     agents ||--o{ tournament_transactions : "involved in"
+    agents ||--o{ announcements : "announces in"
     tournaments ||--o{ tournament_transactions : "has"
     tournaments ||--o{ tournament_agents : "includes"
     tournaments ||--o{ matches : "has"
@@ -123,16 +125,16 @@ erDiagram
 
 ## Relationships
 
-- **agents** are standalone entities. They persist across tournaments. Each agent has a unique name, strategy prompt, and default URL. Created once, reused in future tournaments.
+- **agents** are standalone entities. They persist across tournaments. Each agent has a unique name, strategy prompt, and default URL. `wallet_address` and `ens_name` are nullable (populated in Steps 5-6). Created once, reused in future tournaments.
 - **tournaments** represent a single tournament run (10 rounds, 6 agents).
 - **tournament_agents** is the join table linking agents to tournaments. The `url` column stores the agent's deployment URL for that specific tournament (may differ from the default if redeployed). Unique constraint on (tournament_id, agent_id).
-- **matches** belong to a tournament. Each match records the two agents, arena, round, decisions, and score deltas.
+- **matches** belong to a tournament. Each match records the two agents, arena, round, decisions, and score deltas. Decisions and deltas are nullable — matches are inserted with the schedule before play begins, then updated with decisions after each round.
 - **chat_messages** belong to a match. 6 messages per match (3 per agent, strict alternating).
 - **graffiti_entries** belong to both a tournament and a match. Persists across rounds within an arena.
 - **gossip_entries** belong to both a tournament and a match. Private messages between agents.
-- **announcements** belong to a tournament. One row per round — a broadcast string from the Game Master sent to all agents after each round. No match_id (round-level, not match-level).
+- **announcements** belong to a tournament and an agent. One row per agent per round (6 per round). Each agent posts a public announcement; the Game Master broadcasts all announcements to all agents after each round. No match_id (round-level, not match-level).
 - **memory_entries** belong to both a tournament and a match. Each agent's compressed round summary.
-- **scores** belong to a tournament. One row per agent per round, tracking the delta and running cumulative total.
+- **scores** belong to a tournament. One row per agent per round, tracking the delta and running cumulative total. Unique constraint on (tournament_id, agent_name, round_number) enables upsert.
 - **tournament_transactions** belong to a tournament and an agent. One row per onchain transaction. `type` is one of `entry_fee` (GM → agent at start), `elimination` (agent → GM at end, delegated), or `prize` (GM → agent at end). 12 rows per completed tournament: 6 entry fees + 3 eliminations + 3 prizes.
 
 ## Agent Lifecycle Across Tournaments
@@ -168,18 +170,18 @@ flowchart LR
 
 ## Key Queries for UI
 
-| Query | Tables | Use Case |
-|---|---|---|
-| All agents | `agents` | Agent registry / roster page |
-| Agent tournament history | `tournament_agents` JOIN `tournaments` | Agent profile: which tournaments they played |
-| Tournament list | `tournaments` | Home page |
-| Tournament participants | `tournament_agents` JOIN `agents` | Tournament detail sidebar |
-| Leaderboard | `scores` WHERE max round per agent | Tournament view |
-| Round results | `matches` WHERE round_number = N | Round view |
-| Match detail | `matches` + `chat_messages` | Arena view (chat bubbles) |
-| Score progression | `scores` ORDER BY round_number | Line chart per agent |
-| Arena graffiti history | `graffiti_entries` WHERE arena_id = N | Arena sidebar |
-| Gossip network | `gossip_entries` | Gossip graph visualization |
-| Agent memory timeline | `memory_entries` WHERE agent_name = X | Agent detail view |
-| Round announcement | `announcements` WHERE round_number = N | Announcement phase in arena view |
-| Cross-tournament stats | `scores` GROUP BY agent_name across tournaments | Agent career stats |
+| Query                    | Tables                                          | Use Case                                     |
+| ------------------------ | ----------------------------------------------- | -------------------------------------------- |
+| All agents               | `agents`                                        | Agent registry / roster page                 |
+| Agent tournament history | `tournament_agents` JOIN `tournaments`          | Agent profile: which tournaments they played |
+| Tournament list          | `tournaments`                                   | Home page                                    |
+| Tournament participants  | `tournament_agents` JOIN `agents`               | Tournament detail sidebar                    |
+| Leaderboard              | `scores` WHERE max round per agent              | Tournament view                              |
+| Round results            | `matches` WHERE round_number = N                | Round view                                   |
+| Match detail             | `matches` + `chat_messages`                     | Arena view (chat bubbles)                    |
+| Score progression        | `scores` ORDER BY round_number                  | Line chart per agent                         |
+| Arena graffiti history   | `graffiti_entries` WHERE arena_id = N           | Arena sidebar                                |
+| Gossip network           | `gossip_entries`                                | Gossip graph visualization                   |
+| Agent memory timeline    | `memory_entries` WHERE agent_name = X           | Agent detail view                            |
+| Round announcement       | `announcements` WHERE round_number = N          | Announcement phase in arena view             |
+| Cross-tournament stats   | `scores` GROUP BY agent_name across tournaments | Agent career stats                           |

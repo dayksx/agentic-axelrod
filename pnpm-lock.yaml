@@ -44,6 +44,9 @@ importers:
 
   game:
     dependencies:
+      '@supabase/supabase-js':
+        specifier: ^2.101.1
+        version: 2.101.1
       ai:
         specifier: workspace:*
         version: link:../ai

@@ -15,8 +15,8 @@ export interface Database {
           name: string;
           strategy_prompt: string;
           url: string;
-          wallet_address: string;
-          ens_name: string;
+          wallet_address: string | null;
+          ens_name: string | null;
           created_at: string;
         };
         Insert: {
@@ -24,8 +24,8 @@ export interface Database {
           name: string;
           strategy_prompt: string;
           url: string;
-          wallet_address: string;
-          ens_name: string;
+          wallet_address?: string | null;
+          ens_name?: string | null;
           created_at?: string;
         };
         Update: {
@@ -33,8 +33,8 @@ export interface Database {
           name?: string;
           strategy_prompt?: string;
           url?: string;
-          wallet_address?: string;
-          ens_name?: string;
+          wallet_address?: string | null;
+          ens_name?: string | null;
           created_at?: string;
         };
       };
@@ -93,10 +93,10 @@ export interface Database {
           agent_a: string;
           agent_b: string;
           first_speaker: string;
-          decision_a: "C" | "D";
-          decision_b: "C" | "D";
-          delta_a: number;
-          delta_b: number;
+          decision_a: "C" | "D" | null;
+          decision_b: "C" | "D" | null;
+          delta_a: number | null;
+          delta_b: number | null;
           created_at: string;
         };
         Insert: {
@@ -107,10 +107,10 @@ export interface Database {
           agent_a: string;
           agent_b: string;
           first_speaker: string;
-          decision_a: "C" | "D";
-          decision_b: "C" | "D";
-          delta_a: number;
-          delta_b: number;
+          decision_a?: "C" | "D" | null;
+          decision_b?: "C" | "D" | null;
+          delta_a?: number | null;
+          delta_b?: number | null;
           created_at?: string;
         };
         Update: {
@@ -121,10 +121,10 @@ export interface Database {
           agent_a?: string;
           agent_b?: string;
           first_speaker?: string;
-          decision_a?: "C" | "D";
-          decision_b?: "C" | "D";
-          delta_a?: number;
-          delta_b?: number;
+          decision_a?: "C" | "D" | null;
+          decision_b?: "C" | "D" | null;
+          delta_a?: number | null;
+          delta_b?: number | null;
           created_at?: string;
         };
       };
@@ -214,18 +214,21 @@ export interface Database {
           id: number;
           tournament_id: number;
           round_number: number;
+          agent_id: number;
           message: string;
         };
         Insert: {
           id?: number;
           tournament_id: number;
           round_number: number;
+          agent_id: number;
           message: string;
         };
         Update: {
           id?: number;
           tournament_id?: number;
           round_number?: number;
+          agent_id?: number;
           message?: string;
         };
       };
