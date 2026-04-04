@@ -1,3 +1,4 @@
 packages:
   - "ai"
   - "game"
+  - "ui"
