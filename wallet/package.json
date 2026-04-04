@@ -14,7 +14,9 @@
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "create-wallets": "tsx --env-file=.env src/adapter/inbound/cli/create-wallets.ts",
+    "create-wallets:build": "pnpm run build && node --env-file=.env dist/adapter/inbound/cli/create-wallets.js"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +24,14 @@
   "packageManager": "pnpm@10.6.5",
   "devDependencies": {
     "@types/node": "^25.5.2",
+    "tsx": "^4.21.0",
     "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "@dynamic-labs-wallet/core": "^0.0.322",
+    "@dynamic-labs-wallet/node-evm": "^0.0.322",
+    "@dynamic-labs/ethereum": "^4.75.0",
+    "@dynamic-labs/sdk-react-core": "^4.75.0",
+    "viem": "^2.47.10"
   }
 }
