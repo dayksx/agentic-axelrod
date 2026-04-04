@@ -61,6 +61,8 @@ export const MessageSendRequestSchema = z.discriminatedUnion("phase", [
       name: EnsNameSchema,
       domain: z.string().min(1),
       strategy: z.string(),
+      tournamentId: z.number().finite(),
+      rosterRole: z.enum(["new", "carryover"]).optional(),
     })
     .strict(),
   z

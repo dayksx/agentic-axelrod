@@ -65,6 +65,8 @@ async function postMessageSend(
 export interface PostAgentLoadParams {
   name: string;
   strategy: string;
+  tournamentId: number;
+  rosterRole?: "new" | "carryover";
 }
 
 export async function postAgentLoad(
@@ -78,6 +80,8 @@ export async function postAgentLoad(
       name: params.name,
       domain: domainFromEnsName(params.name),
       strategy: params.strategy,
+      tournamentId: params.tournamentId,
+      ...(params.rosterRole !== undefined ? { rosterRole: params.rosterRole } : {}),
     },
     "Agent load",
   );

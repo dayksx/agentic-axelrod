@@ -46,7 +46,18 @@ Add **Dynamic-backed EVM wallets** for agents on a **testnet** (the repo’s `wa
 
 Each player gets an **ENS-style name** on the wallet aggregate (e.g. `{player}.axelrodtornament.eth`; game master uses `axelrodtornament.eth`). See [`docs/wallet-management.md`](./wallet-management.md). On-chain ENS registration may be additional work beyond name assignment in snapshots.
 
-### Step 7 — Series v1 (Multi-Tournament + Survivor Logic)
+### Step 7 — Game Master HTTP API (Express)
+
+Expose the Game Master as an **Express server** so the **UI** (and other clients) can start tournaments without the CLI:
+
+- **Run**: `pnpm --filter game gm-server` (default `http://127.0.0.1:3200`; configure `GM_HTTP_PORT` / `GM_HTTP_HOST` in `game/.env`)
+- **Start a tournament**: `POST /tournaments/runs` with **`Content-Type: application/json`** and the **full tournament config in the body** (same shape as the CLI file: `players` × 6, optional `totalRounds`, `arenasPerRound`, `announceMaxChars`, per-player `rosterRole` for series)
+- **Poll**: `GET /tournaments/runs/:jobId` for `pending` → `running` → `completed` / `failed` and final `scoresByPlayer`
+- **Health**: `GET /health`
+
+The CLI tournament runner can remain for local scripts and debugging; the API is the primary integration surface for the frontend.
+
+### Step 8 — Series v1 (Multi-Tournament + Survivor Logic)
 
 Tournaments now run in a series:
 
@@ -58,7 +69,7 @@ Tournaments now run in a series:
 
 ## Frontend (Parallel Track)
 
-Implemented up to Step 7, but without onchain features (wallets, transactions, ENS subdomains)
+Implemented up to Step 8, but without onchain features (wallets, transactions, ENS subdomains). The UI should call the **Step 7** Game Master API to start tournaments and poll for results.
 
 ---
 
@@ -79,12 +90,15 @@ These are not fully scoped yet — pick up only if core track is ahead of schedu
 
 ## Build Order Summary
 
-| Step | Milestone                     | Stores to DB | On-chain | Good Hackathon Result |
-| ---- | ----------------------------- | :----------: | :------: | :-------------------: |
-| 1    | Full DB schema                |      —       |    —     |                       |
-| 2    | 1-to-1 agent chat             |      —       |    —     |                       |
-| 3    | Tournament v1 (in-memory)     |      ✗       |    ✗     |          ✅           |
-| 4    | Tournament v2 + Announcements |      ✅      |    ✗     |                       |
-| 5    | Tournament v3 + Wallets       |      ✅      |    ✅    |                       |
-| 6    | Tournament v4 + ENS           |      ✅      |    ✅    |                       |
-| 7    | Series v1 + Survivor logic    |      ✅      |    ✅    |                       |
+| Step | Milestone                      | Stores to DB | On-chain | Good Hackathon Result |
+| ---- | ------------------------------ | :----------: | :------: | :-------------------: |
+| 1    | Full DB schema                 |      —       |    —     |                       |
+| 2    | 1-to-1 agent chat              |      —       |    —     |                       |
+| 3    | Tournament v1 (in-memory)      |      ✗       |    ✗     |          ✅           |
+| 4    | Tournament v2 + Announcements  |      ✅      |    ✗     |                       |
+| 5    | Tournament v3 + Wallets        |      ✅      |    ✅    |                       |
+| 6    | Tournament v4 + ENS            |      ✅      |    ✅    |                       |
+| 7    | Game Master HTTP API (Express) |      ✅      |   ✗\*    |                       |
+| 8    | Series v1 + Survivor logic     |      ✅      |    ✅    |                       |
+
+\*Step 7 API reuses existing GM + DB writes when Supabase env is set; no new on-chain work in that step alone.

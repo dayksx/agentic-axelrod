@@ -20,7 +20,12 @@ import type {
   PlayerWorkflowInvokeInput,
   PlayerWorkflowInvokeResult,
 } from "../../domain/types.js";
-import { PlayerStateAnnotation, type GamePhase } from "./player-state.js";
+import {
+  GAME_LOGS_CLEAR,
+  HISTORICAL_MESSAGES_CLEAR,
+  PlayerStateAnnotation,
+  type GamePhase,
+} from "./player-state.js";
 import {
   buildAnnouncePhaseLlmMessages,
   buildChatPhaseLlmMessages,
@@ -28,8 +33,10 @@ import {
 } from "./player-context.js";
 import type { GameMove } from "../../domain/types.js";
 
-function threadIdFor(input: Pick<PlayerWorkflowInvokeInput, "name">): string {
-  return String(input.name);
+function threadIdFor(
+  input: Pick<PlayerWorkflowInvokeInput, "name" | "tournamentId">,
+): string {
+  return `${String(input.name)}:${input.tournamentId}`;
 }
 
 function toGamePhase(phase: PlayerWorkflowInvokeInput["phase"]): GamePhase {
@@ -96,6 +103,14 @@ function buildChatGraph(strategyPrompt: string) {
           return {
             messages: [new RemoveMessage({ id: REMOVE_ALL_MESSAGES })],
             arenaAnnouncements: [],
+            historicalMessages: HISTORICAL_MESSAGES_CLEAR,
+            gameLogs: GAME_LOGS_CLEAR,
+            round: 0,
+            tournamentId: 0,
+            arenaId: 0,
+            chatMessageCount: 0,
+            sharedMatchContext: "",
+            lastDecision: null,
           };
         }
         if (_state.phase === "reveal") {
@@ -227,6 +242,7 @@ export class LangGraphPlayerWorkflow implements PlayerWorkflow {
           phase: gamePhase,
           messages: [new HumanMessage(input.message)],
           round: input.iteration,
+          tournamentId: input.tournamentId,
         };
         if (input.arenaAnnouncements !== undefined) {
           chatPayload.arenaAnnouncements = [...input.arenaAnnouncements];
@@ -241,7 +257,10 @@ export class LangGraphPlayerWorkflow implements PlayerWorkflow {
       }
       case "decision": {
         const gamePhase = toGamePhase(input.phase);
-        const decisionPayload: Record<string, unknown> = { phase: gamePhase };
+        const decisionPayload: Record<string, unknown> = {
+          phase: gamePhase,
+          tournamentId: input.tournamentId,
+        };
         if (input.arenaAnnouncements !== undefined) {
           decisionPayload.arenaAnnouncements = [...input.arenaAnnouncements];
         }
@@ -261,6 +280,7 @@ export class LangGraphPlayerWorkflow implements PlayerWorkflow {
           {
             phase: gamePhase,
             round: input.reveal.round,
+            tournamentId: input.tournamentId,
             sharedMatchContext: JSON.stringify(input.reveal),
           },
           {
@@ -276,6 +296,7 @@ export class LangGraphPlayerWorkflow implements PlayerWorkflow {
         await this.chatGraph.invoke(
           {
             phase: gamePhase,
+            tournamentId: input.tournamentId,
             sharedMatchContext: "",
           },
           {

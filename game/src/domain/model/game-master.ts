@@ -1,6 +1,19 @@
 /**
- * Game Master: orchestrates rounds, phases, and scoring hooks (HTTP / DB later).
+ * Game Master: orchestrates rounds, phases, HTTP agents, and optional Supabase persistence.
  */
+import {
+  completeTournament,
+  createAgents,
+  createAllMatches,
+  createTournament,
+  enrollAgents,
+  isSupabaseConfigured,
+  recordDecisions,
+  recordTransaction,
+  storeAnnouncement,
+  storeChatMessage,
+  updateScores,
+} from "../../adapter/db/supabase-writes.js";
 import {
   postAgentAnnounce,
   postAgentChat,
@@ -10,6 +23,13 @@ import {
   postAgentReveal,
 } from "../../adapter/http/agent-client.js";
 import { resolveAgentBaseUrls } from "../../config/env-agent-urls.js";
+import {
+  buildMatchIdMap,
+  cooperationToDecision,
+  matchIdKey,
+  scheduleRowsForMatchesTable,
+  stubTxHash,
+} from "./game-master-db.js";
 import { Tournament } from "./tournament.js";
 import {
   getScoresFromCooperation,
@@ -30,11 +50,13 @@ const MATCH_PHASES = [
   "REVEAL",
 ] as const;
 
-/** In-memory tournament id until persistence (`announcements.tournament_id`). */
-const DEFAULT_TOURNAMENT_ID = 1;
-
 export class GameMaster {
-  private readonly tournamentId = DEFAULT_TOURNAMENT_ID;
+  /** HTTP + in-memory rows; replaced when Supabase pre-tournament runs. */
+  private tournamentId = 1;
+  private dbEnabled = false;
+  private agentIdByName = new Map<string, number>();
+  private matchIdByKey = new Map<string, number>();
+
   private nextAnnouncementId = 1;
   private arenaAnnouncements: ArenaAnnouncement[] = [];
 
@@ -42,7 +64,10 @@ export class GameMaster {
     return [...this.arenaAnnouncements];
   }
 
-  private truncateAnnouncement(text: string, maxChars: number | undefined): string {
+  private truncateAnnouncement(
+    text: string,
+    maxChars: number | undefined,
+  ): string {
     if (maxChars === undefined || text.length <= maxChars) return text;
     return text.slice(0, maxChars);
   }
@@ -50,9 +75,7 @@ export class GameMaster {
   /**
    * High-level flow: load agents (HTTP) → scheduled rounds (chat / decision / reveal to agents).
    */
-  async runTournament(
-    config: TournamentConfig,
-  ): Promise<TournamentResults> {
+  async runTournament(config: TournamentConfig): Promise<TournamentResults> {
     console.log("[GM] === Tournament start ===", config);
 
     this.nextAnnouncementId = 1;
@@ -73,6 +96,65 @@ export class GameMaster {
       nameToAgentUrl.set(p.name, u);
     }
 
+    const schedule = tournament.buildSchedule();
+    console.log(
+      `[GM] Schedule: ${schedule.length} rounds × ${schedule[0]?.matches.length ?? 0} arenas`,
+    );
+
+    this.dbEnabled = isSupabaseConfigured();
+    this.agentIdByName = new Map();
+    this.matchIdByKey = new Map();
+
+    if (this.dbEnabled) {
+      const agentRows = await createAgents(
+        players.map((p, i) => ({
+          name: p.name,
+          strategy_prompt: p.strategyPrompt,
+          url: agentBaseUrls[i]!,
+          ens_name: p.name,
+          wallet_address: null,
+        })),
+      );
+      for (const row of agentRows) {
+        this.agentIdByName.set(row.name, row.id);
+      }
+
+      this.tournamentId = await createTournament({
+        total_rounds: config.totalRounds ?? 10,
+        total_agents: 6,
+      });
+      console.log(`[GM] Supabase: tournament id=${this.tournamentId}`);
+
+      await enrollAgents(
+        this.tournamentId,
+        players.map((p, i) => ({
+          agent_id: this.requireAgentId(p.name),
+          url: agentBaseUrls[i]!,
+        })),
+      );
+
+      const insertedMatches = await createAllMatches(
+        this.tournamentId,
+        scheduleRowsForMatchesTable(schedule),
+      );
+      this.matchIdByKey = buildMatchIdMap(insertedMatches);
+
+      for (const p of players) {
+        await recordTransaction(
+          this.tournamentId,
+          this.requireAgentId(p.name),
+          "entry_fee",
+          stubTxHash(["entry_fee", this.tournamentId, p.name]),
+        );
+      }
+      console.log("[GM] Supabase: agents, enrollment, matches, entry_fee rows written");
+    } else {
+      this.tournamentId = 1;
+      console.log(
+        "[GM] Supabase disabled (set SUPABASE_URL + SUPABASE_SECRET_KEY in game/.env to persist)",
+      );
+    }
+
     // Load agents
     await Promise.all(
       players.map((p, i) => {
@@ -83,6 +165,8 @@ export class GameMaster {
         return postAgentLoad(agentBaseUrl, {
           name: p.name,
           strategy: p.strategyPrompt,
+          tournamentId: this.tournamentId,
+          rosterRole: p.rosterRole ?? "new",
         });
       }),
     );
@@ -94,12 +178,6 @@ export class GameMaster {
     // Initialize scores for each player
     const scores: Record<string, number> = Object.fromEntries(
       players.map((p) => [p.name, 0]),
-    );
-
-    // Build schedule
-    const schedule = tournament.buildSchedule();
-    console.log(
-      `[GM] Schedule: ${schedule.length} rounds × ${schedule[0]?.matches.length ?? 0} arenas`,
     );
 
     // Run rounds
@@ -121,10 +199,44 @@ export class GameMaster {
         return postAgentEnd(u);
       }),
     );
-    console.log("[GM] Tournament end: cleared announcement state on all agents");
+    console.log(
+      "[GM] Tournament end: cleared announcement state on all agents",
+    );
+
+    if (this.dbEnabled) {
+      await completeTournament(this.tournamentId);
+      const ranked = [...Object.entries(scores)].sort((a, b) => b[1] - a[1]);
+      const top3 = ranked.slice(0, 3);
+      const bottom3 = ranked.slice(3, 6);
+      for (const [name] of bottom3) {
+        await recordTransaction(
+          this.tournamentId,
+          this.requireAgentId(name),
+          "elimination",
+          stubTxHash(["elimination", this.tournamentId, name]),
+        );
+      }
+      for (const [name] of top3) {
+        await recordTransaction(
+          this.tournamentId,
+          this.requireAgentId(name),
+          "prize",
+          stubTxHash(["prize", this.tournamentId, name]),
+        );
+      }
+      console.log("[GM] Supabase: tournament completed + elimination/prize tx rows");
+    }
 
     console.log("[GM] === Tournament end ===", scores);
     return { scoresByPlayer: { ...scores } };
+  }
+
+  private requireAgentId(name: string): number {
+    const id = this.agentIdByName.get(name);
+    if (id === undefined) {
+      throw new Error(`[GM] Missing agent_id for ${name} (createAgents)`);
+    }
+    return id;
   }
 
   /**
@@ -137,6 +249,8 @@ export class GameMaster {
     scores: Record<string, number>,
     announceMaxChars: number | undefined,
   ): Promise<void> {
+    const cumulativeBeforeRound: Record<string, number> = { ...scores };
+
     console.log(`\n[GM] --- Round ${round.roundIndex} ---`);
     for (const m of round.matches) {
       console.log(
@@ -148,12 +262,14 @@ export class GameMaster {
       console.log(
         `\n[GM]   — Match (arena ${match.arenaId}: ${match.playerA} vs ${match.playerB}) —`,
       );
+      const matchDbId = this.lookupMatchId(round.roundIndex, match.arenaId);
       await this.runMatch(
         round.roundIndex,
         match,
         nameToAgentUrl,
         scores,
         announceMaxChars,
+        matchDbId,
       );
     }
 
@@ -161,6 +277,24 @@ export class GameMaster {
       `\n[GM]   — End of round ${round.roundIndex} (all matches done) —`,
     );
     this.runRevealAnnouncementPhase(round.roundIndex);
+
+    if (this.dbEnabled) {
+      const playerNames = Object.keys(cumulativeBeforeRound);
+      await updateScores(
+        this.tournamentId,
+        round.roundIndex,
+        playerNames.map((agent_name) => ({
+          agent_name,
+          delta: scores[agent_name]! - cumulativeBeforeRound[agent_name]!,
+          cumulative: scores[agent_name]!,
+        })),
+      );
+    }
+  }
+
+  private lookupMatchId(roundNumber: number, arenaId: number): number | undefined {
+    if (!this.dbEnabled) return undefined;
+    return this.matchIdByKey.get(matchIdKey(roundNumber, arenaId));
   }
 
   private async runMatch(
@@ -169,7 +303,14 @@ export class GameMaster {
     nameToAgentUrl: ReadonlyMap<string, string>,
     scores: Record<string, number>,
     announceMaxChars: number | undefined,
+    matchDbId: number | undefined,
   ): Promise<void> {
+    if (this.dbEnabled && matchDbId === undefined) {
+      throw new Error(
+        `[GM] Missing DB match_id for round ${roundIndex} arena ${match.arenaId}`,
+      );
+    }
+
     let movesForReveal: { moveA: Cooperation; moveB: Cooperation } | null =
       null;
 
@@ -181,6 +322,7 @@ export class GameMaster {
         nameToAgentUrl,
         scores,
         announceMaxChars,
+        matchDbId,
         (d) => {
           movesForReveal = d;
         },
@@ -196,6 +338,7 @@ export class GameMaster {
     nameToAgentUrl: ReadonlyMap<string, string>,
     scores: Record<string, number>,
     announceMaxChars: number | undefined,
+    matchDbId: number | undefined,
     setMoves: (d: { moveA: Cooperation; moveB: Cooperation }) => void,
     getMoves: () => { moveA: Cooperation; moveB: Cooperation } | null,
   ): Promise<void> {
@@ -223,6 +366,7 @@ export class GameMaster {
           nameToAgentUrl,
           tag,
           this.snapshotArenaAnnouncements(),
+          matchDbId,
         );
         return;
       case "DECISION": {
@@ -264,6 +408,7 @@ export class GameMaster {
           d.moveA,
           d.moveB,
           tag,
+          matchDbId,
         );
         return;
       }
@@ -303,6 +448,14 @@ export class GameMaster {
         agentName: player,
       };
       this.arenaAnnouncements.push(row);
+      if (this.dbEnabled) {
+        await storeAnnouncement(
+          this.tournamentId,
+          roundIndex,
+          this.requireAgentId(player),
+          message,
+        );
+      }
       const preview =
         message.length > 120 ? `${message.slice(0, 120)}…` : message;
       console.log(`[GM]     ANNOUNCE ${tag} ${player}: ${preview}`);
@@ -315,6 +468,7 @@ export class GameMaster {
     nameToAgentUrl: ReadonlyMap<string, string>,
     tag: string,
     arenaAnnouncements: readonly ArenaAnnouncement[],
+    matchDbId: number | undefined,
   ): Promise<void> {
     const urlA = nameToAgentUrl.get(match.playerA);
     const urlB = nameToAgentUrl.get(match.playerB);
@@ -351,6 +505,9 @@ export class GameMaster {
         iteration: roundIndex,
         arenaAnnouncements,
       });
+      if (this.dbEnabled && matchDbId !== undefined) {
+        await storeChatMessage(matchDbId, i, speaker, reply);
+      }
       // Preview message for logging
       const preview = reply.length > 160 ? `${reply.slice(0, 160)}…` : reply;
       console.log(`[GM]     CHAT ${tag} ${speaker}: ${preview}`);
@@ -367,6 +524,7 @@ export class GameMaster {
     moveA: Cooperation,
     moveB: Cooperation,
     tag: string,
+    matchDbId: number | undefined,
   ): Promise<void> {
     const urlA = nameToAgentUrl.get(match.playerA);
     const urlB = nameToAgentUrl.get(match.playerB);
@@ -384,6 +542,14 @@ export class GameMaster {
     // Update scores
     scores[match.playerA] = prevA + roundPts.you;
     scores[match.playerB] = prevB + roundPts.opponent;
+
+    if (this.dbEnabled && matchDbId !== undefined) {
+      await recordDecisions(
+        matchDbId,
+        cooperationToDecision(moveA),
+        cooperationToDecision(moveB),
+      );
+    }
 
     // Post reveal to agents
     await Promise.all([

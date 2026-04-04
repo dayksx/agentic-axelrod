@@ -35,6 +35,8 @@ export function createPlayerHttpApp(player: Player): express.Express {
       name: player.name,
       domain: player.domain,
       strategy: player.strategy,
+      activeTournamentId: player.activeTournamentId,
+      rosterRole: player.rosterRole,
     });
   });
 
@@ -57,6 +59,10 @@ export function createPlayerHttpApp(player: Player): express.Express {
               name: body.name as EnsName,
               domain: body.domain,
               strategy: body.strategy,
+              tournamentId: body.tournamentId,
+              ...(body.rosterRole !== undefined
+                ? { rosterRole: body.rosterRole }
+                : {}),
             },
           });
           res.json(result);
