@@ -15,15 +15,15 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",
-    "demo": "tsx src/demo.ts",
-    "demo:build": "pnpm run build && node dist/demo.js"
+    "tournament": "tsx src/cli/run-tournament.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.6.5",
   "dependencies": {
-    "ai": "workspace:*"
+    "ai": "workspace:*",
+    "dotenv": "^17.4.0"
   },
   "devDependencies": {
     "@types/node": "^25.5.2",

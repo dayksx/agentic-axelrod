@@ -1,6 +1,8 @@
 /**
  * Game Master: orchestrates rounds, phases, and scoring hooks (HTTP / DB later).
  */
+import { postAgentLoad } from "../../adapter/http/agent-client.js";
+import { resolveAgentBaseUrls } from "../../config/env-agent-urls.js";
 import { Tournament } from "./tournament.js";
 import type {
   Match,
@@ -20,18 +22,34 @@ const MATCH_PHASES = [
 
 export class GameMaster {
   /**
-   * High-level hackathon flow: spin-up (stub) → register → scheduled rounds with phase stubs.
-   * TODO: Replace console logs with PlayerGateway + store when implementing.
+   * High-level hackathon flow: load agents (HTTP) → register → scheduled rounds with phase stubs.
+   * TODO: Replace remaining console logs with PlayerGateway + store when implementing.
    */
-  runTournamentSkeleton(config: TournamentConfig): TournamentResults {
+  async runTournamentSkeleton(
+    config: TournamentConfig,
+  ): Promise<TournamentResults> {
     console.log("[GM] === Tournament start (skeleton) ===", config);
 
-    // TODO: Spin up 6 LangGraph graphs from the `ai` workspace using PlayerConfig (url, strategyPrompt).
-    console.log(
-      "[GM] (stub) Would spawn 6 players via LangGraph (ai/) using config.players[].url …",
-    );
-
     const tournament = new Tournament(config);
+    const players = tournament.getPlayers();
+    const agentBaseUrls = resolveAgentBaseUrls(players);
+
+    await Promise.all(
+      players.map((p, i) => {
+        const agentBaseUrl = agentBaseUrls[i];
+        if (agentBaseUrl === undefined) {
+          throw new Error(`Missing agent base URL for player index ${i}`);
+        }
+        return postAgentLoad(agentBaseUrl, {
+          name: p.name,
+          strategy: p.strategyPrompt,
+        });
+      }),
+    );
+    console.log(
+      "[GM] Load phase complete for:",
+      players.map((p) => p.name).join(", "),
+    );
     console.log(
       `[GM] Registered ${tournament.getPlayers().length} players:`,
       tournament
