@@ -24,6 +24,14 @@ import {
 } from "../../adapter/http/agent-client.js";
 import { resolveAgentBaseUrls } from "../../config/env-agent-urls.js";
 import {
+  isTournamentStakingEnabled,
+  loadWalletsForPlayers,
+  runCollectStakes,
+  runDistributeRewards,
+  stakePayerNames,
+  snapshotOnChainAddress,
+} from "../../adapter/wallet/tournament-stakes.js";
+import {
   buildMatchIdMap,
   cooperationToDecision,
   matchIdKey,
@@ -96,35 +104,58 @@ export class GameMaster {
       nameToAgentUrl.set(p.name, u);
     }
 
+    // Build schedule
     const schedule = tournament.buildSchedule();
     console.log(
       `[GM] Schedule: ${schedule.length} rounds × ${schedule[0]?.matches.length ?? 0} arenas`,
     );
 
+    // Initialize DB state
     this.dbEnabled = isSupabaseConfigured();
+    // Clear DB state
     this.agentIdByName = new Map();
     this.matchIdByKey = new Map();
 
+    const stakingEnabled = isTournamentStakingEnabled();
+    const nameToWalletAddress = new Map<string, string>();
+
+    if (stakingEnabled && this.dbEnabled) {
+      const names = players.map((p) => p.name);
+      const { wallets } = await loadWalletsForPlayers(names);
+      for (let i = 0; i < names.length; i++) {
+        const snap = wallets[i];
+        if (snap === undefined) continue;
+        nameToWalletAddress.set(names[i]!, snapshotOnChainAddress(snap));
+      }
+      console.log(
+        "[GM] Staking: resolved wallet addresses for Supabase agents.",
+      );
+    }
+
     if (this.dbEnabled) {
+      // Create agents
       const agentRows = await createAgents(
         players.map((p, i) => ({
           name: p.name,
           strategy_prompt: p.strategyPrompt,
           url: agentBaseUrls[i]!,
           ens_name: p.name,
-          wallet_address: null,
+          wallet_address: nameToWalletAddress.get(p.name) ?? null,
         })),
       );
+      // Map agent name to agent id
       for (const row of agentRows) {
         this.agentIdByName.set(row.name, row.id);
       }
 
+      // Create tournament
       this.tournamentId = await createTournament({
         total_rounds: config.totalRounds ?? 10,
         total_agents: 6,
       });
       console.log(`[GM] Supabase: tournament id=${this.tournamentId}`);
 
+      // Enroll agents
       await enrollAgents(
         this.tournamentId,
         players.map((p, i) => ({
@@ -133,25 +164,53 @@ export class GameMaster {
         })),
       );
 
+      // Create matches
       const insertedMatches = await createAllMatches(
         this.tournamentId,
         scheduleRowsForMatchesTable(schedule),
       );
       this.matchIdByKey = buildMatchIdMap(insertedMatches);
 
-      for (const p of players) {
-        await recordTransaction(
-          this.tournamentId,
-          this.requireAgentId(p.name),
-          "entry_fee",
-          stubTxHash(["entry_fee", this.tournamentId, p.name]),
+      // Record entry fees (real stakes or stubs)
+      if (stakingEnabled) {
+        const payers = stakePayerNames(players);
+        const { receipts } = await runCollectStakes(payers);
+        for (const r of receipts) {
+          await recordTransaction(
+            this.tournamentId,
+            this.requireAgentId(r.playerName),
+            "collection",
+            r.transactionHash,
+          );
+        }
+        console.log(
+          `[GM] Supabase: collection for ${receipts.length} stake payer(s); agents + matches ready`,
+        );
+      } else {
+        for (const p of players) {
+          await recordTransaction(
+            this.tournamentId,
+            this.requireAgentId(p.name),
+            "collection",
+            stubTxHash(["collection", this.tournamentId, p.name]),
+          );
+        }
+        console.log(
+          "[GM] Supabase: agents, enrollment, matches, collection rows written",
         );
       }
-      console.log("[GM] Supabase: agents, enrollment, matches, entry_fee rows written");
     } else {
       this.tournamentId = 1;
       console.log(
         "[GM] Supabase disabled (set SUPABASE_URL + SUPABASE_SECRET_KEY in game/.env to persist)",
+      );
+    }
+
+    if (stakingEnabled && !this.dbEnabled) {
+      const payers = stakePayerNames(players);
+      await runCollectStakes(payers);
+      console.log(
+        `[GM] Staking: collected from ${payers.length} payer(s) (Supabase off).`,
       );
     }
 
@@ -190,6 +249,7 @@ export class GameMaster {
       );
     }
 
+    // End agents
     await Promise.all(
       players.map((p, i) => {
         const u = agentBaseUrls[i];
@@ -207,24 +267,44 @@ export class GameMaster {
       await completeTournament(this.tournamentId);
       const ranked = [...Object.entries(scores)].sort((a, b) => b[1] - a[1]);
       const top3 = ranked.slice(0, 3);
-      const bottom3 = ranked.slice(3, 6);
-      for (const [name] of bottom3) {
-        await recordTransaction(
-          this.tournamentId,
-          this.requireAgentId(name),
-          "elimination",
-          stubTxHash(["elimination", this.tournamentId, name]),
+      if (stakingEnabled) {
+        const topNames = top3.map(([name]) => name);
+        const { receipts } = await runDistributeRewards(topNames);
+        const hashByName = new Map(
+          receipts.map((r) => [r.playerName, r.transactionHash] as const),
         );
+        for (const [name] of top3) {
+          const hash = hashByName.get(name);
+          if (hash === undefined) {
+            throw new Error(
+              `[GM] Missing prize distribution tx for winner ${name}`,
+            );
+          }
+          await recordTransaction(
+            this.tournamentId,
+            this.requireAgentId(name),
+            "prize",
+            hash as string,
+          );
+        }
+      } else {
+        for (const [name] of top3) {
+          await recordTransaction(
+            this.tournamentId,
+            this.requireAgentId(name),
+            "prize",
+            stubTxHash(["prize", this.tournamentId, name]),
+          );
+        }
       }
-      for (const [name] of top3) {
-        await recordTransaction(
-          this.tournamentId,
-          this.requireAgentId(name),
-          "prize",
-          stubTxHash(["prize", this.tournamentId, name]),
-        );
-      }
-      console.log("[GM] Supabase: tournament completed + elimination/prize tx rows");
+      console.log(
+        "[GM] Supabase: tournament completed + elimination/prize tx rows",
+      );
+    } else if (stakingEnabled) {
+      const ranked = [...Object.entries(scores)].sort((a, b) => b[1] - a[1]);
+      const topNames = ranked.slice(0, 3).map(([name]) => name);
+      await runDistributeRewards(topNames);
+      console.log("[GM] Staking: distributed rewards to top 3 (Supabase off).");
     }
 
     console.log("[GM] === Tournament end ===", scores);
@@ -292,7 +372,10 @@ export class GameMaster {
     }
   }
 
-  private lookupMatchId(roundNumber: number, arenaId: number): number | undefined {
+  private lookupMatchId(
+    roundNumber: number,
+    arenaId: number,
+  ): number | undefined {
     if (!this.dbEnabled) return undefined;
     return this.matchIdByKey.get(matchIdKey(roundNumber, arenaId));
   }

@@ -9,7 +9,7 @@ import { getPlayerWallets } from "../get-player-wallets/index.js";
 import { transferFunds } from "../transfer-funds/index.js";
 
 /** Human-readable stake each player pays to join (native token, e.g. ETH). */
-export const TOURNAMENT_STAKING_PRICE_ETH = "0.01" as const;
+export const TOURNAMENT_STAKING_PRICE_ETH = "0.001" as const;
 
 export const TOURNAMENT_STAKING_PRICE_WEI = parseEther(TOURNAMENT_STAKING_PRICE_ETH);
 
