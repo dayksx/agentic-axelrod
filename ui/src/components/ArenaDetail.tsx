@@ -3,24 +3,18 @@
 import type { DerivedArenaState, Phase } from "@/types/models";
 import { ChatBubble } from "./ChatBubble";
 import { DecisionCards } from "./DecisionCards";
-import { AnnouncementBanner } from "./AnnouncementBanner";
 
 export function ArenaDetail({
   arena,
   phase,
-  announcement,
 }: {
   arena: DerivedArenaState;
   phase: Phase;
-  announcement: string | null;
 }) {
-  const showChat = true;
   const showDecisions =
     phase === "decision_sealed" ||
     phase === "decision_revealed" ||
-    phase === "scoring" ||
-    phase === "announcement";
-  const showAnnouncement = phase === "announcement" && announcement;
+    phase === "scoring";
 
   return (
     <div className="flex flex-col gap-4 p-6 max-w-2xl mx-auto">
@@ -30,20 +24,19 @@ export function ArenaDetail({
           showDecisions ? "opacity-40" : "opacity-100"
         }`}
       >
-        {showChat &&
-          arena.visibleMessages.map((msg, i) => {
-            const isLeft = msg.speaker === arena.agentA;
-            const isLatest = i === arena.visibleMessages.length - 1 && phase === "chat";
-            return (
-              <ChatBubble
-                key={msg.id}
-                speaker={msg.speaker}
-                content={msg.content}
-                isLeft={isLeft}
-                isLatest={isLatest}
-              />
-            );
-          })}
+        {arena.visibleMessages.map((msg, i) => {
+          const isLeft = msg.speaker === arena.agentA;
+          const isLatest = i === arena.visibleMessages.length - 1 && phase === "chat";
+          return (
+            <ChatBubble
+              key={msg.id}
+              speaker={msg.speaker}
+              content={msg.content}
+              isLeft={isLeft}
+              isLatest={isLatest}
+            />
+          );
+        })}
       </div>
 
       {/* Decision cards */}
@@ -57,9 +50,6 @@ export function ArenaDetail({
           deltaB={arena.deltaB}
         />
       )}
-
-      {/* Announcement */}
-      {showAnnouncement && <AnnouncementBanner message={announcement} />}
     </div>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { fetchTournamentList } from "@/lib/queries";
 import { TournamentCard } from "@/components/TournamentCard";
@@ -8,12 +7,7 @@ import { SurvivorConnector } from "@/components/SurvivorConnector";
 import { JoinTournamentForm } from "@/components/JoinTournamentForm";
 import type { TournamentSummary } from "@/types/models";
 
-type SectionId =
-  | "what"
-  | "question"
-  | "how"
-  | "history"
-  | "videos";
+type SectionId = "what" | "question" | "how" | "history" | "videos";
 
 function AccordionSection({
   id,
@@ -73,8 +67,8 @@ export default function HomePage() {
       <section className="relative min-h-screen flex flex-col items-center py-28 overflow-hidden">
         {/* Hero background */}
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-20"
-          style={{ backgroundImage: "url(/landing-hero.png)" }}
+          className="absolute inset-0 bg-cover bg-center opacity-30"
+          style={{ backgroundImage: "url(/axelrod.jpg)" }}
         />
         <div className="absolute inset-0 bg-linear-to-b from-background/60 via-background/80 to-background" />
 
@@ -82,15 +76,6 @@ export default function HomePage() {
           <h1 className="text-5xl font-bold tracking-tight mb-6 text-center">
             Agentic Axelrod
           </h1>
-          <p className="text-center mb-10">
-            <Link
-              href="/wallet-test"
-              className="text-accent text-sm underline underline-offset-4 hover:no-underline"
-            >
-              Wallet connection test (Dynamic)
-            </Link>
-          </p>
-
           <div className="space-y-6 text-foreground/70 text-lg leading-relaxed">
             <AccordionSection
               id="what"
