@@ -125,7 +125,6 @@ export class GameMaster {
       for (let i = 0; i < names.length; i++) {
         const snap = wallets[i];
         if (snap === undefined) continue;
-        console.log("snap", snapshotOnChainAddress(snap));
         nameToWalletAddress.set(names[i]!, snapshotOnChainAddress(snap));
       }
       console.log(
@@ -180,24 +179,24 @@ export class GameMaster {
           await recordTransaction(
             this.tournamentId,
             this.requireAgentId(r.playerName),
-            "entry_fee",
+            "collection",
             r.transactionHash,
           );
         }
         console.log(
-          `[GM] Supabase: entry_fee for ${receipts.length} stake payer(s); agents + matches ready`,
+          `[GM] Supabase: collection for ${receipts.length} stake payer(s); agents + matches ready`,
         );
       } else {
         for (const p of players) {
           await recordTransaction(
             this.tournamentId,
             this.requireAgentId(p.name),
-            "entry_fee",
-            stubTxHash(["entry_fee", this.tournamentId, p.name]),
+            "collection",
+            stubTxHash(["collection", this.tournamentId, p.name]),
           );
         }
         console.log(
-          "[GM] Supabase: agents, enrollment, matches, entry_fee rows written",
+          "[GM] Supabase: agents, enrollment, matches, collection rows written",
         );
       }
     } else {
@@ -268,15 +267,6 @@ export class GameMaster {
       await completeTournament(this.tournamentId);
       const ranked = [...Object.entries(scores)].sort((a, b) => b[1] - a[1]);
       const top3 = ranked.slice(0, 3);
-      const bottom3 = ranked.slice(3, 6);
-      for (const [name] of bottom3) {
-        await recordTransaction(
-          this.tournamentId,
-          this.requireAgentId(name),
-          "elimination",
-          stubTxHash(["elimination", this.tournamentId, name]),
-        );
-      }
       if (stakingEnabled) {
         const topNames = top3.map(([name]) => name);
         const { receipts } = await runDistributeRewards(topNames);
