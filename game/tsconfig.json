@@ -44,5 +44,5 @@
     "esModuleInterop": true
   },
   "include": ["./src/**/*.ts"],
-  "references": []
+  "references": [{ "path": "../wallet" }]
 }
