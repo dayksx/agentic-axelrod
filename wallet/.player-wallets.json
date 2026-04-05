@@ -121,6 +121,28 @@
       "publicKeyHex": "04e2075dc6a46f07cc66347ab70371509be1ddbda3f33cb56bdfd6b7dbb5f9d3a60299e1aa3839becd691071694ce280f9439a89c28f59969f800fbcac5f4c449f",
       "keySharesBackedUpToDynamic": true,
       "ensName": "cyborgdayan.axelrodtornament.eth"
+    },
+    "satyomatic": {
+      "isEoaCreated": true,
+      "isDelegationSigned": false,
+      "isSaSet": false,
+      "isEnsAssigned": true,
+      "eoaAddress": "0xe9a133b612F676931bCBBa507822eD2936291266",
+      "dynamicWalletId": "81a2ab7e-efef-4809-8ef2-3b549df09508",
+      "publicKeyHex": "0491f0f66bd98ac3c42481196bdde125f693e21984ee56b0d0aafb1dfd01aa6c0ba34eba12fb7e9ac43395bc48c5af50846e2601b15328cae817cca329bb1e5a06",
+      "keySharesBackedUpToDynamic": true,
+      "ensName": "satyomatic.axelrodtornament.eth"
+    },
+    "historian": {
+      "isEoaCreated": true,
+      "isDelegationSigned": false,
+      "isSaSet": false,
+      "isEnsAssigned": true,
+      "eoaAddress": "0x35AD8993272BF01f70fdF90Bd444C9190164cfBe",
+      "dynamicWalletId": "e3f2f231-2b1e-4c9a-bf22-00757b3daf06",
+      "publicKeyHex": "04d282960a772104802ee70ff0077f683d9e7759ec30b6e9dfac163ad374e46a66fcac46d90e1a76948e979e0680662b4f3121ec2001450c16e84e29a1ecab7045",
+      "keySharesBackedUpToDynamic": true,
+      "ensName": "historian.axelrodtornament.eth"
     }
   }
 }
