@@ -1,6 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, isAbsolute, join } from "node:path";
 import type { WalletSnapshot } from "../../../domain/index.js";
+import { getWalletPackageRoot } from "../../../wallet-package-root.js";
 
 const FILE_VERSION = 1;
 
@@ -35,10 +36,10 @@ function assertWalletSnapshot(o: unknown, ctx: string): WalletSnapshot {
   return o as unknown as WalletSnapshot;
 }
 
-/** Resolve path relative to `cwd` when not absolute. */
+/** Resolve path relative to the wallet package root when not absolute. */
 export function resolveGameMasterWalletPath(
   filePath: string,
-  cwd = process.cwd(),
+  cwd = getWalletPackageRoot(),
 ): string {
   return isAbsolute(filePath) ? filePath : join(cwd, filePath);
 }

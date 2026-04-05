@@ -17,7 +17,7 @@ export type EnsureGameMasterWalletParams = {
   createOptions?: CreateEvmWalletsOptions;
   /**
    * JSON file written after first successful create. Default: `.game-master-wallet.json` under cwd.
-   * Override with env `GAME_MASTER_WALLET_FILE` from the CLI when needed.
+   * Override with env `GAME_MASTER_WALLET_FILE` from the CLI when needed (relative paths are under the wallet package root).
    */
   stateFilePath?: string;
 };

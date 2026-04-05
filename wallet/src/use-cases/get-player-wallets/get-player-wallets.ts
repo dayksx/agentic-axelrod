@@ -25,7 +25,7 @@ export type GetPlayerWalletsParams = {
   rpcUrl: string;
   chain?: Chain;
   /**
-   * JSON file for all player wallets. Default: `.player-wallets.json` under cwd.
+   * JSON file for all player wallets. Default: `.player-wallets.json` in the wallet package root.
    */
   stateFilePath?: string;
 };
