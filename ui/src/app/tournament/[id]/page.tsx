@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import { useTimeStore } from "@/stores/timeStore";
 import { ArenaCard } from "@/components/ArenaCard";
+import { AnnouncementBanner } from "@/components/AnnouncementBanner";
 import {
   EntryTransactionPanel,
   PrizeTransactionPanel,
@@ -31,17 +32,26 @@ export default function TournamentPage() {
 
   return (
     <div className="p-6">
-      <h2 className="text-lg font-semibold mb-6">Arenas — Round {derived.round}</h2>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {derived.arenas.map((arena) => (
-          <ArenaCard
-            key={arena.arenaId}
-            arena={arena}
-            phase={derived.phase}
-            tournamentId={tournamentId}
-          />
-        ))}
-      </div>
+      <h2 className="text-lg font-semibold mb-6">
+        {derived.phase === "announcement"
+          ? `Announcements — Round ${derived.round}`
+          : `Arenas — Round ${derived.round}`}
+      </h2>
+
+      {derived.phase === "announcement" ? (
+        <AnnouncementBanner announcements={derived.announcements} />
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {derived.arenas.map((arena) => (
+            <ArenaCard
+              key={arena.arenaId}
+              arena={arena}
+              phase={derived.phase}
+              tournamentId={tournamentId}
+            />
+          ))}
+        </div>
+      )}
 
       {showEntryPanel && (
         <EntryTransactionPanel

@@ -44,10 +44,16 @@ export type OrganizedTournament = {
   transactions: TournamentTransactionRow[];
 };
 
+export type AgentAnnouncement = {
+  agentId: number;
+  agentName: string;
+  message: string;
+};
+
 export type Round = {
   roundNumber: number;
   arenas: ArenaRound[];
-  announcement: string | null;
+  announcements: AgentAnnouncement[];
   scores: ScoreSnapshot;
 };
 
@@ -74,6 +80,7 @@ export type TimelineState = {
   phase: Phase;
   chatStep: number;
   arenas: DerivedArenaState[];
+  announcements: AgentAnnouncement[];
   leaderboard: LeaderboardEntry[];
 };
 
