@@ -9,6 +9,7 @@ export type ChatMessageRow = Tables<"chat_messages">;
 export type ScoreRow = Tables<"scores">;
 export type AnnouncementRow = Tables<"announcements">;
 export type TournamentTransactionRow = Tables<"tournament_transactions">;
+export type UserRow = Tables<"users">;
 
 // Home page
 export type TournamentSummary = {

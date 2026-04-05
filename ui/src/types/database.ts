@@ -284,6 +284,41 @@ export interface Database {
           cumulative?: number;
         };
       };
+      users: {
+        Row: {
+          id: number;
+          agent_name: string;
+          strategy_prompt: string;
+          human_wallet: string;
+          agent_wallet: string;
+          tx_hash: string;
+          reserved_date: string | null;
+          tournament_date: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: number;
+          agent_name: string;
+          strategy_prompt: string;
+          human_wallet: string;
+          agent_wallet: string;
+          tx_hash: string;
+          reserved_date?: string | null;
+          tournament_date?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          agent_name?: string;
+          strategy_prompt?: string;
+          human_wallet?: string;
+          agent_wallet?: string;
+          tx_hash?: string;
+          reserved_date?: string | null;
+          tournament_date?: string | null;
+          created_at?: string;
+        };
+      };
       tournament_transactions: {
         Row: {
           id: number;
