@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "pnpm --filter wallet run build && tsc --noEmit",
     "clean": "rm -rf dist",
     "tournament": "tsx src/cli/run-tournament.ts",
     "gm-server": "tsx src/adapter/http/gm-server.ts"
@@ -25,7 +25,9 @@
     "@supabase/supabase-js": "^2.101.1",
     "ai": "workspace:*",
     "dotenv": "^17.4.0",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "viem": "^2.47.10",
+    "wallet": "workspace:*"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",

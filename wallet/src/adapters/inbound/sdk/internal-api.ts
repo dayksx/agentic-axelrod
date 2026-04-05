@@ -53,7 +53,7 @@ export type { GetGameMasterWalletResult, GetPlayersWalletResult } from "./types/
 
 /**
  * In-repo SDK for `wallet/internal-api`: player wallets by name, game master wallet,
- * native transfers, collecting the fixed tournament stake (0.01) from players into the GM treasury,
+ * native transfers, collecting the fixed tournament stake (0.001 ETH) from players into the GM treasury,
  * and distributing that same amount from the GM to up to three named agents.
  */
 

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "wallet": {
+    "isEoaCreated": true,
+    "isDelegationSigned": false,
+    "isSaSet": false,
+    "isEnsAssigned": true,
+    "eoaAddress": "0x10543d0BdF43866FDC5aaB2F6F88abBE023e5Dd6",
+    "dynamicWalletId": "de733894-d125-4ef7-82b5-3fc37b62b0ee",
+    "publicKeyHex": "044bde1ca47ea29bac855232dcac56ec0f30034a51b5f2569da3eda371aa3fa965a258e33df348678179e51306c9549b789a551042f74e4bd317f9a13ba25f30a1",
+    "keySharesBackedUpToDynamic": true,
+    "ensName": "axelrodtornament.eth"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "players": {
+    "alice.eth": {
+      "isEoaCreated": true,
+      "isDelegationSigned": false,
+      "isSaSet": false,
+      "isEnsAssigned": true,
+      "eoaAddress": "0x51579663F0BbB80b04cf3853EF092B9A9d3778F3",
+      "dynamicWalletId": "51ef8fda-f148-4afe-9ec6-18cc2c5dc711",
+      "publicKeyHex": "0436a43514a9809f1514ec4e192114ad7c02f63306facd3557d972c46e9df5ea62b5bc641d92275c64bb96994fecb653ceaf9d6a3c3a31844bee3f965b1a3e32f1",
+      "keySharesBackedUpToDynamic": true,
+      "ensName": "alice.eth.axelrodtornament.eth"
+    },
+    "bob.eth": {
+      "isEoaCreated": true,
+      "isDelegationSigned": false,
+      "isSaSet": false,
+      "isEnsAssigned": true,
+      "eoaAddress": "0x44Ca68423011b6B71eaE6B730DC802cb91B6B68d",
+      "dynamicWalletId": "e8a1d3cf-72a4-4dff-9b66-ab01a64b8da9",
+      "publicKeyHex": "048006693d85554afdf03615fdefc7982d8e3db796ee64f1b5765271098c49990bc9004f47a502c700533cc8c843b875aaaccd58f80fa2cf912882126f4ca2e83f",
+      "keySharesBackedUpToDynamic": true,
+      "ensName": "bob.eth.axelrodtornament.eth"
+    },
+    "carol.eth": {
+      "isEoaCreated": true,
+      "isDelegationSigned": false,
+      "isSaSet": false,
+      "isEnsAssigned": true,
+      "eoaAddress": "0xadD590DC1EBe5B3180b674c96Cd411CD68D23670",
+      "dynamicWalletId": "b10c8df9-ea2d-404d-a7cc-bb140b4c85b2",
+      "publicKeyHex": "0427fbb3e832f534c4e5badd98dc4e6cc2c1442d8dc9297d37eaadefe7f80dd70bf409796774995b3d52d46fed4fc158e7f93dfc54eb53cc67530bba72d38a8d3a",
+      "keySharesBackedUpToDynamic": true,
+      "ensName": "carol.eth.axelrodtornament.eth"
+    },
+    "dave.eth": {
+      "isEoaCreated": true,
+      "isDelegationSigned": false,
+      "isSaSet": false,
+      "isEnsAssigned": true,
+      "eoaAddress": "0x1Dd6540a6Dcb1d39A4E7a494c555B1A313E65Df6",
+      "dynamicWalletId": "7f96a797-ce8e-4ed0-80a6-ac121bdc024b",
+      "publicKeyHex": "04728bccf345c8ccb8706bc4e8c5d9b2a8f7078392a4e09e79c6469043e924d3ba83b741b227a0f85d2270bf49200184257128abc45c5101d1b42ec8cd4c8d2dee",
+      "keySharesBackedUpToDynamic": true,
+      "ensName": "dave.eth.axelrodtornament.eth"
+    },
+    "erin.eth": {
+      "isEoaCreated": true,
+      "isDelegationSigned": false,
+      "isSaSet": false,
+      "isEnsAssigned": true,
+      "eoaAddress": "0x4Df03A08539Ad20dF0c7efbCC943863A59F17020",
+      "dynamicWalletId": "fb6789ae-3409-4949-82b0-9a0ea6f72f34",
+      "publicKeyHex": "04f8a12fb80965155365ede60d2c7d354bd21dcd149e32469711db983ff3739ef2aae4b3fdb29ad1b87a683e86d0d9aa35e17a6a9991b782fd54363f5cdb99e4f9",
+      "keySharesBackedUpToDynamic": true,
+      "ensName": "erin.eth.axelrodtornament.eth"
+    },
+    "frank.eth": {
+      "isEoaCreated": true,
+      "isDelegationSigned": false,
+      "isSaSet": false,
+      "isEnsAssigned": true,
+      "eoaAddress": "0xacdB93e16f01a4394aeF294DdeB2Cda12217aEa8",
+      "dynamicWalletId": "0c5f10f2-f181-40a8-a7bb-2a6a98fbf867",
+      "publicKeyHex": "046cce2f163b960e0ad948ec884292653bcbc36c2e6a7dec25bf46655ad5b3708cf85352fcf24b925b5c290512d92864c69f88075a7f34d80734a781f3c9f60da6",
+      "keySharesBackedUpToDynamic": true,
+      "ensName": "frank.eth.axelrodtornament.eth"
+    }
+  }
+}
