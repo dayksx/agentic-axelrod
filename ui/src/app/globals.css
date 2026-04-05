@@ -33,6 +33,10 @@ body {
   color: var(--foreground);
 }
 
+summary::-webkit-details-marker {
+  display: none;
+}
+
 @keyframes pulse-glow {
   0%, 100% { opacity: 0.4; transform: translateY(0); }
   50% { opacity: 1; transform: translateY(6px); }
