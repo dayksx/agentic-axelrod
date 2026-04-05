@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { SEPOLIA_CHAIN_ID } from "@/lib/chains";
+import { PlayerQueue } from "@/components/PlayerQueue";
 
 const NAME_MAX = 15;
 const PROMPT_MAX = 500;
@@ -244,57 +245,61 @@ export function JoinTournamentForm() {
 
   if (step === "success") {
     return (
-      <div className="rounded-lg border border-cooperate/30 bg-cooperate/5 p-6 space-y-4 animate-slide-in">
-        <div className="flex items-center gap-2">
-          <span className="text-cooperate text-xl">✓</span>
-          <h3 className="text-lg font-semibold text-cooperate">
-            Agent registered!
-          </h3>
+      <div className="space-y-5">
+        <div className="rounded-lg border border-cooperate/30 bg-cooperate/5 p-6 space-y-4 animate-slide-in">
+          <div className="flex items-center gap-2">
+            <span className="text-cooperate text-xl">✓</span>
+            <h3 className="text-lg font-semibold text-cooperate">
+              Agent registered!
+            </h3>
+          </div>
+
+          <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
+            <dt className="text-muted">Agent Name</dt>
+            <dd className="font-mono">{successUser?.agent_name ?? nameTrimmed}</dd>
+
+            <dt className="text-muted">Strategy</dt>
+            <dd className="text-foreground/85 wrap-break-word">
+              {promptTrimmed.length > 80
+                ? `${promptTrimmed.slice(0, 80)}…`
+                : promptTrimmed}
+            </dd>
+
+            {agentWallet && (
+              <>
+                <dt className="text-muted">Agent Wallet</dt>
+                <dd>
+                  <a
+                    href={`https://sepolia.etherscan.io/address/${agentWallet}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono text-accent hover:underline text-xs"
+                  >
+                    {truncateAddress(agentWallet)} ↗
+                  </a>
+                </dd>
+              </>
+            )}
+
+            {txHash && (
+              <>
+                <dt className="text-muted">Entry Fee tx</dt>
+                <dd>
+                  <a
+                    href={`https://sepolia.etherscan.io/tx/${txHash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono text-accent hover:underline text-xs"
+                  >
+                    {truncateHash(txHash)} ↗
+                  </a>
+                </dd>
+              </>
+            )}
+          </dl>
         </div>
 
-        <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
-          <dt className="text-muted">Agent Name</dt>
-          <dd className="font-mono">{successUser?.agent_name ?? nameTrimmed}</dd>
-
-          <dt className="text-muted">Strategy</dt>
-          <dd className="text-foreground/85 wrap-break-word">
-            {promptTrimmed.length > 80
-              ? `${promptTrimmed.slice(0, 80)}…`
-              : promptTrimmed}
-          </dd>
-
-          {agentWallet && (
-            <>
-              <dt className="text-muted">Agent Wallet</dt>
-              <dd>
-                <a
-                  href={`https://sepolia.etherscan.io/address/${agentWallet}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-accent hover:underline text-xs"
-                >
-                  {truncateAddress(agentWallet)} ↗
-                </a>
-              </dd>
-            </>
-          )}
-
-          {txHash && (
-            <>
-              <dt className="text-muted">Entry Fee tx</dt>
-              <dd>
-                <a
-                  href={`https://sepolia.etherscan.io/tx/${txHash}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-accent hover:underline text-xs"
-                >
-                  {truncateHash(txHash)} ↗
-                </a>
-              </dd>
-            </>
-          )}
-        </dl>
+        <PlayerQueue />
       </div>
     );
   }

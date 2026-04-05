@@ -10,6 +10,7 @@ import type {
   ScoreRow,
   AnnouncementRow,
   TournamentTransactionRow,
+  UserRow,
 } from "@/types/models";
 
 export async function fetchTournamentList(): Promise<TournamentSummary[]> {
@@ -64,6 +65,17 @@ export async function fetchTournamentList(): Promise<TournamentSummary[]> {
       agents,
     };
   });
+}
+
+export async function fetchPlayerQueue(): Promise<UserRow[]> {
+  const { data, error } = await supabase
+    .from("users")
+    .select("*")
+    .is("tournament_date", null)
+    .order("created_at", { ascending: true });
+
+  if (error) throw error;
+  return data as UserRow[];
 }
 
 export async function fetchTournamentData(
