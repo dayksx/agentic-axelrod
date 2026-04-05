@@ -1,7 +1,21 @@
 "use client";
 
-const AVATAR_URL =
-  "https://imgs.search.brave.com/VYH0b-0X6tItrD9_PLvbTLYf87N8RVOZVLzPJxtmSh4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLmlt/Z2ZsaXAuY29tLzIv/YmM2MHUuanBn";
+const AVATARS = [
+  "/bender.png",
+  "/c3po.png",
+  "/gearhead.png",
+  "/giant.png",
+  "/optimus.png",
+  "/walle.png",
+] as const;
+
+function nameToIndex(name: string): number {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = (hash * 31 + name.charCodeAt(i)) | 0;
+  }
+  return ((hash % AVATARS.length) + AVATARS.length) % AVATARS.length;
+}
 
 export function AgentAvatar({
   name,
@@ -10,9 +24,10 @@ export function AgentAvatar({
   name: string;
   size?: number;
 }) {
+  const src = AVATARS[nameToIndex(name)];
   return (
     <img
-      src={AVATAR_URL}
+      src={src}
       alt={name}
       width={size}
       height={size}

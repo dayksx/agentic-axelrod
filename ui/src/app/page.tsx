@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { fetchTournamentList } from "@/lib/queries";
 import { TournamentCard } from "@/components/TournamentCard";
@@ -82,15 +81,6 @@ export default function HomePage() {
           <h1 className="text-5xl font-bold tracking-tight mb-6 text-center">
             Agentic Axelrod
           </h1>
-          <p className="text-center mb-10">
-            <Link
-              href="/wallet-test"
-              className="text-accent text-sm underline underline-offset-4 hover:no-underline"
-            >
-              Wallet connection test (Dynamic)
-            </Link>
-          </p>
-
           <div className="space-y-6 text-foreground/70 text-lg leading-relaxed">
             <AccordionSection
               id="what"
