@@ -7,12 +7,7 @@ import { SurvivorConnector } from "@/components/SurvivorConnector";
 import { JoinTournamentForm } from "@/components/JoinTournamentForm";
 import type { TournamentSummary } from "@/types/models";
 
-type SectionId =
-  | "what"
-  | "question"
-  | "how"
-  | "history"
-  | "videos";
+type SectionId = "what" | "question" | "how" | "history" | "videos";
 
 function AccordionSection({
   id,
@@ -72,8 +67,8 @@ export default function HomePage() {
       <section className="relative min-h-screen flex flex-col items-center py-28 overflow-hidden">
         {/* Hero background */}
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-20"
-          style={{ backgroundImage: "url(/landing-hero.png)" }}
+          className="absolute inset-0 bg-cover bg-center opacity-30"
+          style={{ backgroundImage: "url(/axelrod.jpg)" }}
         />
         <div className="absolute inset-0 bg-linear-to-b from-background/60 via-background/80 to-background" />
 
