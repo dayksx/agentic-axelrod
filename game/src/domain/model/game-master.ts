@@ -15,6 +15,7 @@ import {
   updateScores,
 } from "../../adapter/db/supabase-writes.js";
 import {
+  ensNameForAgentApi,
   postAgentAnnounce,
   postAgentChat,
   postAgentDecision,
@@ -528,7 +529,7 @@ export class GameMaster {
         roundNumber: roundIndex,
         arenaId: match.arenaId,
         message,
-        agentName: player,
+        agentName: ensNameForAgentApi(player),
       };
       this.arenaAnnouncements.push(row);
       if (this.dbEnabled) {

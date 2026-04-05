@@ -6,8 +6,23 @@ function normalizeBaseUrl(baseUrl: string): string {
   return baseUrl.replace(/\/$/, "");
 }
 
+/**
+ * AI `POST /message/send` (load phase + arena announcements) requires names ending in `.eth`.
+ * Config / DB often use bare labels; normalize so agents accept the payload.
+ */
+export function ensNameForAgentApi(name: string): string {
+  const t = name.trim();
+  if (t.length === 0) return t;
+  return t.endsWith(".eth") ? t : `${t}.eth`;
+}
+
 /** A2A load body requires `domain`; derive from ENS name (`alice.eth` → `https://alice.local`). */
 function domainFromEnsName(name: string): string {
+  if (!name.endsWith(".eth")) {
+    throw new Error(
+      `internal: domainFromEnsName expected *.eth, got "${name}"`,
+    );
+  }
   return `https://${name.slice(0, -".eth".length)}.local`;
 }
 
@@ -73,12 +88,13 @@ export async function postAgentLoad(
   baseUrl: string,
   params: PostAgentLoadParams,
 ): Promise<void> {
+  const name = ensNameForAgentApi(params.name);
   await postMessageSend(
     baseUrl,
     {
       phase: "load" as const,
-      name: params.name,
-      domain: domainFromEnsName(params.name),
+      name,
+      domain: domainFromEnsName(name),
       strategy: params.strategy,
       tournamentId: params.tournamentId,
       ...(params.rosterRole !== undefined ? { rosterRole: params.rosterRole } : {}),
