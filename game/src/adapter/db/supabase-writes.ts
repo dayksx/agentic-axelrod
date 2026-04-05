@@ -54,6 +54,22 @@ function computeDeltas(
 // PRE-TOURNAMENT
 // ---------------------------------------------------------------------------
 
+/**
+ * Waitlist rows picked for a series tournament: set both date columns so they drop out of
+ * the FIFO query (`tournament_date` and `reserved_date` both NULL).
+ */
+export async function markUsersConsumedForTournament(
+  userIds: readonly number[],
+): Promise<void> {
+  if (userIds.length === 0) return;
+  const now = new Date().toISOString();
+  const { error } = await db()
+    .from("users")
+    .update({ reserved_date: now, tournament_date: now })
+    .in("id", [...userIds]);
+  if (error) throw error;
+}
+
 /** #1 — Insert agents, skip if already exists (by name). Returns all agent ids+names. */
 export async function createAgents(
   agents: {

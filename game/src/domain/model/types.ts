@@ -46,6 +46,11 @@ export interface TournamentConfig {
   arenasPerRound?: number;
   /** GM truncates announces beyond this length; TBD tuning. */
   announceMaxChars?: number;
+  /**
+   * `public.users.id` values picked as new entrants (series draft from waitlist).
+   * When Supabase is enabled, GM sets `reserved_date` and `tournament_date` before agent load.
+   */
+  consumedUsersRowIds?: number[];
 }
 
 export interface TournamentResults {

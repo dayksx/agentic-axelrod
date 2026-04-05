@@ -60,6 +60,24 @@ export function parseTournamentConfig(raw: unknown): TournamentConfig {
   if (typeof o.announceMaxChars === "number") {
     cfg.announceMaxChars = o.announceMaxChars;
   }
+  if (o.consumedUsersRowIds !== undefined) {
+    if (!Array.isArray(o.consumedUsersRowIds)) {
+      throw new Error("consumedUsersRowIds must be an array of positive integers");
+    }
+    const ids: number[] = [];
+    for (let i = 0; i < o.consumedUsersRowIds.length; i++) {
+      const x = o.consumedUsersRowIds[i];
+      if (typeof x !== "number" || !Number.isInteger(x) || x < 1) {
+        throw new Error(
+          `consumedUsersRowIds[${i}] must be a positive integer`,
+        );
+      }
+      ids.push(x);
+    }
+    if (ids.length > 0) {
+      cfg.consumedUsersRowIds = ids;
+    }
+  }
   return cfg;
 }
 
