@@ -110,6 +110,17 @@
       "publicKeyHex": "0435eced61796208ba7013597820b1849566bbd3d37b34c93a3b98d9a78411c7ac9988349888e2eb97a066ee45511e0bb5011d17470a9ecfde88f234a13a8bbcad",
       "keySharesBackedUpToDynamic": true,
       "ensName": "bob.axelrodtornament.eth"
+    },
+    "cyborgdayan": {
+      "isEoaCreated": true,
+      "isDelegationSigned": false,
+      "isSaSet": false,
+      "isEnsAssigned": true,
+      "eoaAddress": "0x8c040f37b38398CF6901840b704eA753B0863CF5",
+      "dynamicWalletId": "1b9b86a9-f337-46dd-89b3-3d26cb7132fd",
+      "publicKeyHex": "04e2075dc6a46f07cc66347ab70371509be1ddbda3f33cb56bdfd6b7dbb5f9d3a60299e1aa3839becd691071694ce280f9439a89c28f59969f800fbcac5f4c449f",
+      "keySharesBackedUpToDynamic": true,
+      "ensName": "cyborgdayan.axelrodtornament.eth"
     }
   }
 }
