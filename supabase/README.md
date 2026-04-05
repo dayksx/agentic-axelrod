@@ -1,3 +1,5 @@
+SPDX-License-Identifier: GPL-3.0-or-later
+
 # Database (Supabase)
 
 ## Structure
@@ -49,20 +51,20 @@ Open the Supabase dashboard → Table Editor. You should see all tables populate
 
 ## Seed data overview
 
-| Tournament | Status    | Agents                                                    | Rounds |
-|------------|-----------|-----------------------------------------------------------|--------|
-| 0          | completed | TitForTat, Deceiver, Grudger, Pavlov, Detective, AC      | 10     |
-| 1          | completed | TitForTat, Grudger, Pavlov, Hawk, Diplomat, Random        | 10     |
-| 2          | running   | Deceiver, Detective, AC, Forgiving, Bully, Adaptive       | 4/10   |
+| Tournament | Status    | Agents                                              | Rounds |
+| ---------- | --------- | --------------------------------------------------- | ------ |
+| 0          | completed | TitForTat, Deceiver, Grudger, Pavlov, Detective, AC | 10     |
+| 1          | completed | TitForTat, Grudger, Pavlov, Hawk, Diplomat, Random  | 10     |
+| 2          | running   | Deceiver, Detective, AC, Forgiving, Bully, Adaptive | 4/10   |
 
 **Row counts:** 12 agents, 72 matches, 432 chat messages, 144 scores, 144 graffiti, 21 gossip, 144 memory, 30 transactions.
 
 ## RLS policy
 
-| Role           | Access      | Use case                    |
-|----------------|-------------|-----------------------------|
-| `anon`         | SELECT only | Frontend (public anon key)  |
-| `service_role` | Full CRUD   | Tournament engine (secret)  |
+| Role           | Access      | Use case                   |
+| -------------- | ----------- | -------------------------- |
+| `anon`         | SELECT only | Frontend (public anon key) |
+| `service_role` | Full CRUD   | Tournament engine (secret) |
 
 The anon key is safe to expose in frontend code. Writes require the service_role key, which stays server-side.
 

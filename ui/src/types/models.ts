@@ -8,6 +8,7 @@ export type MatchRow = Tables<"matches">;
 export type ChatMessageRow = Tables<"chat_messages">;
 export type ScoreRow = Tables<"scores">;
 export type AnnouncementRow = Tables<"announcements">;
+export type TournamentTransactionRow = Tables<"tournament_transactions">;
 
 // Home page
 export type TournamentSummary = {
@@ -30,6 +31,7 @@ export type TournamentData = {
   chatMessages: ChatMessageRow[];
   scores: ScoreRow[];
   announcements: AnnouncementRow[];
+  transactions: TournamentTransactionRow[];
 };
 
 // Organized for timeline consumption
@@ -38,6 +40,7 @@ export type OrganizedTournament = {
   agents: AgentRow[];
   rounds: Round[];
   totalSteps: number;
+  transactions: TournamentTransactionRow[];
 };
 
 export type Round = {

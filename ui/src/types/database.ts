@@ -289,7 +289,7 @@ export interface Database {
           id: number;
           tournament_id: number;
           agent_id: number;
-          type: "entry_fee" | "elimination" | "prize";
+          type: "entry_fee" | "collection" | "prize";
           tx_hash: string;
           created_at: string;
         };
@@ -297,7 +297,7 @@ export interface Database {
           id?: number;
           tournament_id: number;
           agent_id: number;
-          type: "entry_fee" | "elimination" | "prize";
+          type: "entry_fee" | "collection" | "prize";
           tx_hash: string;
           created_at?: string;
         };
@@ -305,7 +305,7 @@ export interface Database {
           id?: number;
           tournament_id?: number;
           agent_id?: number;
-          type?: "entry_fee" | "elimination" | "prize";
+          type?: "entry_fee" | "collection" | "prize";
           tx_hash?: string;
           created_at?: string;
         };

@@ -160,11 +160,11 @@ export async function createAllMatches(
   }[];
 }
 
-/** #5 / #11 / #12 — Record an on-chain transaction (entry_fee | elimination | prize). */
+/** #5 / #11 / #12 — Record an on-chain transaction (entry_fee | collection | prize). */
 export async function recordTransaction(
   tournament_id: number,
   agent_id: number,
-  type: "entry_fee" | "elimination" | "prize",
+  type: "entry_fee" | "collection" | "prize",
   tx_hash: string,
 ): Promise<void> {
   const { error } = await db()

@@ -179,9 +179,9 @@ One per agent per round. Tournament 0, Rounds 1–2 (4 agents shown for brevity)
 
 ## tournament_transactions
 
-`type` values: `entry_fee` (each agent pays stake **to** the game master at start — matches `collect-tournament-stake` in [`../wallet-management.md`](../wallet-management.md)), `elimination` (losing agents → GM at end, often via delegation), `prize` (GM → agent at end).
+`type` values: `entry_fee` (human → agent wallet at start), `collection` (agent → Game Master immediately after entry_fee), `prize` (Game Master → agent at end).
 
-Tournament 0 — complete (6 entry fees + 3 eliminations + 3 prizes):
+Tournament 0 — complete (6 entry fees + 6 collections + 3 prizes):
 
 | id  | tournament_id | agent_id | type        | tx_hash                                                          | created_at          |
 | --- | ------------- | -------- | ----------- | ---------------------------------------------------------------- | ------------------- |
@@ -191,9 +191,9 @@ Tournament 0 — complete (6 entry fees + 3 eliminations + 3 prizes):
 | 3   | 0             | 3        | entry_fee   | 0x4d5e6f1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d | 2026-04-01 12:00:04 |
 | 4   | 0             | 4        | entry_fee   | 0x5e6f1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d5e | 2026-04-01 12:00:05 |
 | 5   | 0             | 5        | entry_fee   | 0x6f1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d5e6f | 2026-04-01 12:00:06 |
-| 6   | 0             | 2        | elimination | 0x7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a | 2026-04-01 12:15:01 |
-| 7   | 0             | 4        | elimination | 0x8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b | 2026-04-01 12:15:02 |
-| 8   | 0             | 5        | elimination | 0x9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c | 2026-04-01 12:15:03 |
+| 6   | 0             | 2        | collection  | 0x7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a | 2026-04-01 12:15:01 |
+| 7   | 0             | 4        | collection  | 0x8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b | 2026-04-01 12:15:02 |
+| 8   | 0             | 5        | collection  | 0x9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c | 2026-04-01 12:15:03 |
 | 9   | 0             | 1        | prize       | 0x0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d | 2026-04-01 12:15:04 |
 | 10  | 0             | 3        | prize       | 0x1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e | 2026-04-01 12:15:05 |
 | 11  | 0             | 0        | prize       | 0x2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f7a8b9c0d1e2f | 2026-04-01 12:15:06 |

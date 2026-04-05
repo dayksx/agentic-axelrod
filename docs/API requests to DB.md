@@ -31,25 +31,29 @@ Input: `{ tournament_id, round_number, arena_id, agent_a, agent_b, first_speaker
 
 ### 5. `recordTransaction(tournament_id, agent_id, "entry_fee", tx_hash)`
 
-Insert one row into `tournament_transactions` per agent (×6). Records the onchain entry fee transfer.
+Insert one row into `tournament_transactions` per agent (×6). Records the onchain entry fee transfer (human → agent wallet).
+
+### 6. `recordTransaction(tournament_id, agent_id, "collection", tx_hash)`
+
+Insert one row into `tournament_transactions` per agent (×6). Records the collection transfer (agent wallet → Game Master) immediately after entry fee.
 
 ---
 
 ## PER ROUND (×10 rounds, 3 arenas each)
 
-### 6. `storeAnnouncement(tournament_id, round_number, agent_id, message)`
+### 7. `storeAnnouncement(tournament_id, round_number, agent_id, message)`
 
 Insert into `announcements`. One per agent per round (6 per round). Phase 4b output.
 
-### 7. `storeChatMessage(match_id, turn_number, speaker, content)`
+### 8. `storeChatMessage(match_id, turn_number, speaker, content)`
 
 Insert into `chat_messages`. Called up to 6 times per match (3 per agent, strict alternation). Phase 4c output.
 
-### 8. `recordDecisions(match_id, decision_a, decision_b)`
+### 9. `recordDecisions(match_id, decision_a, decision_b)`
 
 Update the existing `matches` row — set `decision_a`, `decision_b`, `delta_a`, `delta_b` (computed from payoff matrix). Phase 4d+4e output.
 
-### 9. `updateScores(tournament_id, round_number, scores[])`
+### 10. `updateScores(tournament_id, round_number, scores[])`
 
 Upsert into `scores`. One row per agent per round (6 rows per round). Sets `delta` and `cumulative`.
 
@@ -57,21 +61,17 @@ Upsert into `scores`. One row per agent per round (6 rows per round). Sets `delt
 
 ## POST-TOURNAMENT
 
-### 10. `completeTournament(tournament_id)`
+### 11. `completeTournament(tournament_id)`
 
 Update `tournaments` row: status = `completed`, set `completed_at`.
 
-### 11. `recordTransaction(tournament_id, agent_id, "elimination", tx_hash)`
-
-Insert into `tournament_transactions`. Bottom 3 agents lose their stake (×3 rows).
-
 ### 12. `recordTransaction(tournament_id, agent_id, "prize", tx_hash)`
 
-Insert into `tournament_transactions`. Top 3 agents receive prize split (×3 rows).
+Insert into `tournament_transactions`. Top 3 agents receive prize split (Game Master → agent wallet, ×3 rows).
 
 ---
 
-## SERIES (Step 7 — Survivor Logic)
+## SERIES (Survivor Logic)
 
 ### 13. `createTournament(config)` — same as #2
 
@@ -85,11 +85,11 @@ Enroll surviving agents (top 3 from previous tournament) + 3 new agents into the
 
 Precompute and insert the 30-match schedule for the new tournament.
 
-### 16. `recordTransaction(...)` — same as #5
+### 16. `recordTransaction(...)` — same as #5 + #6
 
-Entry fees for the new 6 agents.
+Entry fees + collections for the new agents. Survivors carry forward without new entry_fee or collection.
 
-Then rounds 6–12 repeat.
+Then rounds 7–12 repeat.
 
 ---
 
@@ -102,13 +102,13 @@ Then rounds 6–12 repeat.
 | 3     | enrollAgents                    | tournament_agents       | pre-tournament          |
 | 4     | createAllMatches                | matches                 | pre-tournament          |
 | 5     | recordTransaction (entry_fee)   | tournament_transactions | pre-tournament          |
-| 6     | storeAnnouncement               | announcements           | phase 4b, each round    |
-| 7     | storeChatMessage                | chat_messages           | phase 4c, each match    |
-| 8     | recordDecisions                 | matches (update)        | phase 4d, each match    |
-| 9     | updateScores                    | scores                  | phase 4e, each round    |
-| 10    | completeTournament              | tournaments (update)    | post-tournament         |
-| 11    | recordTransaction (elimination) | tournament_transactions | post-tournament         |
+| 6     | recordTransaction (collection)  | tournament_transactions | pre-tournament          |
+| 7     | storeAnnouncement               | announcements           | phase 4b, each round    |
+| 8     | storeChatMessage                | chat_messages           | phase 4c, each match    |
+| 9     | recordDecisions                 | matches (update)        | phase 4d, each match    |
+| 10    | updateScores                    | scores                  | phase 4e, each round    |
+| 11    | completeTournament              | tournaments (update)    | post-tournament         |
 | 12    | recordTransaction (prize)       | tournament_transactions | post-tournament         |
-| 13–16 | repeat 2–5                      | —                       | series: next tournament |
+| 13–16 | repeat 2–6                      | —                       | series: next tournament |
 
-**9 unique functions, 12 call sites per tournament, then 2–5 repeat for each series iteration.**
+**9 unique functions, 12 call sites per tournament, then 2–6 repeat for each series iteration.**
