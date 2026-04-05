@@ -4,18 +4,21 @@ import type {
   Round,
   ArenaRound,
   ScoreSnapshot,
+  AgentAnnouncement,
 } from "@/types/models";
 
 /**
  * Steps per round:
- *   6 chat messages + 1 decision_sealed + 1 decision_revealed + 1 scoring
- *   + 1 announcement (if exists) = 9 or 10
+ *   1 announcement + 6 chat messages + 1 decision_sealed + 1 decision_revealed + 1 scoring = 10
+ *
+ * Announcement is always the first step (even if the array is empty, the phase exists).
  */
+const ANNOUNCEMENT_STEPS = 1;
 const CHAT_STEPS = 6;
 const NON_CHAT_STEPS = 3; // sealed + revealed + scoring
 
-export function stepsForRound(hasAnnouncement: boolean): number {
-  return CHAT_STEPS + NON_CHAT_STEPS + (hasAnnouncement ? 1 : 0);
+export function stepsForRound(): number {
+  return ANNOUNCEMENT_STEPS + CHAT_STEPS + NON_CHAT_STEPS;
 }
 
 export function organizeByRound(data: TournamentData): OrganizedTournament {
@@ -40,9 +43,20 @@ export function organizeByRound(data: TournamentData): OrganizedTournament {
     scoresByRound.set(score.round_number, list);
   }
 
-  const announcementByRound = new Map<number, string>();
+  const agentNameById = new Map<number, string>();
+  for (const agent of data.agents) {
+    agentNameById.set(agent.id, agent.name);
+  }
+
+  const announcementsByRound = new Map<number, AgentAnnouncement[]>();
   for (const a of data.announcements) {
-    announcementByRound.set(a.round_number, a.message);
+    const list = announcementsByRound.get(a.round_number) ?? [];
+    list.push({
+      agentId: a.agent_id,
+      agentName: agentNameById.get(a.agent_id) ?? `Agent ${a.agent_id}`,
+      message: a.message,
+    });
+    announcementsByRound.set(a.round_number, list);
   }
 
   const roundNumbers = [...matchesByRound.keys()].sort((a, b) => a - b);
@@ -66,10 +80,10 @@ export function organizeByRound(data: TournamentData): OrganizedTournament {
       scores[s.agent_name] = { delta: s.delta, cumulative: s.cumulative };
     }
 
-    const announcement = announcementByRound.get(roundNum) ?? null;
-    totalSteps += stepsForRound(announcement !== null);
+    const announcements = announcementsByRound.get(roundNum) ?? [];
+    totalSteps += stepsForRound();
 
-    return { roundNumber: roundNum, arenas, announcement, scores };
+    return { roundNumber: roundNum, arenas, announcements, scores };
   });
 
   return {

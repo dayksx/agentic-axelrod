@@ -28,11 +28,6 @@ export default function ArenaDetailPage() {
     );
   }
 
-  const round = derived.round;
-  const tournamentData = useTimeStore.getState().tournamentData;
-  const roundData = tournamentData?.rounds.find((r) => r.roundNumber === round);
-  const announcement = roundData?.announcement ?? null;
-
   return (
     <div className="h-full flex flex-col">
       {/* Arena header */}
@@ -51,11 +46,7 @@ export default function ArenaDetailPage() {
 
       {/* Arena content */}
       <div className="flex-1 overflow-y-auto">
-        <ArenaDetail
-          arena={arena}
-          phase={derived.phase}
-          announcement={announcement}
-        />
+        <ArenaDetail arena={arena} phase={derived.phase} />
       </div>
     </div>
   );

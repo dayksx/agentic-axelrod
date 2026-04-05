@@ -6,6 +6,7 @@ import type {
   LeaderboardEntry,
   Phase,
   ScoreSnapshot,
+  AgentAnnouncement,
 } from "@/types/models";
 
 const CHAT_STEPS = 6;
@@ -13,12 +14,12 @@ const CHAT_STEPS = 6;
 /**
  * The single pure function that maps a step index to the full UI state.
  *
- * Step layout within a round:
- *   [0..5]  chat (one message per step, across all arenas simultaneously)
- *   [6]     decision_sealed
- *   [7]     decision_revealed
- *   [8]     scoring
- *   [9]     announcement (only if round has one)
+ * Step layout within a round (10 steps total):
+ *   [0]     announcement   (agents broadcast their public statements)
+ *   [1..6]  chat           (one message per step, across all arenas simultaneously)
+ *   [7]     decision_sealed
+ *   [8]     decision_revealed
+ *   [9]     scoring
  */
 export function deriveState(
   step: number,
@@ -31,7 +32,7 @@ export function deriveState(
 
   for (let i = 0; i < tournament.rounds.length; i++) {
     const round = tournament.rounds[i];
-    const roundSteps = stepsForRound(round.announcement !== null);
+    const roundSteps = stepsForRound();
     if (remaining < roundSteps) {
       roundIndex = i;
       break;
@@ -48,24 +49,22 @@ export function deriveState(
   let phase: Phase;
   let chatStep = 0;
 
-  if (remaining < CHAT_STEPS) {
-    phase = "chat";
-    chatStep = remaining;
-  } else if (remaining === CHAT_STEPS) {
-    phase = "decision_sealed";
-  } else if (remaining === CHAT_STEPS + 1) {
-    phase = "decision_revealed";
-  } else if (remaining === CHAT_STEPS + 2) {
-    phase = "scoring";
-  } else {
+  if (remaining === 0) {
     phase = "announcement";
+  } else if (remaining <= CHAT_STEPS) {
+    phase = "chat";
+    chatStep = remaining - 1; // 0-based chat index
+  } else if (remaining === CHAT_STEPS + 1) {
+    phase = "decision_sealed";
+  } else if (remaining === CHAT_STEPS + 2) {
+    phase = "decision_revealed";
+  } else {
+    phase = "scoring";
   }
 
   const showDecisions =
-    phase === "decision_revealed" ||
-    phase === "scoring" ||
-    phase === "announcement";
-  const showDeltas = phase === "scoring" || phase === "announcement";
+    phase === "decision_revealed" || phase === "scoring";
+  const showDeltas = phase === "scoring";
 
   const arenas: DerivedArenaState[] = round.arenas.map((arena) => ({
     arenaId: arena.arenaId,
@@ -79,6 +78,7 @@ export function deriveState(
     deltaB: showDeltas ? arena.match.delta_b : null,
   }));
 
+  const announcements: AgentAnnouncement[] = round.announcements;
   const leaderboard = buildLeaderboard(tournament, roundIndex, phase);
 
   return {
@@ -86,21 +86,22 @@ export function deriveState(
     phase,
     chatStep,
     arenas,
+    announcements,
     leaderboard,
   };
 }
 
 /**
- * Leaderboard is frozen during chat/decision phases. It shows:
- * - During chat/decision_sealed/decision_revealed: cumulative scores through the PREVIOUS round
- * - During scoring/announcement: cumulative scores through the CURRENT round
+ * Leaderboard shows:
+ * - During announcement/chat/decision phases: cumulative scores through the PREVIOUS round
+ * - During scoring: cumulative scores through the CURRENT round
  */
 function buildLeaderboard(
   tournament: OrganizedTournament,
   roundIndex: number,
   phase: Phase,
 ): LeaderboardEntry[] {
-  const useCurrentRound = phase === "scoring" || phase === "announcement";
+  const useCurrentRound = phase === "scoring";
   const scoreRoundIndex = useCurrentRound ? roundIndex : roundIndex - 1;
 
   const scoreMap: Record<string, number> = {};

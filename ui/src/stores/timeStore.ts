@@ -6,6 +6,7 @@ import { deriveState } from "@/lib/timeline";
 
 const AUTO_PLAY_MS = 800;
 const SEALED_PAUSE_MS = 1500;
+const ANNOUNCEMENT_PAUSE_MS = 2500;
 
 interface TimeState {
   currentStep: number;
@@ -38,8 +39,13 @@ function scheduleNext(get: () => TimeState) {
   const state = get();
   if (!state.isPlaying || !state.tournamentData) return;
 
+  const phase = state.derived?.phase;
   const delay =
-    state.derived?.phase === "decision_sealed" ? SEALED_PAUSE_MS : AUTO_PLAY_MS;
+    phase === "announcement"
+      ? ANNOUNCEMENT_PAUSE_MS
+      : phase === "decision_sealed"
+        ? SEALED_PAUSE_MS
+        : AUTO_PLAY_MS;
 
   autoPlayTimer = setTimeout(() => {
     const current = get();

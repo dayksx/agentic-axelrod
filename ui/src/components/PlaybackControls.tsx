@@ -3,11 +3,11 @@
 import { useTimeStore } from "@/stores/timeStore";
 
 const PHASE_LABELS: Record<string, string> = {
+  announcement: "Announcements",
   chat: "Chat",
   decision_sealed: "Decision",
   decision_revealed: "Reveal",
   scoring: "Scoring",
-  announcement: "Announcement",
 };
 
 export function PlaybackControls({ totalRounds }: { totalRounds: number }) {

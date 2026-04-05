@@ -45,6 +45,13 @@ export function ArenaCard({
 
       {/* Phase-specific preview */}
       <div className="min-h-[48px]">
+        {phase === "announcement" && (
+          <div className="flex items-center justify-center gap-2 text-xs text-accent">
+            <span>📢</span>
+            <span>Agents making announcements…</span>
+          </div>
+        )}
+
         {phase === "chat" && lastMsg && (
           <div className="text-xs text-muted truncate">
             <span className="font-medium text-foreground/70">
@@ -54,14 +61,14 @@ export function ArenaCard({
           </div>
         )}
 
-        {(phase === "decision_sealed") && (
+        {phase === "decision_sealed" && (
           <div className="flex items-center justify-center gap-4">
             <div className="w-8 h-10 bg-surface-2 rounded border border-border animate-pulse-card" />
             <div className="w-8 h-10 bg-surface-2 rounded border border-border animate-pulse-card" />
           </div>
         )}
 
-        {(phase === "decision_revealed" || phase === "scoring" || phase === "announcement") && (
+        {(phase === "decision_revealed" || phase === "scoring") && (
           <div className="flex items-center justify-center gap-6 text-lg font-bold">
             <span className={arena.decisionA === "C" ? "text-cooperate" : "text-defect"}>
               {arena.decisionA}
@@ -73,7 +80,7 @@ export function ArenaCard({
           </div>
         )}
 
-        {(phase === "scoring" || phase === "announcement") &&
+        {phase === "scoring" &&
           arena.deltaA !== null &&
           arena.deltaB !== null && (
             <div className="flex items-center justify-center gap-8 mt-1 text-sm font-mono">
