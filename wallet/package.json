@@ -28,7 +28,7 @@
     "transfer-funds": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts transfer-funds",
     "collect-tournament-stake": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts collect-tournament-stake",
     "distribute-tournament-rewards": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts distribute-tournament-rewards",
-    "start": "tsx --env-file=.env src/adapters/inbound/http/run-wallet-http.ts"
+    "start": "tsx src/adapters/inbound/http/run-wallet-http.ts"
   },
   "keywords": [],
   "author": "",
