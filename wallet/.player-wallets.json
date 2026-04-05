@@ -66,6 +66,28 @@
       "publicKeyHex": "043ade72cba716044c0fab21ef89d30973ee4a257f22e1eb7a7b9461bd56058755d361cf69811c3f3a8cb1a909bdb597456ad86160a0967de9fa02e5845fa05600",
       "keySharesBackedUpToDynamic": true,
       "ensName": "axelrod.axelrodtornament.eth"
+    },
+    "joe.eth": {
+      "isEoaCreated": true,
+      "isDelegationSigned": false,
+      "isSaSet": false,
+      "isEnsAssigned": true,
+      "eoaAddress": "0xb438a698FC46f6FcC237FE377941f60d6b2b7d45",
+      "dynamicWalletId": "ba4dd8e7-6cf0-4996-9f34-21635b2f3202",
+      "publicKeyHex": "048cbdf40d79bbdee1be0ea3644e4e51a965ce1b37d4289f37b3ab1f1d56e093d024aac5d1d04684dde00bea141a4f213d54e2ac75ec01d143e2fff17090415a5f",
+      "keySharesBackedUpToDynamic": true,
+      "ensName": "joe.eth.axelrodtornament.eth"
+    },
+    "test": {
+      "isEoaCreated": true,
+      "isDelegationSigned": false,
+      "isSaSet": false,
+      "isEnsAssigned": true,
+      "eoaAddress": "0x339b99a87Ed9eEC8221fa926b2b0047492B68886",
+      "dynamicWalletId": "0c24a75a-72d5-412e-8e70-672e2df00399",
+      "publicKeyHex": "046f4611f88660f0ddb9b275ae84fbbd01bff8aebf021a84ca98c514eb8dca78ab92dbe7f174e855596ab79342a1a345342bcdb1c4aa8a8370c7477cd60ad6b18a",
+      "keySharesBackedUpToDynamic": true,
+      "ensName": "test.axelrodtornament.eth"
     }
   }
 }

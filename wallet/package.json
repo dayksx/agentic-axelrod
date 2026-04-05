@@ -27,18 +27,22 @@
     "get-player-wallets": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts get-player-wallets",
     "transfer-funds": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts transfer-funds",
     "collect-tournament-stake": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts collect-tournament-stake",
-    "distribute-tournament-rewards": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts distribute-tournament-rewards"
+    "distribute-tournament-rewards": "pnpm exec tsx --env-file=.env src/adapters/inbound/cli/wallet-cli.ts distribute-tournament-rewards",
+    "wallet:http": "tsx --env-file=.env src/adapters/inbound/http/run-wallet-http.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.6.5",
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "^25.5.2",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2"
   },
   "dependencies": {
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1",
     "@dynamic-labs-wallet/core": "^0.0.322",
     "@dynamic-labs-wallet/node-evm": "^0.0.322",
     "@dynamic-labs/ethereum": "^4.75.0",

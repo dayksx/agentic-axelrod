@@ -102,9 +102,11 @@ flowchart TB
 | **Outbound adapters** | `src/adapters/outbound/` | **`createAuthenticatedEvmClient`** and Dynamic Node EVM typings; **filesystem** persistence for `.game-master-wallet.json` and `.player-wallets.json`. |
 | **Domain** | `src/domain/` | **Types**, **`Wallet`** aggregate, **`WalletSnapshot`**, **`GAME_MASTER_ENS_NAME`**, **`ThresholdScheme`**. |
 
-### HTTP integration (for your own server)
+### HTTP integration
 
-There is **no built-in HTTP server** in this package. Import **`runCreateWalletsFromHttpBody`** from the package root and call it from your route handler.
+**Built-in server (optional):** `pnpm run wallet:http` starts Express on `WALLET_HTTP_PORT` (default **3210**). **`POST /agents`** creates or loads persisted player wallets by name (same as `getPlayersWallet` / CLI `get-player-wallets`). **`GET /health`** — liveness.
+
+You can also **`import { createWalletHttpApp }`** from the package root and mount the app behind your own host, or call **`runCreateWalletsFromHttpBody`** from a custom route handler.
 
 **`CreateWalletsHttpBody`** (see `src/adapters/inbound/http/create-wallets.ts`):
 
