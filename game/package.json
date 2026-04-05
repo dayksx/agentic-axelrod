@@ -16,6 +16,7 @@
     "typecheck": "pnpm --filter wallet run build && tsc --noEmit",
     "clean": "rm -rf dist",
     "tournament": "tsx src/cli/run-tournament.ts",
+    "series-players": "tsx src/cli/print-series-players-json.ts",
     "gm-server": "tsx src/adapter/http/gm-server.ts"
   },
   "keywords": [],
