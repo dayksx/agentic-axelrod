@@ -104,11 +104,47 @@ flowchart TB
 
 ### HTTP integration
 
-**Built-in server (optional):** `pnpm run wallet:http` starts Express on `WALLET_HTTP_PORT` (default **3210**). **`POST /agents`** creates or loads persisted player wallets by name (same as `getPlayersWallet` / CLI `get-player-wallets`). **`GET /health`** — liveness.
+**Built-in server (optional):** from `wallet/`, run `pnpm run wallet:http`. It starts Express on **`WALLET_HTTP_HOST`** (default `0.0.0.0`) and **`WALLET_HTTP_PORT`** (default **3210**). Loads `wallet/.env` on startup (same variables as the [Setup](#setup) table, plus **`WALLET_HTTP_HOST`** / **`WALLET_HTTP_PORT`** above).
 
-You can also **`import { createWalletHttpApp }`** from the package root and mount the app behind your own host, or call **`runCreateWalletsFromHttpBody`** from a custom route handler.
+| Route | Method | Purpose |
+|-------|--------|---------|
+| `/health` | GET | Liveness (`{ "ok": true, "service": "wallet" }`) |
+| `/agents` | POST | Create or load persisted wallets per agent name — same as **`getPlayersWallet`** / CLI **`get-player-wallets`** |
 
-**`CreateWalletsHttpBody`** (see `src/adapters/inbound/http/create-wallets.ts`):
+You can also **`import { createWalletHttpApp }`** from the package root and mount the app behind your own host, or call **`runCreateWalletsFromHttpBody`** from a custom route handler (see below).
+
+#### `curl` examples
+
+Server listening on the default port (`127.0.0.1:3210`):
+
+```bash
+# Liveness
+curl -sS http://127.0.0.1:3210/health
+```
+
+**`POST /agents`** — request body is only **`names`**. The server reads **Dynamic** credentials from **`DYNAMIC_AUTH_TOKEN`** and **`DYNAMIC_ENVIRONMENT_ID`**, uses **Ethereum Sepolia** from viem (`sepolia`), and uses **`RPC_URL`** when set, otherwise viem’s default Sepolia HTTP RPC (same pattern as the CLI). Optional **`WALLET_PASSWORD`** and **`PLAYER_WALLETS_FILE`** apply on the server only.
+
+```bash
+curl -sS -X POST http://127.0.0.1:3210/agents \
+  -H 'Content-Type: application/json' \
+  -d '{"names":["alice","bob"]}'
+```
+
+**Response** (`200`): JSON with **`wallets`** (array of **`WalletSnapshot`**), **`created`** (boolean per name, same order as **`names`**), and **`stateFilePath`**. **`400`** — bad **`names`**. **`503`** — server missing **`DYNAMIC_AUTH_TOKEN`** or **`DYNAMIC_ENVIRONMENT_ID`**. **`500`** — other errors with **`{ "error": "..." }`**.
+
+#### `POST /agents` body (`CreateAgentsHttpBody`)
+
+See `src/adapters/inbound/http/wallet-http-app.ts`.
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `names` | Yes | Non-empty array of agent / player name strings (trimmed; order preserved) |
+
+All other configuration is **server-side** (`.env` / process environment), not request fields.
+
+#### Library helper: `runCreateWalletsFromHttpBody`
+
+**`CreateWalletsHttpBody`** (see `src/adapters/inbound/http/create-wallets.ts`) is for embedding **`runCreateWalletsFromHttpBody`** in your own app — not the shape of **`POST /agents`**.
 
 | Field | Required | Description |
 |-------|----------|-------------|

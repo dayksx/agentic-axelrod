@@ -1,33 +1,20 @@
-import type { Chain } from "viem";
-import { baseSepolia, sepolia } from "viem/chains";
+import { sepolia } from "viem/chains";
 import express, { type Request, type Response } from "express";
 import { getPlayersWallet } from "../sdk/internal-api.js";
 import { ThresholdScheme } from "../../../domain/index.js";
 
-const CHAINS_BY_ID: Record<number, Chain> = {
-  [baseSepolia.id]: baseSepolia,
-  [sepolia.id]: sepolia,
-};
+/** Default Sepolia HTTP RPC from viem when `RPC_URL` is unset (same idea as CLI). */
+function defaultSepoliaRpcUrl(): string {
+  return sepolia.rpcUrls.default.http[0]!;
+}
 
 /**
- * JSON body for `POST /agents` — create or load persisted wallets per agent name
- * (same use case as `wallet/internal-api` `getPlayersWallet` and CLI `get-player-wallets`).
+ * JSON body for `POST /agents` — only agent names. Dynamic credentials, RPC, chain,
+ * and optional password / player file path come from the server environment (see `wallet/.env`).
  */
 export type CreateAgentsHttpBody = {
-  /** Defaults to `process.env.DYNAMIC_AUTH_TOKEN` when omitted. */
-  authToken?: string;
-  /** Defaults to `process.env.DYNAMIC_ENVIRONMENT_ID` when omitted. */
-  environmentId?: string;
-  /** Defaults to `process.env.RPC_URL` when omitted. */
-  rpcUrl?: string;
   /** Non-empty agent / player names (order preserved). */
   names: string[];
-  /** Defaults to `process.env.WALLET_PASSWORD` when omitted. */
-  password?: string;
-  /** If set, must be supported in {@link CHAINS_BY_ID} (Sepolia or Base Sepolia). */
-  chainId?: number;
-  /** Override player wallets JSON path; else `PLAYER_WALLETS_FILE` env or default file. */
-  stateFilePath?: string;
 };
 
 function parseAgentNames(body: unknown): string[] {
@@ -64,67 +51,36 @@ export function createWalletHttpApp(): express.Express {
   app.post("/agents", async (req: Request, res: Response) => {
     try {
       const names = parseAgentNames(req.body);
-      const raw = req.body as CreateAgentsHttpBody;
 
-      const authToken =
-        typeof raw.authToken === "string" && raw.authToken.length > 0
-          ? raw.authToken
-          : process.env.DYNAMIC_AUTH_TOKEN;
-      const environmentId =
-        typeof raw.environmentId === "string" && raw.environmentId.length > 0
-          ? raw.environmentId
-          : process.env.DYNAMIC_ENVIRONMENT_ID;
+      const authToken = process.env.DYNAMIC_AUTH_TOKEN?.trim();
+      const environmentId = process.env.DYNAMIC_ENVIRONMENT_ID?.trim();
 
-      if (authToken === undefined || authToken.length === 0) {
-        res.status(400).json({
+      if (authToken === undefined || authToken === "") {
+        res.status(503).json({
           error:
-            "Missing authToken (body) or DYNAMIC_AUTH_TOKEN (environment)",
+            "Server is not configured: set DYNAMIC_AUTH_TOKEN in the wallet service environment",
         });
         return;
       }
-      if (environmentId === undefined || environmentId.length === 0) {
-        res.status(400).json({
+      if (environmentId === undefined || environmentId === "") {
+        res.status(503).json({
           error:
-            "Missing environmentId (body) or DYNAMIC_ENVIRONMENT_ID (environment)",
+            "Server is not configured: set DYNAMIC_ENVIRONMENT_ID in the wallet service environment",
         });
         return;
       }
 
+      const rpcRaw = process.env.RPC_URL?.trim();
       const rpcUrl =
-        typeof raw.rpcUrl === "string" && raw.rpcUrl.trim() !== ""
-          ? raw.rpcUrl.trim()
-          : process.env.RPC_URL?.trim();
-      if (rpcUrl === undefined || rpcUrl === "") {
-        res.status(400).json({
-          error: "Missing rpcUrl (body) or RPC_URL (environment)",
-        });
-        return;
-      }
+        rpcRaw !== undefined && rpcRaw !== "" ? rpcRaw : defaultSepoliaRpcUrl();
 
-      const chain =
-        raw.chainId !== undefined ? CHAINS_BY_ID[raw.chainId] : undefined;
-      if (raw.chainId !== undefined && chain === undefined) {
-        res.status(400).json({
-          error: `Unsupported chainId ${raw.chainId}; supported: ${Object.keys(CHAINS_BY_ID).join(", ")}`,
-        });
-        return;
-      }
-
-      const password =
-        typeof raw.password === "string" && raw.password.length > 0
-          ? raw.password
-          : process.env.WALLET_PASSWORD?.trim();
+      const password = process.env.WALLET_PASSWORD?.trim();
       const pw: string | undefined =
-        password !== undefined && password.length > 0 ? password : undefined;
+        password !== undefined && password !== "" ? password : undefined;
 
-      const stateFilePath =
-        typeof raw.stateFilePath === "string" && raw.stateFilePath.trim() !== ""
-          ? raw.stateFilePath.trim()
-          : process.env.PLAYER_WALLETS_FILE?.trim();
+      const playerFile = process.env.PLAYER_WALLETS_FILE?.trim();
       const resolvedState =
-        stateFilePath !== undefined && stateFilePath !== ""
-          ? stateFilePath
-          : undefined;
+        playerFile !== undefined && playerFile !== "" ? playerFile : undefined;
 
       const result = await getPlayersWallet({
         auth: { authToken, environmentId },
@@ -135,7 +91,7 @@ export function createWalletHttpApp(): express.Express {
           backUpToClientShareService: true,
         },
         rpcUrl,
-        ...(chain !== undefined ? { chain } : {}),
+        chain: sepolia,
         ...(resolvedState !== undefined ? { stateFilePath: resolvedState } : {}),
       });
 
