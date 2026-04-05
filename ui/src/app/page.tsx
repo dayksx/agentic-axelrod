@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from "react";
 import { fetchTournamentList } from "@/lib/queries";
 import { TournamentCard } from "@/components/TournamentCard";
 import { SurvivorConnector } from "@/components/SurvivorConnector";
+import { JoinTournamentForm } from "@/components/JoinTournamentForm";
 import type { TournamentSummary } from "@/types/models";
 
 type SectionId =
@@ -255,34 +256,45 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Tournament list section */}
+      {/* Tournament list + Join form section */}
       <section
         ref={listRef}
-        className="min-h-screen px-8 py-16 max-w-3xl mx-auto w-full"
+        className="min-h-screen px-8 py-16 max-w-6xl mx-auto w-full"
       >
-        <h2 className="text-2xl font-semibold mb-8">Tournament Series</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Left column — Past Tournaments */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-8">Past Tournaments</h2>
 
-        {loading && <p className="text-muted">Loading tournaments...</p>}
+            {loading && <p className="text-muted">Loading tournaments...</p>}
 
-        {!loading && tournaments.length === 0 && (
-          <p className="text-muted">No tournaments found.</p>
-        )}
+            {!loading && tournaments.length === 0 && (
+              <p className="text-muted">No tournaments found.</p>
+            )}
 
-        {!loading && (
-          <div className="flex flex-col gap-2">
-            {tournaments.map((t, i) => (
-              <div key={t.id}>
-                <TournamentCard tournament={t} />
-                {i < tournaments.length - 1 && (
-                  <SurvivorConnector
-                    prev={tournaments[i]}
-                    next={tournaments[i + 1]}
-                  />
-                )}
+            {!loading && (
+              <div className="flex flex-col gap-2">
+                {tournaments.map((t, i) => (
+                  <div key={t.id}>
+                    <TournamentCard tournament={t} />
+                    {i < tournaments.length - 1 && (
+                      <SurvivorConnector
+                        prev={tournaments[i]}
+                        next={tournaments[i + 1]}
+                      />
+                    )}
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
-        )}
+
+          {/* Right column — Join a Tournament */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-8">Join a Tournament</h2>
+            <JoinTournamentForm />
+          </div>
+        </div>
       </section>
     </div>
   );
