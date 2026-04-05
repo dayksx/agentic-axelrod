@@ -260,6 +260,9 @@ export function createGmHttpApp(): express.Express {
     try {
       config = parseTournamentConfig({
         players,
+        ...(draft.usersRowIds !== undefined
+          ? { consumedUsersRowIds: draft.usersRowIds }
+          : {}),
         ...(body.totalRounds !== undefined ? { totalRounds: body.totalRounds } : {}),
         ...(body.arenasPerRound !== undefined
           ? { arenasPerRound: body.arenasPerRound }

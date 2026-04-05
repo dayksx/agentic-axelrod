@@ -8,6 +8,7 @@ import {
   createTournament,
   enrollAgents,
   isSupabaseConfigured,
+  markUsersConsumedForTournament,
   recordDecisions,
   recordTransaction,
   storeAnnouncement,
@@ -212,6 +213,17 @@ export class GameMaster {
       await runCollectStakes(payers);
       console.log(
         `[GM] Staking: collected from ${payers.length} payer(s) (Supabase off).`,
+      );
+    }
+
+    if (
+      this.dbEnabled &&
+      config.consumedUsersRowIds !== undefined &&
+      config.consumedUsersRowIds.length > 0
+    ) {
+      await markUsersConsumedForTournament(config.consumedUsersRowIds);
+      console.log(
+        `[GM] Supabase: users.id=[${config.consumedUsersRowIds.join(", ")}] → reserved_date + tournament_date set (waitlist consumed)`,
       );
     }
 
