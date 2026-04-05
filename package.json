@@ -1,5 +1,9 @@
 {
   "name": "agentic-axelrod",
   "private": true,
-  "packageManager": "pnpm@10.6.5"
+  "packageManager": "pnpm@10.6.5",
+  "scripts": {
+    "build": "pnpm --filter wallet build",
+    "start": "pnpm --filter wallet start"
+  }
 }
