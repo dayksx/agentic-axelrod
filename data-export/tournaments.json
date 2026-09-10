@@ -1,0 +1,162 @@
+[
+{
+"id": 12,
+"status": "completed",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 00:43:17.935994+00",
+"completed_at": "2026-04-05 00:52:20.899+00"
+},
+{
+"id": 13,
+"status": "completed",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 01:21:10.184206+00",
+"completed_at": "2026-04-05 01:31:22.484+00"
+},
+{
+"id": 14,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 01:40:26.776097+00",
+"completed_at": null
+},
+{
+"id": 15,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 05:24:24.051639+00",
+"completed_at": null
+},
+{
+"id": 16,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 05:36:17.675486+00",
+"completed_at": null
+},
+{
+"id": 17,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 05:58:06.969003+00",
+"completed_at": null
+},
+{
+"id": 18,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 05:59:59.018978+00",
+"completed_at": null
+},
+{
+"id": 19,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 06:01:27.3+00",
+"completed_at": null
+},
+{
+"id": 20,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 06:04:25.480314+00",
+"completed_at": null
+},
+{
+"id": 21,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 06:05:19.769881+00",
+"completed_at": null
+},
+{
+"id": 22,
+"status": "completed",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 06:06:06.027559+00",
+"completed_at": "2026-04-05 06:32:23.637+00"
+},
+{
+"id": 23,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 06:55:01.446361+00",
+"completed_at": null
+},
+{
+"id": 24,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 06:55:49.568296+00",
+"completed_at": null
+},
+{
+"id": 25,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 06:56:36.424177+00",
+"completed_at": null
+},
+{
+"id": 26,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 06:57:21.823509+00",
+"completed_at": null
+},
+{
+"id": 27,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 10:32:17.629579+00",
+"completed_at": null
+},
+{
+"id": 28,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 10:33:40.40484+00",
+"completed_at": null
+},
+{
+"id": 29,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 10:34:59.742273+00",
+"completed_at": null
+},
+{
+"id": 30,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 10:36:30.898858+00",
+"completed_at": null
+},
+{
+"id": 31,
+"status": "running",
+"total_rounds": 10,
+"total_agents": 6,
+"created_at": "2026-04-05 10:37:26.943483+00",
+"completed_at": null
+}
+]

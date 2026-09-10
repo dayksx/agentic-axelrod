@@ -1,0 +1,722 @@
+[
+{
+"id": 72,
+"tournament_id": 12,
+"agent_id": 66,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 73,
+"tournament_id": 12,
+"agent_id": 67,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 74,
+"tournament_id": 12,
+"agent_id": 68,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 75,
+"tournament_id": 12,
+"agent_id": 69,
+"url": "http://127.0.0.1:3103"
+},
+{
+"id": 76,
+"tournament_id": 12,
+"agent_id": 70,
+"url": "http://127.0.0.1:3104"
+},
+{
+"id": 77,
+"tournament_id": 12,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 78,
+"tournament_id": 13,
+"agent_id": 66,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 79,
+"tournament_id": 13,
+"agent_id": 67,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 80,
+"tournament_id": 13,
+"agent_id": 68,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 81,
+"tournament_id": 13,
+"agent_id": 69,
+"url": "http://127.0.0.1:3103"
+},
+{
+"id": 82,
+"tournament_id": 13,
+"agent_id": 70,
+"url": "http://127.0.0.1:3104"
+},
+{
+"id": 83,
+"tournament_id": 13,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 84,
+"tournament_id": 14,
+"agent_id": 66,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 85,
+"tournament_id": 14,
+"agent_id": 67,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 86,
+"tournament_id": 14,
+"agent_id": 68,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 87,
+"tournament_id": 14,
+"agent_id": 69,
+"url": "http://127.0.0.1:3103"
+},
+{
+"id": 88,
+"tournament_id": 14,
+"agent_id": 70,
+"url": "http://127.0.0.1:3104"
+},
+{
+"id": 89,
+"tournament_id": 14,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 90,
+"tournament_id": 15,
+"agent_id": 69,
+"url": "http://127.0.0.1:3103"
+},
+{
+"id": 91,
+"tournament_id": 15,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 92,
+"tournament_id": 15,
+"agent_id": 68,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 93,
+"tournament_id": 15,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 94,
+"tournament_id": 15,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 95,
+"tournament_id": 15,
+"agent_id": 91,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 96,
+"tournament_id": 16,
+"agent_id": 69,
+"url": "http://127.0.0.1:3103"
+},
+{
+"id": 97,
+"tournament_id": 16,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 98,
+"tournament_id": 16,
+"agent_id": 68,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 99,
+"tournament_id": 16,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 100,
+"tournament_id": 16,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 101,
+"tournament_id": 16,
+"agent_id": 91,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 102,
+"tournament_id": 17,
+"agent_id": 69,
+"url": "http://127.0.0.1:3103"
+},
+{
+"id": 103,
+"tournament_id": 17,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 104,
+"tournament_id": 17,
+"agent_id": 68,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 105,
+"tournament_id": 17,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 106,
+"tournament_id": 17,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 107,
+"tournament_id": 17,
+"agent_id": 91,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 108,
+"tournament_id": 18,
+"agent_id": 69,
+"url": "http://127.0.0.1:3103"
+},
+{
+"id": 109,
+"tournament_id": 18,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 110,
+"tournament_id": 18,
+"agent_id": 68,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 111,
+"tournament_id": 18,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 112,
+"tournament_id": 18,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 113,
+"tournament_id": 18,
+"agent_id": 91,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 114,
+"tournament_id": 19,
+"agent_id": 69,
+"url": "http://127.0.0.1:3103"
+},
+{
+"id": 115,
+"tournament_id": 19,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 116,
+"tournament_id": 19,
+"agent_id": 68,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 117,
+"tournament_id": 19,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 118,
+"tournament_id": 19,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 119,
+"tournament_id": 19,
+"agent_id": 91,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 120,
+"tournament_id": 20,
+"agent_id": 69,
+"url": "http://127.0.0.1:3103"
+},
+{
+"id": 121,
+"tournament_id": 20,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 122,
+"tournament_id": 20,
+"agent_id": 68,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 123,
+"tournament_id": 20,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 124,
+"tournament_id": 20,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 125,
+"tournament_id": 20,
+"agent_id": 91,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 126,
+"tournament_id": 21,
+"agent_id": 69,
+"url": "http://127.0.0.1:3103"
+},
+{
+"id": 127,
+"tournament_id": 21,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 128,
+"tournament_id": 21,
+"agent_id": 68,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 129,
+"tournament_id": 21,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 130,
+"tournament_id": 21,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 131,
+"tournament_id": 21,
+"agent_id": 91,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 132,
+"tournament_id": 22,
+"agent_id": 69,
+"url": "http://127.0.0.1:3103"
+},
+{
+"id": 133,
+"tournament_id": 22,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 134,
+"tournament_id": 22,
+"agent_id": 68,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 135,
+"tournament_id": 22,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 136,
+"tournament_id": 22,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 137,
+"tournament_id": 22,
+"agent_id": 91,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 138,
+"tournament_id": 23,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 139,
+"tournament_id": 23,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 140,
+"tournament_id": 23,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 141,
+"tournament_id": 23,
+"agent_id": 138,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 142,
+"tournament_id": 23,
+"agent_id": 139,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 143,
+"tournament_id": 23,
+"agent_id": 140,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 144,
+"tournament_id": 24,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 145,
+"tournament_id": 24,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 146,
+"tournament_id": 24,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 147,
+"tournament_id": 24,
+"agent_id": 138,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 148,
+"tournament_id": 24,
+"agent_id": 139,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 149,
+"tournament_id": 24,
+"agent_id": 140,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 150,
+"tournament_id": 25,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 151,
+"tournament_id": 25,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 152,
+"tournament_id": 25,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 153,
+"tournament_id": 25,
+"agent_id": 138,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 154,
+"tournament_id": 25,
+"agent_id": 139,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 155,
+"tournament_id": 25,
+"agent_id": 140,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 156,
+"tournament_id": 26,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 157,
+"tournament_id": 26,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 158,
+"tournament_id": 26,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 159,
+"tournament_id": 26,
+"agent_id": 138,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 160,
+"tournament_id": 26,
+"agent_id": 139,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 161,
+"tournament_id": 26,
+"agent_id": 140,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 162,
+"tournament_id": 27,
+"agent_id": 69,
+"url": "http://127.0.0.1:3103"
+},
+{
+"id": 163,
+"tournament_id": 27,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 164,
+"tournament_id": 27,
+"agent_id": 68,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 165,
+"tournament_id": 27,
+"agent_id": 162,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 166,
+"tournament_id": 27,
+"agent_id": 163,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 167,
+"tournament_id": 27,
+"agent_id": 164,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 168,
+"tournament_id": 28,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 169,
+"tournament_id": 28,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 170,
+"tournament_id": 28,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 171,
+"tournament_id": 28,
+"agent_id": 168,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 172,
+"tournament_id": 28,
+"agent_id": 169,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 173,
+"tournament_id": 28,
+"agent_id": 170,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 174,
+"tournament_id": 29,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 175,
+"tournament_id": 29,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 176,
+"tournament_id": 29,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 177,
+"tournament_id": 29,
+"agent_id": 168,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 178,
+"tournament_id": 29,
+"agent_id": 169,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 179,
+"tournament_id": 29,
+"agent_id": 170,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 180,
+"tournament_id": 30,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 181,
+"tournament_id": 30,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 182,
+"tournament_id": 30,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 183,
+"tournament_id": 30,
+"agent_id": 168,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 184,
+"tournament_id": 30,
+"agent_id": 169,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 185,
+"tournament_id": 30,
+"agent_id": 170,
+"url": "http://127.0.0.1:3102"
+},
+{
+"id": 186,
+"tournament_id": 31,
+"agent_id": 89,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 187,
+"tournament_id": 31,
+"agent_id": 90,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 188,
+"tournament_id": 31,
+"agent_id": 71,
+"url": "http://127.0.0.1:3105"
+},
+{
+"id": 189,
+"tournament_id": 31,
+"agent_id": 168,
+"url": "http://127.0.0.1:3100"
+},
+{
+"id": 190,
+"tournament_id": 31,
+"agent_id": 169,
+"url": "http://127.0.0.1:3101"
+},
+{
+"id": 191,
+"tournament_id": 31,
+"agent_id": 170,
+"url": "http://127.0.0.1:3102"
+}
+]

@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Public read (mirrors the old Supabase anon read-only RLS).
+    // No client writes: all writes go through the server Admin SDK.
+    match /{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}

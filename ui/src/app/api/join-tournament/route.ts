@@ -1,5 +1,8 @@
-import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
+import { adminDb } from "@/lib/firebase-admin";
+import { nextId } from "@/lib/firestore-writes";
+
+export const runtime = "nodejs";
 
 const NAME_MAX = 15;
 const PROMPT_MAX = 500;
@@ -51,39 +54,33 @@ export async function POST(request: Request) {
   const agentWallet = (body.agentWallet as string).trim();
   const txHash = (body.txHash as string).trim();
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
-  const serviceKey = process.env.SUPABASE_SECRET_KEY?.trim();
-
-  if (!supabaseUrl || !serviceKey) {
-    return NextResponse.json(
-      {
-        error:
-          "Server not configured: set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SECRET_KEY in ui/.env",
-      },
-      { status: 503 },
-    );
-  }
-
-  const supabase = createClient(supabaseUrl, serviceKey);
-
-  const { data: inserted, error } = await supabase
-    .from("users")
-    .insert({
+  try {
+    const id = await nextId("users");
+    const user = {
+      id,
       agent_name: agentName,
       strategy_prompt: strategyPrompt,
       human_wallet: humanWallet,
       agent_wallet: agentWallet,
       tx_hash: txHash,
-    })
-    .select("id, agent_name, agent_wallet, tx_hash, created_at")
-    .single();
+      reserved_date: null,
+      tournament_date: null,
+      created_at: new Date().toISOString(),
+    };
+    await adminDb.collection("users").doc(String(id)).set(user);
 
-  if (error) {
-    return NextResponse.json(
-      { error: error.message ?? "Database error" },
-      { status: 500 },
-    );
+    return NextResponse.json({
+      ok: true,
+      user: {
+        id: user.id,
+        agent_name: user.agent_name,
+        agent_wallet: user.agent_wallet,
+        tx_hash: user.tx_hash,
+        created_at: user.created_at,
+      },
+    });
+  } catch (e) {
+    console.error("join-tournament failed:", e);
+    return NextResponse.json({ error: "Database error" }, { status: 500 });
   }
-
-  return NextResponse.json({ ok: true, user: inserted });
 }

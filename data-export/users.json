@@ -1,0 +1,189 @@
+[
+{
+"id": 2,
+"agent_name": "CyborgDayan",
+"strategy_prompt": "Climbing is the way",
+"human_wallet": "0x2973BFb328DCb32933De3b14FcED06f36812c215",
+"agent_wallet": "0x8c040f37b38398CF6901840b704eA753B0863CF5",
+"tx_hash": "0xb4263e826d8010e095dbef0634572f6eef16d0df48adf85498a94e50bae153b5",
+"reserved_date": "2026-04-05 06:49:54.461+00",
+"tournament_date": "2026-04-05 06:49:54.461+00",
+"created_at": "2026-04-05 03:28:29.38258+00"
+},
+{
+"id": 3,
+"agent_name": "test",
+"strategy_prompt": "test",
+"human_wallet": "0x224b11F0747c7688a10aCC15F785354aA6493ED6",
+"agent_wallet": "0x339b99a87Ed9eEC8221fa926b2b0047492B68886",
+"tx_hash": "0xa1de9bd99590445b0fbcfbb8ba86c34fd60cd26b0529c423d4a151b27905aef3",
+"reserved_date": "2026-04-05 06:49:54.461+00",
+"tournament_date": "2026-04-05 06:49:54.461+00",
+"created_at": "2026-04-05 05:15:05.199252+00"
+},
+{
+"id": 8,
+"agent_name": "test",
+"strategy_prompt": "test",
+"human_wallet": "0x224b11F0747c7688a10aCC15F785354aA6493ED6",
+"agent_wallet": "0x339b99a87Ed9eEC8221fa926b2b0047492B68886",
+"tx_hash": "0xbd7e85edc32d02edb53d4b7fabb46700da2234124dad913a0598fc0dc91a8259",
+"reserved_date": "2026-04-05 06:49:54.461+00",
+"tournament_date": "2026-04-05 06:49:54.461+00",
+"created_at": "2026-04-05 05:45:14.787452+00"
+},
+{
+"id": 9,
+"agent_name": "test",
+"strategy_prompt": "test",
+"human_wallet": "0x224b11F0747c7688a10aCC15F785354aA6493ED6",
+"agent_wallet": "0x339b99a87Ed9eEC8221fa926b2b0047492B68886",
+"tx_hash": "0xb80e1d999f52576cb6b51710ed21d8ec6a41c16e3c42807f5a8854f752054ec5",
+"reserved_date": "2026-04-05 06:49:54.461+00",
+"tournament_date": "2026-04-05 06:49:54.461+00",
+"created_at": "2026-04-05 05:46:07.356219+00"
+},
+{
+"id": 4,
+"agent_name": "Random",
+"strategy_prompt": "Just do random decisions each time",
+"human_wallet": "0x224b11F0747c7688a10aCC15F785354aA6493ED6",
+"agent_wallet": "0x7D422dd90D58F79982dD0306eA8970a8A21C39a3",
+"tx_hash": "0x910dd52053d27844ec0c1a49bf05ca7ef9f48535735517806313ddd5b774830b",
+"reserved_date": "2026-04-05 06:49:54.461+00",
+"tournament_date": "2026-04-05 06:49:54.461+00",
+"created_at": "2026-04-05 05:17:28.910824+00"
+},
+{
+"id": 6,
+"agent_name": "Random",
+"strategy_prompt": "Just do random decisions each time",
+"human_wallet": "0x224b11F0747c7688a10aCC15F785354aA6493ED6",
+"agent_wallet": "0x7D422dd90D58F79982dD0306eA8970a8A21C39a3",
+"tx_hash": "0xa249d64ca2a707a0887b46453c9c44a526b19230b91306095e05e37ceb5c1129",
+"reserved_date": "2026-04-05 06:49:54.461+00",
+"tournament_date": "2026-04-05 06:49:54.461+00",
+"created_at": "2026-04-05 05:40:05.07159+00"
+},
+{
+"id": 5,
+"agent_name": "Satyomatic",
+"strategy_prompt": "You are John Von Neuman genius game-theorist",
+"human_wallet": "0x2973BFb328DCb32933De3b14FcED06f36812c215",
+"agent_wallet": "0xe9a133b612F676931bCBBa507822eD2936291266",
+"tx_hash": "0x6c3a7775e2975de2817491d619890606341fbebf869403e0a1a331cb780575bb",
+"reserved_date": "2026-04-05 06:57:40.853+00",
+"tournament_date": "2026-04-05 06:57:40.853+00",
+"created_at": "2026-04-05 05:39:52.205128+00"
+},
+{
+"id": 7,
+"agent_name": "Historian",
+"strategy_prompt": "Look at the history of game theory and iterative game theory research - learn what works best, based on situations.",
+"human_wallet": "0x2973BFb328DCb32933De3b14FcED06f36812c215",
+"agent_wallet": "0x35AD8993272BF01f70fdF90Bd444C9190164cfBe",
+"tx_hash": "0x56fef3c3ce4cb7884a942e068edc8c0b0dfeb9e9c73ba71e75c6811c3d6350a1",
+"reserved_date": "2026-04-05 06:57:40.853+00",
+"tournament_date": "2026-04-05 06:57:40.853+00",
+"created_at": "2026-04-05 05:42:26.893134+00"
+},
+{
+"id": 10,
+"agent_name": "VonNeuman",
+"strategy_prompt": "You are a genius game theorist - learn from history - beat your opponents, gain the most points",
+"human_wallet": "0x2973BFb328DCb32933De3b14FcED06f36812c215",
+"agent_wallet": "0xf3c223Dfb72B1163bC6f6478882AAc84eFB9741b",
+"tx_hash": "0xef1b4db60bd1ed988c23df4bed70a82851e47b89441ebfc89b35eb7edcbf465d",
+"reserved_date": "2026-04-05 06:57:40.853+00",
+"tournament_date": "2026-04-05 06:57:40.853+00",
+"created_at": "2026-04-05 06:40:40.3931+00"
+},
+{
+"id": 14,
+"agent_name": "QueueUser1",
+"strategy_prompt": "I am here to enjoy, no strategy",
+"human_wallet": "0x47E3Ac06A8c20Ff1fd9E4586ee26dA341A60b4A0",
+"agent_wallet": "0xC3Fc3cE41Ed03dC97C7186f197A6789F9208EfED",
+"tx_hash": "0x144e0e9b433ec754830e42930a32629f33783644e11108bf4fc198f9125a0124",
+"reserved_date": null,
+"tournament_date": null,
+"created_at": "2026-04-05 09:25:57.46044+00"
+},
+{
+"id": 15,
+"agent_name": "badwater",
+"strategy_prompt": "very aggressive, very mean, extremely competitive, always want to win, does not accept failure, tries to win all the time",
+"human_wallet": "0x9Fe403723C343697c819c0109a17353b92B1dAA6",
+"agent_wallet": "0x354D44fa9AF13Bfa8F0e8Ed0440032fF40939438",
+"tx_hash": "0x5892b6e375f97d7c68c0252df2b4c1e15e2884be4733c17ba1f9ca69734e10c6",
+"reserved_date": null,
+"tournament_date": null,
+"created_at": "2026-04-05 10:23:32.415209+00"
+},
+{
+"id": 16,
+"agent_name": "nikola",
+"strategy_prompt": "be evil",
+"human_wallet": "0x06569702FA5144C7FB9FEd566cb9cD6E5A427b7B",
+"agent_wallet": "0xDe9Bc76B07231d17929883E444A215aa466BfF86",
+"tx_hash": "0xe3cee1760b23ebb6cb1b7193d540334efc0d6794655cdebea8b30d74810dfca3",
+"reserved_date": null,
+"tournament_date": null,
+"created_at": "2026-04-05 10:49:11.920024+00"
+},
+{
+"id": 13,
+"agent_name": "Finalist",
+"strategy_prompt": "Scam everybody",
+"human_wallet": "0x2973BFb328DCb32933De3b14FcED06f36812c215",
+"agent_wallet": "0xBF3114799B1a35edBE2e2aC16ebcFC961aAb9AA7",
+"tx_hash": "0xde90ec57e63dc48dd306b4fc94fba7f3193be4561f61c23d27f7168e173945db",
+"reserved_date": "2026-04-05 13:19:56.92+00",
+"tournament_date": "2026-04-05 13:19:56.92+00",
+"created_at": "2026-04-05 09:18:44.290693+00"
+},
+{
+"id": 12,
+"agent_name": "EthSatya",
+"strategy_prompt": "In exchange 1, defect to test the opponent's response. If they retaliate, switch to TitForTat. If they still cooperate after your defection, exploit them by defecting again. You are probing for weakness early and adapting accordingly.",
+"human_wallet": "0x47E3Ac06A8c20Ff1fd9E4586ee26dA341A60b4A0",
+"agent_wallet": "0x56f8c2bB5AFd13AE70e341F3eC98Ee88D2BA0Ef3",
+"tx_hash": "0xa342619e1cc54b980478e4159d2e4b29c07470da197e358e74bf8d6dc3f592ef",
+"reserved_date": "2026-04-05 13:19:56.92+00",
+"tournament_date": "2026-04-05 13:19:56.92+00",
+"created_at": "2026-04-05 08:26:13.959954+00"
+},
+{
+"id": 11,
+"agent_name": "MattBot",
+"strategy_prompt": "Prove that being evil works",
+"human_wallet": "0x2973BFb328DCb32933De3b14FcED06f36812c215",
+"agent_wallet": "0xc48c45CE1BC1aB10a00b30Cfab59825c60f0f347",
+"tx_hash": "0x4faae37731bf0d48d2f4042ec4ed58c93a520f883c8b4308591d3055e0236834",
+"reserved_date": "2026-04-05 13:19:56.92+00",
+"tournament_date": "2026-04-05 13:19:56.92+00",
+"created_at": "2026-04-05 08:23:41.07298+00"
+},
+{
+"id": 17,
+"agent_name": "shalaka",
+"strategy_prompt": "I want to buy clothes",
+"human_wallet": "0x47E3Ac06A8c20Ff1fd9E4586ee26dA341A60b4A0",
+"agent_wallet": "0x6A91c89cf0e4D33c75d2EDFe3D3C91b2D434dB27",
+"tx_hash": "0xb24794e1cb874e4c011050d7efb8e96568218c78b4040eba7cf980db5b180b0d",
+"reserved_date": null,
+"tournament_date": null,
+"created_at": "2026-04-05 13:20:32.948529+00"
+},
+{
+"id": 18,
+"agent_name": "Nico",
+"strategy_prompt": "Cooperate first and then adopt a Tit-for-Tat strategy",
+"human_wallet": "0x929eC0A94720F3Ed80D53e100b65D612D0e16194",
+"agent_wallet": "0xf334432b02B869fa133Cb7a1b18C1858b08f9b47",
+"tx_hash": "0x6c2d3bb0bb0b5488a37e568aa63b2ad329a45e6366b5ac06d7e1d81140551a09",
+"reserved_date": null,
+"tournament_date": null,
+"created_at": "2026-04-06 14:47:08.703056+00"
+}
+]

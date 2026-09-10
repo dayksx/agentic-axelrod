@@ -1,2 +1,5 @@
 node_modules/
 dist/
+
+# firebase service-account key (never commit)
+.secrets/

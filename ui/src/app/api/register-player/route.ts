@@ -1,5 +1,8 @@
-import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
+import { adminDb } from "@/lib/firebase-admin";
+import { nextId, findOneByField } from "@/lib/firestore-writes";
+
+export const runtime = "nodejs";
 
 const NAME_MAX = 100;
 const PROMPT_MAX = 500;
@@ -63,9 +66,6 @@ export async function POST(request: Request) {
       : "";
   const ensName = ensRaw !== "" ? ensRaw.slice(0, 255) : null;
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
-  const serviceKey = process.env.SUPABASE_SECRET_KEY?.trim();
-
   const playerPayload = {
     name: nameRaw,
     prompt: promptRaw,
@@ -73,47 +73,37 @@ export async function POST(request: Request) {
     ensName: ensName ?? "",
   };
 
-  if (!supabaseUrl || !serviceKey) {
-    return NextResponse.json({
-      ok: true,
-      persisted: false,
-      message:
-        "Received. Add SUPABASE_SECRET_KEY to ui/.env (server-only) to persist rows to agents.",
-      player: playerPayload,
-      agent: null,
-    });
-  }
-
-  const supabase = createClient(supabaseUrl, serviceKey);
-
-  const { data: inserted, error } = await supabase
-    .from("agents")
-    .insert({
-      name: nameRaw,
-      strategy_prompt: promptRaw,
-      url: PENDING_AGENT_URL,
-      wallet_address: walletAddress,
-      ens_name: ensName,
-    })
-    .select("id, name, strategy_prompt, wallet_address, ens_name, created_at")
-    .single();
-
-  if (error) {
-    const msg = error.message ?? "Database error";
-    if (msg.includes("duplicate") || error.code === "23505") {
+  try {
+    // name is UNIQUE in the original schema — enforce it explicitly.
+    const clash = await findOneByField<{ id: number }>("agents", "name", nameRaw);
+    if (clash) {
       return NextResponse.json(
         { error: "That player name is already taken." },
         { status: 409 },
       );
     }
-    return NextResponse.json({ error: msg }, { status: 500 });
-  }
 
-  return NextResponse.json({
-    ok: true,
-    persisted: true,
-    message: "Player registered in the database.",
-    player: playerPayload,
-    agent: inserted,
-  });
+    const id = await nextId("agents");
+    const agent = {
+      id,
+      name: nameRaw,
+      strategy_prompt: promptRaw,
+      url: PENDING_AGENT_URL,
+      wallet_address: walletAddress,
+      ens_name: ensName,
+      created_at: new Date().toISOString(),
+    };
+    await adminDb.collection("agents").doc(String(id)).set(agent);
+
+    return NextResponse.json({
+      ok: true,
+      persisted: true,
+      message: "Player registered in the database.",
+      player: playerPayload,
+      agent,
+    });
+  } catch (e) {
+    console.error("register-player failed:", e);
+    return NextResponse.json({ error: "Database error" }, { status: 500 });
+  }
 }

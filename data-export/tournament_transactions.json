@@ -1,0 +1,266 @@
+[
+{
+"id": 78,
+"tournament_id": 12,
+"agent_id": 66,
+"type": "entry_fee",
+"tx_hash": "0x14804fcf8e014fa0513a09254eaa09a9ef0a4309b2439ecd43148e769baa3db9",
+"created_at": "2026-04-05 00:43:55.593001+00"
+},
+{
+"id": 79,
+"tournament_id": 12,
+"agent_id": 67,
+"type": "entry_fee",
+"tx_hash": "0x29c3bba372c44f69f0521b536160bca117ae9a43400732b0327806f1e07421a5",
+"created_at": "2026-04-05 00:43:55.830555+00"
+},
+{
+"id": 80,
+"tournament_id": 12,
+"agent_id": 68,
+"type": "entry_fee",
+"tx_hash": "0x4f6b998e45834ac58c71907262c81b642a07513bc5f36356bfbc726964a1c012",
+"created_at": "2026-04-05 00:43:55.911434+00"
+},
+{
+"id": 81,
+"tournament_id": 12,
+"agent_id": 69,
+"type": "entry_fee",
+"tx_hash": "0x468df6a795d6cd8120a7643ea35fb6a124f4e3627cb3a55c544411a67be965f7",
+"created_at": "2026-04-05 00:43:55.997268+00"
+},
+{
+"id": 82,
+"tournament_id": 12,
+"agent_id": 70,
+"type": "entry_fee",
+"tx_hash": "0x424cd2ba0dc459077d528d9c9f870514b9340dd658e7c12d6e98973b9314acbc",
+"created_at": "2026-04-05 00:43:56.082697+00"
+},
+{
+"id": 83,
+"tournament_id": 12,
+"agent_id": 71,
+"type": "entry_fee",
+"tx_hash": "0xcbfab6c0ff8685151fb54f3e24fa8043339baa945c9dea0ea003755b8a7d2da3",
+"created_at": "2026-04-05 00:43:56.190776+00"
+},
+{
+"id": 85,
+"tournament_id": 13,
+"agent_id": 66,
+"type": "collection",
+"tx_hash": "0xf1822def882ea3db3a4ea3037f3b37abb33fbf720f3d369fe703d93e5d0d6e6b",
+"created_at": "2026-04-05 01:21:49.181998+00"
+},
+{
+"id": 86,
+"tournament_id": 13,
+"agent_id": 67,
+"type": "collection",
+"tx_hash": "0xc1b82f4771afdab45576bef31e52e6ef74be60d185fc162180f5ad20903d5055",
+"created_at": "2026-04-05 01:21:49.347171+00"
+},
+{
+"id": 87,
+"tournament_id": 13,
+"agent_id": 68,
+"type": "collection",
+"tx_hash": "0x98bf510db3683788ea076e5c04fac90f55ef5740d37a99ffc6bf580338092d46",
+"created_at": "2026-04-05 01:21:49.5066+00"
+},
+{
+"id": 88,
+"tournament_id": 13,
+"agent_id": 69,
+"type": "collection",
+"tx_hash": "0x7f77a5e01f31e96eb7ad4b502f55be18b346302051165f2ffe33b0d04b1cb819",
+"created_at": "2026-04-05 01:21:49.585769+00"
+},
+{
+"id": 89,
+"tournament_id": 13,
+"agent_id": 70,
+"type": "collection",
+"tx_hash": "0x46fbcf74b89ef326a3cf3cdd6fc5483047a7e46ac4fa168e66549853b9dcf978",
+"created_at": "2026-04-05 01:21:49.664642+00"
+},
+{
+"id": 90,
+"tournament_id": 13,
+"agent_id": 71,
+"type": "collection",
+"tx_hash": "0xad1bff4e516e2df602c5268fddf64dbd927fbb61132ea63e2b78455dd22c47a6",
+"created_at": "2026-04-05 01:21:49.749296+00"
+},
+{
+"id": 91,
+"tournament_id": 14,
+"agent_id": 66,
+"type": "collection",
+"tx_hash": "0xda64405fc3741874ae64f50f95766499ab6d945e24570f60ccf1c9445eb3567a",
+"created_at": "2026-04-05 01:41:02.011097+00"
+},
+{
+"id": 92,
+"tournament_id": 14,
+"agent_id": 67,
+"type": "collection",
+"tx_hash": "0xff8173ccfa82d2d3963de7316c30a37743057356917ec8baa174080b0fa43d7c",
+"created_at": "2026-04-05 01:41:02.149141+00"
+},
+{
+"id": 93,
+"tournament_id": 14,
+"agent_id": 68,
+"type": "collection",
+"tx_hash": "0x3426fedc83430521c0f763509630c6c04e11fa1163f27808dcbd9705ed6a882d",
+"created_at": "2026-04-05 01:41:02.231846+00"
+},
+{
+"id": 94,
+"tournament_id": 14,
+"agent_id": 69,
+"type": "collection",
+"tx_hash": "0x41cd1f6725c3bb6339ba9e0c187cc4c0453981e69930470d4781b9892d56f915",
+"created_at": "2026-04-05 01:41:02.312472+00"
+},
+{
+"id": 95,
+"tournament_id": 14,
+"agent_id": 70,
+"type": "collection",
+"tx_hash": "0xbfc184c6b5504fdbbb64ae055174f8173ee8ad81736c9f98914f951e01521e4f",
+"created_at": "2026-04-05 01:41:02.409998+00"
+},
+{
+"id": 96,
+"tournament_id": 14,
+"agent_id": 71,
+"type": "collection",
+"tx_hash": "0xfe6ceaa8a32e94b30226dbce85ed79a9e0c7009e2d7710f4c9695df9474f0591",
+"created_at": "2026-04-05 01:41:02.492418+00"
+},
+{
+"id": 97,
+"tournament_id": 19,
+"agent_id": 89,
+"type": "collection",
+"tx_hash": "0x3a5569a252208117d7d885d011048646779b62d6d4eec81caba694968ac73636",
+"created_at": "2026-04-05 06:01:46.925182+00"
+},
+{
+"id": 98,
+"tournament_id": 19,
+"agent_id": 90,
+"type": "collection",
+"tx_hash": "0xf99023569ba948c27d43f0b45def71b4e34fc40d87e83dd30db171dc5d0f6a37",
+"created_at": "2026-04-05 06:01:47.066804+00"
+},
+{
+"id": 99,
+"tournament_id": 19,
+"agent_id": 91,
+"type": "collection",
+"tx_hash": "0x492c25e6842cd972eeea3ef6213c0a9367a04e5a9f9f1f06247fba6157ea9c48",
+"created_at": "2026-04-05 06:01:47.139363+00"
+},
+{
+"id": 100,
+"tournament_id": 22,
+"agent_id": 89,
+"type": "collection",
+"tx_hash": "0x26660cbeaa898cad4f9759c946b7dece0df52a059527beb5ab8dc5948193e711",
+"created_at": "2026-04-05 06:06:26.060969+00"
+},
+{
+"id": 101,
+"tournament_id": 22,
+"agent_id": 90,
+"type": "collection",
+"tx_hash": "0xf823340db03f13a8b99ad5037c8a319edcf8db4b46e3e435418ebde322d714f3",
+"created_at": "2026-04-05 06:06:26.264864+00"
+},
+{
+"id": 102,
+"tournament_id": 22,
+"agent_id": 91,
+"type": "collection",
+"tx_hash": "0x66f128ec95595473f04c311425ff83726665482012f49cbbcfc70532847ea89c",
+"created_at": "2026-04-05 06:06:26.332084+00"
+},
+{
+"id": 103,
+"tournament_id": 22,
+"agent_id": 89,
+"type": "prize",
+"tx_hash": "0x731d14cac324d9c86a91b9c4919517d5bbe3a243bb526773b1b7bc716c57e8cc",
+"created_at": "2026-04-05 06:32:47.304911+00"
+},
+{
+"id": 104,
+"tournament_id": 22,
+"agent_id": 90,
+"type": "prize",
+"tx_hash": "0x14e2a6679d68518fafb325f2ec8dde48b694d322a283c70e0eff74dd07b1f99c",
+"created_at": "2026-04-05 06:32:47.534256+00"
+},
+{
+"id": 105,
+"tournament_id": 22,
+"agent_id": 71,
+"type": "prize",
+"tx_hash": "0x39e6d74baca17871e47f2eab3ea5038afc634bb0c77fa32911f5f116d187b5a8",
+"created_at": "2026-04-05 06:32:47.623317+00"
+},
+{
+"id": 106,
+"tournament_id": 26,
+"agent_id": 138,
+"type": "collection",
+"tx_hash": "0x9f04240feb5caa73fa87526e3d11b5e6e134e92bf58217aacba93d1100d57a3a",
+"created_at": "2026-04-05 06:57:40.675879+00"
+},
+{
+"id": 107,
+"tournament_id": 26,
+"agent_id": 139,
+"type": "collection",
+"tx_hash": "0x71e11ff38721aff05c9d5783eccd6eb23dd174d9ebf4b2e6dcfd1ac95c1853c1",
+"created_at": "2026-04-05 06:57:40.808167+00"
+},
+{
+"id": 108,
+"tournament_id": 26,
+"agent_id": 140,
+"type": "collection",
+"tx_hash": "0xe1095f60b1ec8b205c3ef8488cc074703a35a4e98ea3ab38f960fd42bda7375f",
+"created_at": "2026-04-05 06:57:40.890021+00"
+},
+{
+"id": 109,
+"tournament_id": 31,
+"agent_id": 168,
+"type": "collection",
+"tx_hash": "0x759d7ed330e5fdd26eff62884f864425831565ac805c1692e83bcb2b414cc122",
+"created_at": "2026-04-05 10:38:03.790236+00"
+},
+{
+"id": 110,
+"tournament_id": 31,
+"agent_id": 169,
+"type": "collection",
+"tx_hash": "0xb6aebc4351e6262f36ec4965324e4c29d7ac7416885035cec74f2d817130e48d",
+"created_at": "2026-04-05 10:38:05.876193+00"
+},
+{
+"id": 111,
+"tournament_id": 31,
+"agent_id": 170,
+"type": "collection",
+"tx_hash": "0x4df27231ea1354df97b9a251ceba9284c6b4bff3a437d660afa331d3e9f5a91f",
+"created_at": "2026-04-05 10:38:06.040772+00"
+}
+]

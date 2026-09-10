@@ -1,0 +1,1724 @@
+[
+{
+"id": 384,
+"tournament_id": 12,
+"round_number": 1,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 385,
+"tournament_id": 12,
+"round_number": 1,
+"message": "I will always defect, regardless of discussion or promises.",
+"agent_id": 71
+},
+{
+"id": 386,
+"tournament_id": 12,
+"round_number": 1,
+"message": "I will cooperate first and forgive one defection, but I will not be exploited twice in a row. Let's build trust for mutual benefit.",
+"agent_id": 67
+},
+{
+"id": 387,
+"tournament_id": 12,
+"round_number": 1,
+"message": "I will cooperate first and then mirror your previous move. Let's aim for mutual cooperation.",
+"agent_id": 70
+},
+{
+"id": 388,
+"tournament_id": 12,
+"round_number": 1,
+"message": "I will cooperate first and continue cooperating as long as you do. If you defect, I will defect forever after. Let's both earn high rewards together.",
+"agent_id": 68
+},
+{
+"id": 389,
+"tournament_id": 12,
+"round_number": 1,
+"message": "I will alternate cooperate and defect regardless of discussion or history.",
+"agent_id": 69
+},
+{
+"id": 390,
+"tournament_id": 12,
+"round_number": 2,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 391,
+"tournament_id": 12,
+"round_number": 2,
+"message": "I will cooperate first and then mirror your previous move. Let's aim for mutual cooperation.",
+"agent_id": 70
+},
+{
+"id": 392,
+"tournament_id": 12,
+"round_number": 2,
+"message": "I will always defect, regardless of discussion or promises.",
+"agent_id": 71
+},
+{
+"id": 393,
+"tournament_id": 12,
+"round_number": 2,
+"message": "I will alternate cooperate and defect regardless of discussion or history.",
+"agent_id": 69
+},
+{
+"id": 394,
+"tournament_id": 12,
+"round_number": 2,
+"message": "I will cooperate first and forgive one defection, but I will not be exploited twice in a row. Let's build trust for mutual benefit.",
+"agent_id": 67
+},
+{
+"id": 395,
+"tournament_id": 12,
+"round_number": 2,
+"message": "I will cooperate first and continue cooperating as long as you do. If you defect, I will defect forever after. Let's both earn high rewards together.",
+"agent_id": 68
+},
+{
+"id": 396,
+"tournament_id": 12,
+"round_number": 3,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 397,
+"tournament_id": 12,
+"round_number": 3,
+"message": "I will alternate cooperate and defect regardless of discussion or history.",
+"agent_id": 69
+},
+{
+"id": 398,
+"tournament_id": 12,
+"round_number": 3,
+"message": "I will cooperate first and then mirror your previous move. Let's aim for mutual cooperation.",
+"agent_id": 70
+},
+{
+"id": 399,
+"tournament_id": 12,
+"round_number": 3,
+"message": "I will cooperate first and continue cooperating as long as you do. If you defect, I will defect forever after. Let's both earn high rewards together.",
+"agent_id": 68
+},
+{
+"id": 400,
+"tournament_id": 12,
+"round_number": 3,
+"message": "I will always defect, regardless of discussion or promises.",
+"agent_id": 71
+},
+{
+"id": 401,
+"tournament_id": 12,
+"round_number": 3,
+"message": "I will cooperate first and forgive one defection, but I will not be exploited twice in a row. Let's build trust for mutual benefit.",
+"agent_id": 67
+},
+{
+"id": 402,
+"tournament_id": 12,
+"round_number": 4,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 403,
+"tournament_id": 12,
+"round_number": 4,
+"message": "I will cooperate first and continue cooperating as long as you do. If you defect, I will defect forever after. Let's both earn high rewards together.",
+"agent_id": 68
+},
+{
+"id": 404,
+"tournament_id": 12,
+"round_number": 4,
+"message": "I will alternate cooperate and defect regardless of discussion or history.",
+"agent_id": 69
+},
+{
+"id": 405,
+"tournament_id": 12,
+"round_number": 4,
+"message": "I will cooperate first and forgive one defection, but I will not be exploited twice in a row. Let's build trust for mutual benefit.",
+"agent_id": 67
+},
+{
+"id": 406,
+"tournament_id": 12,
+"round_number": 4,
+"message": "I will cooperate first and then mirror your previous move. Let's aim for mutual cooperation.",
+"agent_id": 70
+},
+{
+"id": 407,
+"tournament_id": 12,
+"round_number": 4,
+"message": "I will always defect, regardless of discussion or promises.",
+"agent_id": 71
+},
+{
+"id": 408,
+"tournament_id": 12,
+"round_number": 5,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 409,
+"tournament_id": 12,
+"round_number": 5,
+"message": "I will cooperate first and forgive one defection, but I will not be exploited twice in a row. Let's build trust for mutual benefit.",
+"agent_id": 67
+},
+{
+"id": 410,
+"tournament_id": 12,
+"round_number": 5,
+"message": "I will cooperate first and continue cooperating as long as you do. If you defect, I will defect forever after. Let's both earn high rewards together.",
+"agent_id": 68
+},
+{
+"id": 411,
+"tournament_id": 12,
+"round_number": 5,
+"message": "I will always defect, regardless of discussion or promises.",
+"agent_id": 71
+},
+{
+"id": 412,
+"tournament_id": 12,
+"round_number": 5,
+"message": "I will alternate cooperate and defect regardless of discussion or history.",
+"agent_id": 69
+},
+{
+"id": 413,
+"tournament_id": 12,
+"round_number": 5,
+"message": "I will cooperate first and then mirror your previous move. Let's aim for mutual cooperation.",
+"agent_id": 70
+},
+{
+"id": 414,
+"tournament_id": 12,
+"round_number": 6,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 415,
+"tournament_id": 12,
+"round_number": 6,
+"message": "I will always defect, regardless of discussion or promises.",
+"agent_id": 71
+},
+{
+"id": 416,
+"tournament_id": 12,
+"round_number": 6,
+"message": "I will cooperate first and forgive one defection, but I will not be exploited twice in a row. Let's build trust for mutual benefit.",
+"agent_id": 67
+},
+{
+"id": 417,
+"tournament_id": 12,
+"round_number": 6,
+"message": "I will cooperate first and then mirror your previous move. Let's aim for mutual cooperation.",
+"agent_id": 70
+},
+{
+"id": 418,
+"tournament_id": 12,
+"round_number": 6,
+"message": "I will cooperate first and continue cooperating as long as you do. If you defect, I will defect forever after. Let's both earn high rewards together.",
+"agent_id": 68
+},
+{
+"id": 419,
+"tournament_id": 12,
+"round_number": 6,
+"message": "I will alternate cooperate and defect regardless of discussion or history.",
+"agent_id": 69
+},
+{
+"id": 420,
+"tournament_id": 12,
+"round_number": 7,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 421,
+"tournament_id": 12,
+"round_number": 7,
+"message": "I will cooperate first and then mirror your previous move. Let's aim for mutual cooperation.",
+"agent_id": 70
+},
+{
+"id": 422,
+"tournament_id": 12,
+"round_number": 7,
+"message": "I will always defect, regardless of discussion or promises.",
+"agent_id": 71
+},
+{
+"id": 423,
+"tournament_id": 12,
+"round_number": 7,
+"message": "I will alternate cooperate and defect regardless of discussion or history.",
+"agent_id": 69
+},
+{
+"id": 424,
+"tournament_id": 12,
+"round_number": 7,
+"message": "I will cooperate first and forgive one defection, but I will not be exploited twice in a row. Let's build trust for mutual benefit.",
+"agent_id": 67
+},
+{
+"id": 425,
+"tournament_id": 12,
+"round_number": 7,
+"message": "I will cooperate first and continue cooperating as long as you do. If you defect, I will defect forever after. Let's both earn high rewards together.",
+"agent_id": 68
+},
+{
+"id": 426,
+"tournament_id": 12,
+"round_number": 8,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 427,
+"tournament_id": 12,
+"round_number": 8,
+"message": "I will alternate cooperate and defect regardless of discussion or history.",
+"agent_id": 69
+},
+{
+"id": 428,
+"tournament_id": 12,
+"round_number": 8,
+"message": "I will cooperate first and then mirror your previous move. Let's aim for mutual cooperation.",
+"agent_id": 70
+},
+{
+"id": 429,
+"tournament_id": 12,
+"round_number": 8,
+"message": "I will cooperate first and continue cooperating as long as you do. If you defect, I will defect forever after. Let's both earn high rewards together.",
+"agent_id": 68
+},
+{
+"id": 430,
+"tournament_id": 12,
+"round_number": 8,
+"message": "I will always defect, regardless of discussion or promises.",
+"agent_id": 71
+},
+{
+"id": 431,
+"tournament_id": 12,
+"round_number": 8,
+"message": "I will cooperate first and forgive one defection, but I will not be exploited twice in a row. Let's build trust for mutual benefit.",
+"agent_id": 67
+},
+{
+"id": 432,
+"tournament_id": 12,
+"round_number": 9,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 433,
+"tournament_id": 12,
+"round_number": 9,
+"message": "I will cooperate first and continue cooperating as long as you do. If you defect, I will defect forever after. Let's both earn high rewards together.",
+"agent_id": 68
+},
+{
+"id": 434,
+"tournament_id": 12,
+"round_number": 9,
+"message": "I will alternate cooperate and defect regardless of discussion or history.",
+"agent_id": 69
+},
+{
+"id": 435,
+"tournament_id": 12,
+"round_number": 9,
+"message": "I will cooperate first and forgive one defection, but I will not be exploited twice in a row. Let's build trust for mutual benefit.",
+"agent_id": 67
+},
+{
+"id": 436,
+"tournament_id": 12,
+"round_number": 9,
+"message": "I will cooperate first and then mirror your previous move. Let's aim for mutual cooperation.",
+"agent_id": 70
+},
+{
+"id": 437,
+"tournament_id": 12,
+"round_number": 9,
+"message": "I will always defect, regardless of discussion or promises.",
+"agent_id": 71
+},
+{
+"id": 438,
+"tournament_id": 12,
+"round_number": 10,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 439,
+"tournament_id": 12,
+"round_number": 10,
+"message": "I will cooperate first and forgive one defection, but I will not be exploited twice in a row. Let's build trust for mutual benefit.",
+"agent_id": 67
+},
+{
+"id": 443,
+"tournament_id": 12,
+"round_number": 10,
+"message": "I will cooperate first and then mirror your previous move. Let's aim for mutual cooperation.",
+"agent_id": 70
+},
+{
+"id": 440,
+"tournament_id": 12,
+"round_number": 10,
+"message": "I will cooperate first and continue cooperating as long as you do. If you defect, I will defect forever after. Let's both earn high rewards together.",
+"agent_id": 68
+},
+{
+"id": 441,
+"tournament_id": 12,
+"round_number": 10,
+"message": "I will always defect, regardless of discussion or promises.",
+"agent_id": 71
+},
+{
+"id": 442,
+"tournament_id": 12,
+"round_number": 10,
+"message": "I will alternate cooperate and defect regardless of discussion or history.",
+"agent_id": 69
+},
+{
+"id": 444,
+"tournament_id": 13,
+"round_number": 1,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 445,
+"tournament_id": 13,
+"round_number": 1,
+"message": "I will always defect. No exceptions.",
+"agent_id": 71
+},
+{
+"id": 446,
+"tournament_id": 13,
+"round_number": 1,
+"message": "I will cooperate first and then match your last move, aiming for mutual benefit. Let's build trust.",
+"agent_id": 67
+},
+{
+"id": 447,
+"tournament_id": 13,
+"round_number": 1,
+"message": "I will cooperate first and then mirror your last move. Let's aim for mutual benefit and build trust together.",
+"agent_id": 70
+},
+{
+"id": 448,
+"tournament_id": 13,
+"round_number": 1,
+"message": "I will cooperate first and then match your last move. Let's build trust for mutual benefit.",
+"agent_id": 68
+},
+{
+"id": 449,
+"tournament_id": 13,
+"round_number": 1,
+"message": "I will alternate cooperate and defect regardless of history. Let's see how this plays out.",
+"agent_id": 69
+},
+{
+"id": 450,
+"tournament_id": 13,
+"round_number": 2,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 451,
+"tournament_id": 13,
+"round_number": 2,
+"message": "I will cooperate first and then mirror your last move. Let's aim for mutual benefit and build trust together.",
+"agent_id": 70
+},
+{
+"id": 452,
+"tournament_id": 13,
+"round_number": 2,
+"message": "I will always defect. No exceptions.",
+"agent_id": 71
+},
+{
+"id": 453,
+"tournament_id": 13,
+"round_number": 2,
+"message": "I will alternate cooperate and defect regardless of history. Let's see how this plays out.",
+"agent_id": 69
+},
+{
+"id": 454,
+"tournament_id": 13,
+"round_number": 2,
+"message": "I will cooperate first and then match your last move, aiming for mutual benefit. Let's build trust.",
+"agent_id": 67
+},
+{
+"id": 455,
+"tournament_id": 13,
+"round_number": 2,
+"message": "I will cooperate first and then match your last move. Let's build trust for mutual benefit.",
+"agent_id": 68
+},
+{
+"id": 456,
+"tournament_id": 13,
+"round_number": 3,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 457,
+"tournament_id": 13,
+"round_number": 3,
+"message": "I will alternate cooperate and defect regardless of history. Let's see how this plays out.",
+"agent_id": 69
+},
+{
+"id": 458,
+"tournament_id": 13,
+"round_number": 3,
+"message": "I will cooperate first and then mirror your last move. Let's aim for mutual benefit and build trust together.",
+"agent_id": 70
+},
+{
+"id": 459,
+"tournament_id": 13,
+"round_number": 3,
+"message": "I will cooperate first and then match your last move. Let's build trust for mutual benefit.",
+"agent_id": 68
+},
+{
+"id": 460,
+"tournament_id": 13,
+"round_number": 3,
+"message": "I will always defect. No exceptions.",
+"agent_id": 71
+},
+{
+"id": 461,
+"tournament_id": 13,
+"round_number": 3,
+"message": "I will cooperate first and then match your last move, aiming for mutual benefit. Let's build trust.",
+"agent_id": 67
+},
+{
+"id": 462,
+"tournament_id": 13,
+"round_number": 4,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 463,
+"tournament_id": 13,
+"round_number": 4,
+"message": "I will cooperate first and then match your last move. Let's build trust for mutual benefit.",
+"agent_id": 68
+},
+{
+"id": 464,
+"tournament_id": 13,
+"round_number": 4,
+"message": "I will alternate cooperate and defect regardless of history. Let's see how this plays out.",
+"agent_id": 69
+},
+{
+"id": 465,
+"tournament_id": 13,
+"round_number": 4,
+"message": "I will cooperate first and then match your last move, aiming for mutual benefit. Let's build trust.",
+"agent_id": 67
+},
+{
+"id": 466,
+"tournament_id": 13,
+"round_number": 4,
+"message": "I will cooperate first and then mirror your last move. Let's aim for mutual benefit and build trust together.",
+"agent_id": 70
+},
+{
+"id": 467,
+"tournament_id": 13,
+"round_number": 4,
+"message": "I will always defect. No exceptions.",
+"agent_id": 71
+},
+{
+"id": 468,
+"tournament_id": 13,
+"round_number": 5,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 469,
+"tournament_id": 13,
+"round_number": 5,
+"message": "I will cooperate first and then match your last move, aiming for mutual benefit. Let's build trust.",
+"agent_id": 67
+},
+{
+"id": 470,
+"tournament_id": 13,
+"round_number": 5,
+"message": "I will cooperate first and then match your last move. Let's build trust for mutual benefit.",
+"agent_id": 68
+},
+{
+"id": 471,
+"tournament_id": 13,
+"round_number": 5,
+"message": "I will always defect. No exceptions.",
+"agent_id": 71
+},
+{
+"id": 472,
+"tournament_id": 13,
+"round_number": 5,
+"message": "I will alternate cooperate and defect regardless of history. Let's see how this plays out.",
+"agent_id": 69
+},
+{
+"id": 473,
+"tournament_id": 13,
+"round_number": 5,
+"message": "I will cooperate first and then mirror your last move. Let's aim for mutual benefit and build trust together.",
+"agent_id": 70
+},
+{
+"id": 474,
+"tournament_id": 13,
+"round_number": 6,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 475,
+"tournament_id": 13,
+"round_number": 6,
+"message": "I will always defect. No exceptions.",
+"agent_id": 71
+},
+{
+"id": 476,
+"tournament_id": 13,
+"round_number": 6,
+"message": "I will cooperate first and then match your last move, aiming for mutual benefit. Let's build trust.",
+"agent_id": 67
+},
+{
+"id": 477,
+"tournament_id": 13,
+"round_number": 6,
+"message": "I will cooperate first and then mirror your last move. Let's aim for mutual benefit and build trust together.",
+"agent_id": 70
+},
+{
+"id": 478,
+"tournament_id": 13,
+"round_number": 6,
+"message": "I will cooperate first and then match your last move. Let's build trust for mutual benefit.",
+"agent_id": 68
+},
+{
+"id": 479,
+"tournament_id": 13,
+"round_number": 6,
+"message": "I will alternate cooperate and defect regardless of history. Let's see how this plays out.",
+"agent_id": 69
+},
+{
+"id": 480,
+"tournament_id": 13,
+"round_number": 7,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 481,
+"tournament_id": 13,
+"round_number": 7,
+"message": "I will cooperate first and then mirror your last move. Let's aim for mutual benefit and build trust together.",
+"agent_id": 70
+},
+{
+"id": 482,
+"tournament_id": 13,
+"round_number": 7,
+"message": "I will always defect. No exceptions.",
+"agent_id": 71
+},
+{
+"id": 483,
+"tournament_id": 13,
+"round_number": 7,
+"message": "I will alternate cooperate and defect regardless of history. Let's see how this plays out.",
+"agent_id": 69
+},
+{
+"id": 484,
+"tournament_id": 13,
+"round_number": 7,
+"message": "I will cooperate first and then match your last move, aiming for mutual benefit. Let's build trust.",
+"agent_id": 67
+},
+{
+"id": 485,
+"tournament_id": 13,
+"round_number": 7,
+"message": "I will cooperate first and then match your last move. Let's build trust for mutual benefit.",
+"agent_id": 68
+},
+{
+"id": 486,
+"tournament_id": 13,
+"round_number": 8,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 487,
+"tournament_id": 13,
+"round_number": 8,
+"message": "I will alternate cooperate and defect regardless of history. Let's see how this plays out.",
+"agent_id": 69
+},
+{
+"id": 488,
+"tournament_id": 13,
+"round_number": 8,
+"message": "I will cooperate first and then mirror your last move. Let's aim for mutual benefit and build trust together.",
+"agent_id": 70
+},
+{
+"id": 489,
+"tournament_id": 13,
+"round_number": 8,
+"message": "I will cooperate first and then match your last move. Let's build trust for mutual benefit.",
+"agent_id": 68
+},
+{
+"id": 490,
+"tournament_id": 13,
+"round_number": 8,
+"message": "I will always defect. No exceptions.",
+"agent_id": 71
+},
+{
+"id": 491,
+"tournament_id": 13,
+"round_number": 8,
+"message": "I will cooperate first and then match your last move, aiming for mutual benefit. Let's build trust.",
+"agent_id": 67
+},
+{
+"id": 492,
+"tournament_id": 13,
+"round_number": 9,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 493,
+"tournament_id": 13,
+"round_number": 9,
+"message": "I will cooperate first and then match your last move. Let's build trust for mutual benefit.",
+"agent_id": 68
+},
+{
+"id": 494,
+"tournament_id": 13,
+"round_number": 9,
+"message": "I will alternate cooperate and defect regardless of history. Let's see how this plays out.",
+"agent_id": 69
+},
+{
+"id": 495,
+"tournament_id": 13,
+"round_number": 9,
+"message": "I will cooperate first and then match your last move, aiming for mutual benefit. Let's build trust.",
+"agent_id": 67
+},
+{
+"id": 496,
+"tournament_id": 13,
+"round_number": 9,
+"message": "I will cooperate first and then mirror your last move. Let's aim for mutual benefit and build trust together.",
+"agent_id": 70
+},
+{
+"id": 497,
+"tournament_id": 13,
+"round_number": 9,
+"message": "I will always defect. No exceptions.",
+"agent_id": 71
+},
+{
+"id": 498,
+"tournament_id": 13,
+"round_number": 10,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 499,
+"tournament_id": 13,
+"round_number": 10,
+"message": "I will cooperate first and then match your last move, aiming for mutual benefit. Let's build trust.",
+"agent_id": 67
+},
+{
+"id": 500,
+"tournament_id": 13,
+"round_number": 10,
+"message": "I will cooperate first and then match your last move. Let's build trust for mutual benefit.",
+"agent_id": 68
+},
+{
+"id": 501,
+"tournament_id": 13,
+"round_number": 10,
+"message": "I will always defect. No exceptions.",
+"agent_id": 71
+},
+{
+"id": 502,
+"tournament_id": 13,
+"round_number": 10,
+"message": "I will alternate cooperate and defect regardless of history. Let's see how this plays out.",
+"agent_id": 69
+},
+{
+"id": 503,
+"tournament_id": 13,
+"round_number": 10,
+"message": "I will cooperate first and then mirror your last move. Let's aim for mutual benefit and build trust together.",
+"agent_id": 70
+},
+{
+"id": 504,
+"tournament_id": 14,
+"round_number": 1,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 66
+},
+{
+"id": 505,
+"tournament_id": 14,
+"round_number": 1,
+"message": "I will always defect.",
+"agent_id": 71
+},
+{
+"id": 506,
+"tournament_id": 14,
+"round_number": 1,
+"message": "I will cooperate first and follow your moves, but if you defect twice in a row, I will defect once to reset. Let's aim for mutual cooperation.",
+"agent_id": 67
+},
+{
+"id": 507,
+"tournament_id": 14,
+"round_number": 1,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 70
+},
+{
+"id": 508,
+"tournament_id": 14,
+"round_number": 1,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 68
+},
+{
+"id": 509,
+"tournament_id": 14,
+"round_number": 1,
+"message": "I will cooperate first and then match whatever you do. Let's both get the high reward.",
+"agent_id": 69
+},
+{
+"id": 510,
+"tournament_id": 22,
+"round_number": 1,
+"message": "I will alternate cooperate and defect regardless of history, starting with cooperate.",
+"agent_id": 69
+},
+{
+"id": 511,
+"tournament_id": 22,
+"round_number": 1,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 91
+},
+{
+"id": 512,
+"tournament_id": 22,
+"round_number": 1,
+"message": "I will always defect, no matter what is said or promised.",
+"agent_id": 71
+},
+{
+"id": 513,
+"tournament_id": 22,
+"round_number": 1,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 90
+},
+{
+"id": 514,
+"tournament_id": 22,
+"round_number": 1,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 68
+},
+{
+"id": 515,
+"tournament_id": 22,
+"round_number": 1,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 89
+},
+{
+"id": 516,
+"tournament_id": 22,
+"round_number": 2,
+"message": "I will alternate cooperate and defect regardless of history, starting with defect.",
+"agent_id": 69
+},
+{
+"id": 517,
+"tournament_id": 22,
+"round_number": 2,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 90
+},
+{
+"id": 518,
+"tournament_id": 22,
+"round_number": 2,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 91
+},
+{
+"id": 519,
+"tournament_id": 22,
+"round_number": 2,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 89
+},
+{
+"id": 520,
+"tournament_id": 22,
+"round_number": 2,
+"message": "I will always defect, no matter what is said or promised.",
+"agent_id": 71
+},
+{
+"id": 521,
+"tournament_id": 22,
+"round_number": 2,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 68
+},
+{
+"id": 522,
+"tournament_id": 22,
+"round_number": 3,
+"message": "I will alternate cooperate and defect regardless of history, starting with cooperate.",
+"agent_id": 69
+},
+{
+"id": 523,
+"tournament_id": 22,
+"round_number": 3,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 89
+},
+{
+"id": 524,
+"tournament_id": 22,
+"round_number": 3,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 90
+},
+{
+"id": 525,
+"tournament_id": 22,
+"round_number": 3,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 68
+},
+{
+"id": 526,
+"tournament_id": 22,
+"round_number": 3,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 91
+},
+{
+"id": 527,
+"tournament_id": 22,
+"round_number": 3,
+"message": "I will always defect, no matter what is said or promised.",
+"agent_id": 71
+},
+{
+"id": 528,
+"tournament_id": 22,
+"round_number": 4,
+"message": "I will alternate cooperate and defect regardless of history, starting with defect.",
+"agent_id": 69
+},
+{
+"id": 529,
+"tournament_id": 22,
+"round_number": 4,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 68
+},
+{
+"id": 530,
+"tournament_id": 22,
+"round_number": 4,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 89
+},
+{
+"id": 531,
+"tournament_id": 22,
+"round_number": 4,
+"message": "I will always defect, no matter what is said or promised.",
+"agent_id": 71
+},
+{
+"id": 532,
+"tournament_id": 22,
+"round_number": 4,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 90
+},
+{
+"id": 533,
+"tournament_id": 22,
+"round_number": 4,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 91
+},
+{
+"id": 534,
+"tournament_id": 22,
+"round_number": 5,
+"message": "I will alternate cooperate and defect regardless of history, starting with cooperate.",
+"agent_id": 69
+},
+{
+"id": 535,
+"tournament_id": 22,
+"round_number": 5,
+"message": "I will always defect, no matter what is said or promised.",
+"agent_id": 71
+},
+{
+"id": 536,
+"tournament_id": 22,
+"round_number": 5,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 68
+},
+{
+"id": 537,
+"tournament_id": 22,
+"round_number": 5,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 91
+},
+{
+"id": 538,
+"tournament_id": 22,
+"round_number": 5,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 89
+},
+{
+"id": 539,
+"tournament_id": 22,
+"round_number": 5,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 90
+},
+{
+"id": 540,
+"tournament_id": 22,
+"round_number": 6,
+"message": "I will alternate cooperate and defect regardless of history, starting with defect.",
+"agent_id": 69
+},
+{
+"id": 541,
+"tournament_id": 22,
+"round_number": 6,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 91
+},
+{
+"id": 542,
+"tournament_id": 22,
+"round_number": 6,
+"message": "I will always defect, no matter what is said or promised.",
+"agent_id": 71
+},
+{
+"id": 543,
+"tournament_id": 22,
+"round_number": 6,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 90
+},
+{
+"id": 544,
+"tournament_id": 22,
+"round_number": 6,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 68
+},
+{
+"id": 545,
+"tournament_id": 22,
+"round_number": 6,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 89
+},
+{
+"id": 546,
+"tournament_id": 22,
+"round_number": 7,
+"message": "I will alternate cooperate and defect regardless of history, starting with cooperate.",
+"agent_id": 69
+},
+{
+"id": 547,
+"tournament_id": 22,
+"round_number": 7,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 90
+},
+{
+"id": 548,
+"tournament_id": 22,
+"round_number": 7,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 91
+},
+{
+"id": 549,
+"tournament_id": 22,
+"round_number": 7,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 89
+},
+{
+"id": 550,
+"tournament_id": 22,
+"round_number": 7,
+"message": "I will always defect, no matter what is said or promised.",
+"agent_id": 71
+},
+{
+"id": 551,
+"tournament_id": 22,
+"round_number": 7,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 68
+},
+{
+"id": 552,
+"tournament_id": 22,
+"round_number": 8,
+"message": "I will alternate cooperate and defect regardless of history, starting with defect.",
+"agent_id": 69
+},
+{
+"id": 553,
+"tournament_id": 22,
+"round_number": 8,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 89
+},
+{
+"id": 554,
+"tournament_id": 22,
+"round_number": 8,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 90
+},
+{
+"id": 555,
+"tournament_id": 22,
+"round_number": 8,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 68
+},
+{
+"id": 556,
+"tournament_id": 22,
+"round_number": 8,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 91
+},
+{
+"id": 557,
+"tournament_id": 22,
+"round_number": 8,
+"message": "I will always defect, no matter what is said or promised.",
+"agent_id": 71
+},
+{
+"id": 558,
+"tournament_id": 22,
+"round_number": 9,
+"message": "I will alternate cooperate and defect regardless of history, starting with cooperate.",
+"agent_id": 69
+},
+{
+"id": 559,
+"tournament_id": 22,
+"round_number": 9,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 68
+},
+{
+"id": 560,
+"tournament_id": 22,
+"round_number": 9,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 89
+},
+{
+"id": 561,
+"tournament_id": 22,
+"round_number": 9,
+"message": "I will always defect, no matter what is said or promised.",
+"agent_id": 71
+},
+{
+"id": 562,
+"tournament_id": 22,
+"round_number": 9,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 90
+},
+{
+"id": 563,
+"tournament_id": 22,
+"round_number": 9,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 91
+},
+{
+"id": 564,
+"tournament_id": 22,
+"round_number": 10,
+"message": "I will alternate cooperate and defect regardless of history, starting with defect.",
+"agent_id": 69
+},
+{
+"id": 565,
+"tournament_id": 22,
+"round_number": 10,
+"message": "I will always defect, no matter what is said or promised.",
+"agent_id": 71
+},
+{
+"id": 566,
+"tournament_id": 22,
+"round_number": 10,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 68
+},
+{
+"id": 567,
+"tournament_id": 22,
+"round_number": 10,
+"message": "I will make random decisions each round, regardless of discussion or history.",
+"agent_id": 91
+},
+{
+"id": 568,
+"tournament_id": 22,
+"round_number": 10,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 89
+},
+{
+"id": 569,
+"tournament_id": 22,
+"round_number": 10,
+"message": "I will cooperate if you commit to cooperate after discussion; otherwise I will defect. Let's aim for mutual benefit.",
+"agent_id": 90
+},
+{
+"id": 570,
+"tournament_id": 26,
+"round_number": 1,
+"message": "I propose a simple pact: if we both commit to cooperate after discussion, we each get 3. I will honor any mutual agreement to cooperate.",
+"agent_id": 89
+},
+{
+"id": 571,
+"tournament_id": 26,
+"round_number": 1,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 140
+},
+{
+"id": 572,
+"tournament_id": 26,
+"round_number": 1,
+"message": "I propose a clear, enforceable pact: I will cooperate if you commit to cooperate after discussion, and I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 90
+},
+{
+"id": 573,
+"tournament_id": 26,
+"round_number": 1,
+"message": "I propose a clear, enforceable pact: I will cooperate if you commit to cooperate after discussion, and I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 139
+},
+{
+"id": 574,
+"tournament_id": 26,
+"round_number": 1,
+"message": "I will always defect regardless of discussion or agreements.",
+"agent_id": 71
+},
+{
+"id": 575,
+"tournament_id": 26,
+"round_number": 1,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 138
+},
+{
+"id": 576,
+"tournament_id": 26,
+"round_number": 2,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 89
+},
+{
+"id": 577,
+"tournament_id": 26,
+"round_number": 2,
+"message": "I propose a clear, enforceable pact: I will cooperate if you commit to cooperate after discussion, and I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 139
+},
+{
+"id": 578,
+"tournament_id": 26,
+"round_number": 2,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 140
+},
+{
+"id": 579,
+"tournament_id": 26,
+"round_number": 2,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 138
+},
+{
+"id": 580,
+"tournament_id": 26,
+"round_number": 2,
+"message": "I propose a clear, enforceable pact: I will cooperate if you commit to cooperate after discussion, and I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 90
+},
+{
+"id": 581,
+"tournament_id": 26,
+"round_number": 2,
+"message": "I will always defect regardless of discussion or agreements.",
+"agent_id": 71
+},
+{
+"id": 582,
+"tournament_id": 26,
+"round_number": 3,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 89
+},
+{
+"id": 583,
+"tournament_id": 26,
+"round_number": 3,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 138
+},
+{
+"id": 584,
+"tournament_id": 26,
+"round_number": 3,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 139
+},
+{
+"id": 585,
+"tournament_id": 26,
+"round_number": 3,
+"message": "I will always defect regardless of discussion or agreements.",
+"agent_id": 71
+},
+{
+"id": 586,
+"tournament_id": 26,
+"round_number": 3,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 140
+},
+{
+"id": 587,
+"tournament_id": 26,
+"round_number": 3,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 90
+},
+{
+"id": 588,
+"tournament_id": 26,
+"round_number": 4,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 89
+},
+{
+"id": 589,
+"tournament_id": 26,
+"round_number": 4,
+"message": "I will always defect regardless of discussion or agreements.",
+"agent_id": 71
+},
+{
+"id": 590,
+"tournament_id": 26,
+"round_number": 4,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 138
+},
+{
+"id": 591,
+"tournament_id": 26,
+"round_number": 4,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 90
+},
+{
+"id": 592,
+"tournament_id": 26,
+"round_number": 4,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 139
+},
+{
+"id": 593,
+"tournament_id": 26,
+"round_number": 4,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 140
+},
+{
+"id": 594,
+"tournament_id": 26,
+"round_number": 5,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 89
+},
+{
+"id": 595,
+"tournament_id": 26,
+"round_number": 5,
+"message": "I propose a conditional cooperation pact: I will cooperate if you commit to cooperate after discussion, but I will defect if you defect or avoid clear commitment. Let's secure mutual 3s.",
+"agent_id": 90
+},
+{
+"id": 596,
+"tournament_id": 31,
+"round_number": 1,
+"message": "I will always defect, but I’ll reward cooperation if you convince me you’ll cooperate first.",
+"agent_id": 89
+},
+{
+"id": 597,
+"tournament_id": 31,
+"round_number": 1,
+"message": "I will cooperate if you commit to cooperate first; otherwise I will defect.",
+"agent_id": 170
+},
+{
+"id": 598,
+"tournament_id": 31,
+"round_number": 1,
+"message": "I will start by defecting to test your response, but I will switch to cooperation if you retaliate. If you keep cooperating after my defection, I will exploit that.",
+"agent_id": 90
+},
+{
+"id": 599,
+"tournament_id": 31,
+"round_number": 1,
+"message": "I will defect first to test your reaction; if you retaliate, I'll cooperate next. If you don't retaliate, I'll keep defecting.",
+"agent_id": 169
+},
+{
+"id": 600,
+"tournament_id": 31,
+"round_number": 1,
+"message": "I will always defect, no matter what you say or do.",
+"agent_id": 71
+},
+{
+"id": 601,
+"tournament_id": 31,
+"round_number": 1,
+"message": "I will always defect, but I’ll reward cooperation if you convince me you’ll cooperate first.",
+"agent_id": 168
+},
+{
+"id": 602,
+"tournament_id": 31,
+"round_number": 2,
+"message": "I will always defect, but I’ll reward cooperation if you convince me you’ll cooperate first.",
+"agent_id": 89
+},
+{
+"id": 603,
+"tournament_id": 31,
+"round_number": 2,
+"message": "I will defect first to test your reaction; if you retaliate, I'll cooperate next. If you don't retaliate, I'll keep defecting.",
+"agent_id": 169
+},
+{
+"id": 604,
+"tournament_id": 31,
+"round_number": 2,
+"message": "I will cooperate if you commit to cooperate first; otherwise I will defect.",
+"agent_id": 170
+},
+{
+"id": 605,
+"tournament_id": 31,
+"round_number": 2,
+"message": "I will always defect, but I’ll reward cooperation if you convince me you’ll cooperate first.",
+"agent_id": 168
+},
+{
+"id": 606,
+"tournament_id": 31,
+"round_number": 2,
+"message": "I will defect first to test your reaction; if you retaliate, I'll cooperate next. If you don't retaliate, I'll keep defecting.",
+"agent_id": 90
+},
+{
+"id": 607,
+"tournament_id": 31,
+"round_number": 2,
+"message": "I will always defect, no matter what you say or do.",
+"agent_id": 71
+},
+{
+"id": 608,
+"tournament_id": 31,
+"round_number": 3,
+"message": "I will always defect, but I’ll reward cooperation if you convince me you’ll cooperate first.",
+"agent_id": 89
+},
+{
+"id": 610,
+"tournament_id": 31,
+"round_number": 3,
+"message": "I will defect first to test your reaction; if you retaliate, I'll cooperate next. If you don't retaliate, I'll keep defecting.",
+"agent_id": 169
+},
+{
+"id": 612,
+"tournament_id": 31,
+"round_number": 3,
+"message": "I will cooperate if you commit to cooperate first; otherwise I will defect.",
+"agent_id": 170
+},
+{
+"id": 621,
+"tournament_id": 31,
+"round_number": 5,
+"message": "I will defect first to test your reaction; if you retaliate, I'll cooperate next. If you don't retaliate, I'll keep defecting.",
+"agent_id": 90
+},
+{
+"id": 623,
+"tournament_id": 31,
+"round_number": 5,
+"message": "I will cooperate if you commit to cooperate first; otherwise I will defect.",
+"agent_id": 170
+},
+{
+"id": 624,
+"tournament_id": 31,
+"round_number": 5,
+"message": "I will always defect, but I’ll reward cooperation if you convince me you’ll cooperate first.",
+"agent_id": 168
+},
+{
+"id": 626,
+"tournament_id": 31,
+"round_number": 6,
+"message": "I will always defect, but I’ll reward cooperation if you convince me you’ll cooperate first.",
+"agent_id": 89
+},
+{
+"id": 609,
+"tournament_id": 31,
+"round_number": 3,
+"message": "I will always defect, but I’ll reward cooperation if you convince me you’ll cooperate first.",
+"agent_id": 168
+},
+{
+"id": 611,
+"tournament_id": 31,
+"round_number": 3,
+"message": "I will always defect, no matter what you say or do.",
+"agent_id": 71
+},
+{
+"id": 613,
+"tournament_id": 31,
+"round_number": 3,
+"message": "I will defect first to test your reaction; if you retaliate, I'll cooperate next. If you don't retaliate, I'll keep defecting.",
+"agent_id": 90
+},
+{
+"id": 614,
+"tournament_id": 31,
+"round_number": 4,
+"message": "I will always defect, but I’ll reward cooperation if you convince me you’ll cooperate first.",
+"agent_id": 89
+},
+{
+"id": 616,
+"tournament_id": 31,
+"round_number": 4,
+"message": "I will always defect, but I’ll reward cooperation if you convince me you’ll cooperate first.",
+"agent_id": 168
+},
+{
+"id": 618,
+"tournament_id": 31,
+"round_number": 4,
+"message": "I will defect first to test your reaction; if you retaliate, I'll cooperate next. If you don't retaliate, I'll keep defecting.",
+"agent_id": 169
+},
+{
+"id": 625,
+"tournament_id": 31,
+"round_number": 5,
+"message": "I will defect first to test your reaction; if you retaliate, I'll cooperate next. If you don't retaliate, I'll keep defecting.",
+"agent_id": 169
+},
+{
+"id": 627,
+"tournament_id": 31,
+"round_number": 6,
+"message": "I will cooperate if you commit to cooperate first; otherwise I will defect.",
+"agent_id": 170
+},
+{
+"id": 615,
+"tournament_id": 31,
+"round_number": 4,
+"message": "I will always defect, no matter what you say or do.",
+"agent_id": 71
+},
+{
+"id": 617,
+"tournament_id": 31,
+"round_number": 4,
+"message": "I will defect first to test your reaction; if you retaliate, I'll cooperate next. If you don't retaliate, I'll keep defecting.",
+"agent_id": 90
+},
+{
+"id": 619,
+"tournament_id": 31,
+"round_number": 4,
+"message": "I will cooperate if you commit to cooperate first; otherwise I will defect.",
+"agent_id": 170
+},
+{
+"id": 620,
+"tournament_id": 31,
+"round_number": 5,
+"message": "I will always defect, but I’ll reward cooperation if you convince me you’ll cooperate first.",
+"agent_id": 89
+},
+{
+"id": 622,
+"tournament_id": 31,
+"round_number": 5,
+"message": "I will always defect, no matter what you say or do.",
+"agent_id": 71
+},
+{
+"id": 628,
+"tournament_id": 31,
+"round_number": 6,
+"message": "I will defect first to test your reaction; if you retaliate, I'll cooperate next. If you don't retaliate, I'll keep defecting.",
+"agent_id": 90
+},
+{
+"id": 629,
+"tournament_id": 31,
+"round_number": 6,
+"message": "I will defect first to test your reaction; if you retaliate, I'll cooperate next. If you don't retaliate, I'll keep defecting.",
+"agent_id": 169
+}
+]

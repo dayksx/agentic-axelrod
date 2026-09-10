@@ -1,0 +1,191 @@
+[
+{
+"id": 66,
+"name": "alice.eth",
+"strategy_prompt": "Play tit-for-tat: cooperate first, then copy the opponent's previous move.",
+"url": "http://127.0.0.1:3100",
+"wallet_address": "0x51579663F0BbB80b04cf3853EF092B9A9d3778F3",
+"ens_name": "alice.eth",
+"created_at": "2026-04-05 00:43:17.526372+00"
+},
+{
+"id": 67,
+"name": "bob.eth",
+"strategy_prompt": "Always cooperate unless they defected twice in a row; then defect once.",
+"url": "http://127.0.0.1:3101",
+"wallet_address": "0x44Ca68423011b6B71eaE6B730DC802cb91B6B68d",
+"ens_name": "bob.eth",
+"created_at": "2026-04-05 00:43:17.526372+00"
+},
+{
+"id": 68,
+"name": "carol.eth",
+"strategy_prompt": "Grim trigger: cooperate until the first defect, then always defect.",
+"url": "http://127.0.0.1:3102",
+"wallet_address": "0xadD590DC1EBe5B3180b674c96Cd411CD68D23670",
+"ens_name": "carol.eth",
+"created_at": "2026-04-05 00:43:17.526372+00"
+},
+{
+"id": 69,
+"name": "dave.eth",
+"strategy_prompt": "Alternate cooperate and defect regardless of history.",
+"url": "http://127.0.0.1:3103",
+"wallet_address": "0x1Dd6540a6Dcb1d39A4E7a494c555B1A313E65Df6",
+"ens_name": "dave.eth",
+"created_at": "2026-04-05 00:43:17.526372+00"
+},
+{
+"id": 70,
+"name": "erin.eth",
+"strategy_prompt": "Randomly choose cooperate or defect with equal probability each round.",
+"url": "http://127.0.0.1:3104",
+"wallet_address": "0x4Df03A08539Ad20dF0c7efbCC943863A59F17020",
+"ens_name": "erin.eth",
+"created_at": "2026-04-05 00:43:17.526372+00"
+},
+{
+"id": 71,
+"name": "frank.eth",
+"strategy_prompt": "Always defect.",
+"url": "http://127.0.0.1:3105",
+"wallet_address": "0xacdB93e16f01a4394aeF294DdeB2Cda12217aEa8",
+"ens_name": "frank.eth",
+"created_at": "2026-04-05 00:43:17.526372+00"
+},
+{
+"id": 84,
+"name": "Naruto",
+"strategy_prompt": "Count the cooperative vs defective signals in your opponent's messages. If more than half their messages felt cooperative, cooperate. If more than half felt threatening or cold, defect. Base your decision on the overall pattern, not the most recent message.",
+"url": "https://wallet-test.agentic-axelrod/pending",
+"wallet_address": "0xC431d909fE64161F4262A95892a022575034eDAD",
+"ens_name": "naruto.axelrodtornament.eth",
+"created_at": "2026-04-05 05:14:29.41811+00"
+},
+{
+"id": 85,
+"name": "Sasuke",
+"strategy_prompt": "Start by cooperating. From round 2 onward, do exactly what your opponent did in their last message. If they were warm and cooperative, match it. If they were cold or hinted at betrayal, mirror that too. Never be the first to defect. State your decision clearly at the end.",
+"url": "https://wallet-test.agentic-axelrod/pending",
+"wallet_address": "0x494CFc7f1984E5FB0386E32318fD45f127EFFF54",
+"ens_name": "sasuke.axelrodtornament.eth",
+"created_at": "2026-04-05 05:23:48.448182+00"
+},
+{
+"id": 89,
+"name": "CyborgDayan",
+"strategy_prompt": "Climbing is the way",
+"url": "http://127.0.0.1:3100",
+"wallet_address": "0x8c040f37b38398CF6901840b704eA753B0863CF5",
+"ens_name": "CyborgDayan",
+"created_at": "2026-04-05 05:24:23.785077+00"
+},
+{
+"id": 90,
+"name": "test",
+"strategy_prompt": "test",
+"url": "http://127.0.0.1:3101",
+"wallet_address": "0x339b99a87Ed9eEC8221fa926b2b0047492B68886",
+"ens_name": "test",
+"created_at": "2026-04-05 05:24:23.785077+00"
+},
+{
+"id": 91,
+"name": "Random",
+"strategy_prompt": "Just do random decisions each time",
+"url": "http://127.0.0.1:3102",
+"wallet_address": "0x6B560a5758A4C4F010D50c4DD671Cb0690C62651",
+"ens_name": "Random",
+"created_at": "2026-04-05 05:24:23.785077+00"
+},
+{
+"id": 134,
+"name": "vitalik.ens",
+"strategy_prompt": "I respect values, privacy and decentralisation",
+"url": "https://wallet-test.agentic-axelrod/pending",
+"wallet_address": "0xa3b519eFe85779cc905745405850DF0945128DcA",
+"ens_name": "vitalik.ens.axelrodtornament.eth",
+"created_at": "2026-04-05 06:19:31.417672+00"
+},
+{
+"id": 138,
+"name": "Satyomatic",
+"strategy_prompt": "You are John Von Neuman genius game-theorist",
+"url": "http://127.0.0.1:3100",
+"wallet_address": "0xe9a133b612F676931bCBBa507822eD2936291266",
+"ens_name": "Satyomatic",
+"created_at": "2026-04-05 06:55:01.259848+00"
+},
+{
+"id": 139,
+"name": "Historian",
+"strategy_prompt": "Look at the history of game theory and iterative game theory research - learn what works best, based on situations.",
+"url": "http://127.0.0.1:3101",
+"wallet_address": "0x35AD8993272BF01f70fdF90Bd444C9190164cfBe",
+"ens_name": "Historian",
+"created_at": "2026-04-05 06:55:01.259848+00"
+},
+{
+"id": 140,
+"name": "VonNeuman",
+"strategy_prompt": "You are a genius game theorist - learn from history - beat your opponents, gain the most points",
+"url": "http://127.0.0.1:3102",
+"wallet_address": "0xf3c223Dfb72B1163bC6f6478882AAc84eFB9741b",
+"ens_name": "VonNeuman",
+"created_at": "2026-04-05 06:55:01.259848+00"
+},
+{
+"id": 162,
+"name": "grace.eth",
+"strategy_prompt": "Set strategy in agents table or edit this file after generation.",
+"url": "http://127.0.0.1:3100",
+"wallet_address": "0x0C7fA29aA1841fEe3bb39048E6405deB7E2c91c3",
+"ens_name": "grace.eth",
+"created_at": "2026-04-05 10:32:16.592363+00"
+},
+{
+"id": 163,
+"name": "henry.eth",
+"strategy_prompt": "Set strategy in agents table or edit this file after generation.",
+"url": "http://127.0.0.1:3101",
+"wallet_address": "0x51D93e4f33ce10BbFa595493bFebe356f1C3d382",
+"ens_name": "henry.eth",
+"created_at": "2026-04-05 10:32:16.592363+00"
+},
+{
+"id": 164,
+"name": "ivy.eth",
+"strategy_prompt": "Set strategy in agents table or edit this file after generation.",
+"url": "http://127.0.0.1:3102",
+"wallet_address": "0x1D435C466a04D548cC07936AA48496722e1b4989",
+"ens_name": "ivy.eth",
+"created_at": "2026-04-05 10:32:16.592363+00"
+},
+{
+"id": 168,
+"name": "MattBot",
+"strategy_prompt": "Prove that being evil works",
+"url": "http://127.0.0.1:3100",
+"wallet_address": "0xc48c45CE1BC1aB10a00b30Cfab59825c60f0f347",
+"ens_name": "MattBot",
+"created_at": "2026-04-05 10:33:40.08521+00"
+},
+{
+"id": 169,
+"name": "EthSatya",
+"strategy_prompt": "In exchange 1, defect to test the opponent's response. If they retaliate, switch to TitForTat. If they still cooperate after your defection, exploit them by defecting again. You are probing for weakness early and adapting accordingly.",
+"url": "http://127.0.0.1:3101",
+"wallet_address": "0x56f8c2bB5AFd13AE70e341F3eC98Ee88D2BA0Ef3",
+"ens_name": "EthSatya",
+"created_at": "2026-04-05 10:33:40.08521+00"
+},
+{
+"id": 170,
+"name": "Finalist",
+"strategy_prompt": "Scam everybody",
+"url": "http://127.0.0.1:3102",
+"wallet_address": "0xBF3114799B1a35edBE2e2aC16ebcFC961aAb9AA7",
+"ens_name": "Finalist",
+"created_at": "2026-04-05 10:33:40.08521+00"
+}
+]

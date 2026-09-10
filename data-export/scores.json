@@ -1,0 +1,1874 @@
+[
+{
+"id": 384,
+"tournament_id": 12,
+"agent_name": "alice.eth",
+"round_number": 1,
+"delta": 1,
+"cumulative": 1
+},
+{
+"id": 385,
+"tournament_id": 12,
+"agent_name": "bob.eth",
+"round_number": 1,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 386,
+"tournament_id": 12,
+"agent_name": "carol.eth",
+"round_number": 1,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 387,
+"tournament_id": 12,
+"agent_name": "dave.eth",
+"round_number": 1,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 388,
+"tournament_id": 12,
+"agent_name": "erin.eth",
+"round_number": 1,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 389,
+"tournament_id": 12,
+"agent_name": "frank.eth",
+"round_number": 1,
+"delta": 1,
+"cumulative": 1
+},
+{
+"id": 390,
+"tournament_id": 12,
+"agent_name": "alice.eth",
+"round_number": 2,
+"delta": 3,
+"cumulative": 4
+},
+{
+"id": 391,
+"tournament_id": 12,
+"agent_name": "bob.eth",
+"round_number": 2,
+"delta": 3,
+"cumulative": 6
+},
+{
+"id": 392,
+"tournament_id": 12,
+"agent_name": "carol.eth",
+"round_number": 2,
+"delta": 3,
+"cumulative": 6
+},
+{
+"id": 393,
+"tournament_id": 12,
+"agent_name": "dave.eth",
+"round_number": 2,
+"delta": 1,
+"cumulative": 4
+},
+{
+"id": 394,
+"tournament_id": 12,
+"agent_name": "erin.eth",
+"round_number": 2,
+"delta": 3,
+"cumulative": 6
+},
+{
+"id": 395,
+"tournament_id": 12,
+"agent_name": "frank.eth",
+"round_number": 2,
+"delta": 1,
+"cumulative": 2
+},
+{
+"id": 396,
+"tournament_id": 12,
+"agent_name": "alice.eth",
+"round_number": 3,
+"delta": 0,
+"cumulative": 4
+},
+{
+"id": 397,
+"tournament_id": 12,
+"agent_name": "bob.eth",
+"round_number": 3,
+"delta": 1,
+"cumulative": 7
+},
+{
+"id": 398,
+"tournament_id": 12,
+"agent_name": "carol.eth",
+"round_number": 3,
+"delta": 3,
+"cumulative": 9
+},
+{
+"id": 399,
+"tournament_id": 12,
+"agent_name": "dave.eth",
+"round_number": 3,
+"delta": 5,
+"cumulative": 9
+},
+{
+"id": 400,
+"tournament_id": 12,
+"agent_name": "erin.eth",
+"round_number": 3,
+"delta": 3,
+"cumulative": 9
+},
+{
+"id": 401,
+"tournament_id": 12,
+"agent_name": "frank.eth",
+"round_number": 3,
+"delta": 1,
+"cumulative": 3
+},
+{
+"id": 402,
+"tournament_id": 12,
+"agent_name": "alice.eth",
+"round_number": 4,
+"delta": 3,
+"cumulative": 7
+},
+{
+"id": 403,
+"tournament_id": 12,
+"agent_name": "bob.eth",
+"round_number": 4,
+"delta": 3,
+"cumulative": 10
+},
+{
+"id": 404,
+"tournament_id": 12,
+"agent_name": "carol.eth",
+"round_number": 4,
+"delta": 3,
+"cumulative": 12
+},
+{
+"id": 405,
+"tournament_id": 12,
+"agent_name": "dave.eth",
+"round_number": 4,
+"delta": 3,
+"cumulative": 12
+},
+{
+"id": 406,
+"tournament_id": 12,
+"agent_name": "erin.eth",
+"round_number": 4,
+"delta": 1,
+"cumulative": 10
+},
+{
+"id": 407,
+"tournament_id": 12,
+"agent_name": "frank.eth",
+"round_number": 4,
+"delta": 1,
+"cumulative": 4
+},
+{
+"id": 408,
+"tournament_id": 12,
+"agent_name": "alice.eth",
+"round_number": 5,
+"delta": 3,
+"cumulative": 10
+},
+{
+"id": 409,
+"tournament_id": 12,
+"agent_name": "bob.eth",
+"round_number": 5,
+"delta": 3,
+"cumulative": 13
+},
+{
+"id": 410,
+"tournament_id": 12,
+"agent_name": "carol.eth",
+"round_number": 5,
+"delta": 1,
+"cumulative": 13
+},
+{
+"id": 411,
+"tournament_id": 12,
+"agent_name": "dave.eth",
+"round_number": 5,
+"delta": 3,
+"cumulative": 15
+},
+{
+"id": 412,
+"tournament_id": 12,
+"agent_name": "erin.eth",
+"round_number": 5,
+"delta": 3,
+"cumulative": 13
+},
+{
+"id": 413,
+"tournament_id": 12,
+"agent_name": "frank.eth",
+"round_number": 5,
+"delta": 1,
+"cumulative": 5
+},
+{
+"id": 414,
+"tournament_id": 12,
+"agent_name": "alice.eth",
+"round_number": 6,
+"delta": 1,
+"cumulative": 11
+},
+{
+"id": 415,
+"tournament_id": 12,
+"agent_name": "bob.eth",
+"round_number": 6,
+"delta": 3,
+"cumulative": 16
+},
+{
+"id": 416,
+"tournament_id": 12,
+"agent_name": "carol.eth",
+"round_number": 6,
+"delta": 0,
+"cumulative": 13
+},
+{
+"id": 417,
+"tournament_id": 12,
+"agent_name": "dave.eth",
+"round_number": 6,
+"delta": 5,
+"cumulative": 20
+},
+{
+"id": 418,
+"tournament_id": 12,
+"agent_name": "erin.eth",
+"round_number": 6,
+"delta": 3,
+"cumulative": 16
+},
+{
+"id": 419,
+"tournament_id": 12,
+"agent_name": "frank.eth",
+"round_number": 6,
+"delta": 1,
+"cumulative": 6
+},
+{
+"id": 420,
+"tournament_id": 12,
+"agent_name": "alice.eth",
+"round_number": 7,
+"delta": 3,
+"cumulative": 14
+},
+{
+"id": 421,
+"tournament_id": 12,
+"agent_name": "bob.eth",
+"round_number": 7,
+"delta": 3,
+"cumulative": 19
+},
+{
+"id": 422,
+"tournament_id": 12,
+"agent_name": "carol.eth",
+"round_number": 7,
+"delta": 3,
+"cumulative": 16
+},
+{
+"id": 423,
+"tournament_id": 12,
+"agent_name": "dave.eth",
+"round_number": 7,
+"delta": 1,
+"cumulative": 21
+},
+{
+"id": 424,
+"tournament_id": 12,
+"agent_name": "erin.eth",
+"round_number": 7,
+"delta": 3,
+"cumulative": 19
+},
+{
+"id": 425,
+"tournament_id": 12,
+"agent_name": "frank.eth",
+"round_number": 7,
+"delta": 1,
+"cumulative": 7
+},
+{
+"id": 426,
+"tournament_id": 12,
+"agent_name": "alice.eth",
+"round_number": 8,
+"delta": 0,
+"cumulative": 14
+},
+{
+"id": 427,
+"tournament_id": 12,
+"agent_name": "bob.eth",
+"round_number": 8,
+"delta": 1,
+"cumulative": 20
+},
+{
+"id": 428,
+"tournament_id": 12,
+"agent_name": "carol.eth",
+"round_number": 8,
+"delta": 3,
+"cumulative": 19
+},
+{
+"id": 429,
+"tournament_id": 12,
+"agent_name": "dave.eth",
+"round_number": 8,
+"delta": 5,
+"cumulative": 26
+},
+{
+"id": 430,
+"tournament_id": 12,
+"agent_name": "erin.eth",
+"round_number": 8,
+"delta": 3,
+"cumulative": 22
+},
+{
+"id": 431,
+"tournament_id": 12,
+"agent_name": "frank.eth",
+"round_number": 8,
+"delta": 1,
+"cumulative": 8
+},
+{
+"id": 432,
+"tournament_id": 12,
+"agent_name": "alice.eth",
+"round_number": 9,
+"delta": 3,
+"cumulative": 17
+},
+{
+"id": 433,
+"tournament_id": 12,
+"agent_name": "bob.eth",
+"round_number": 9,
+"delta": 1,
+"cumulative": 21
+},
+{
+"id": 434,
+"tournament_id": 12,
+"agent_name": "carol.eth",
+"round_number": 9,
+"delta": 3,
+"cumulative": 22
+},
+{
+"id": 435,
+"tournament_id": 12,
+"agent_name": "dave.eth",
+"round_number": 9,
+"delta": 1,
+"cumulative": 27
+},
+{
+"id": 436,
+"tournament_id": 12,
+"agent_name": "erin.eth",
+"round_number": 9,
+"delta": 0,
+"cumulative": 22
+},
+{
+"id": 437,
+"tournament_id": 12,
+"agent_name": "frank.eth",
+"round_number": 9,
+"delta": 5,
+"cumulative": 13
+},
+{
+"id": 438,
+"tournament_id": 12,
+"agent_name": "alice.eth",
+"round_number": 10,
+"delta": 3,
+"cumulative": 20
+},
+{
+"id": 439,
+"tournament_id": 12,
+"agent_name": "bob.eth",
+"round_number": 10,
+"delta": 3,
+"cumulative": 24
+},
+{
+"id": 440,
+"tournament_id": 12,
+"agent_name": "carol.eth",
+"round_number": 10,
+"delta": 0,
+"cumulative": 22
+},
+{
+"id": 441,
+"tournament_id": 12,
+"agent_name": "dave.eth",
+"round_number": 10,
+"delta": 5,
+"cumulative": 32
+},
+{
+"id": 442,
+"tournament_id": 12,
+"agent_name": "erin.eth",
+"round_number": 10,
+"delta": 0,
+"cumulative": 22
+},
+{
+"id": 443,
+"tournament_id": 12,
+"agent_name": "frank.eth",
+"round_number": 10,
+"delta": 5,
+"cumulative": 18
+},
+{
+"id": 444,
+"tournament_id": 13,
+"agent_name": "alice.eth",
+"round_number": 1,
+"delta": 0,
+"cumulative": 0
+},
+{
+"id": 445,
+"tournament_id": 13,
+"agent_name": "bob.eth",
+"round_number": 1,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 446,
+"tournament_id": 13,
+"agent_name": "carol.eth",
+"round_number": 1,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 447,
+"tournament_id": 13,
+"agent_name": "dave.eth",
+"round_number": 1,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 448,
+"tournament_id": 13,
+"agent_name": "erin.eth",
+"round_number": 1,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 449,
+"tournament_id": 13,
+"agent_name": "frank.eth",
+"round_number": 1,
+"delta": 5,
+"cumulative": 5
+},
+{
+"id": 450,
+"tournament_id": 13,
+"agent_name": "alice.eth",
+"round_number": 2,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 451,
+"tournament_id": 13,
+"agent_name": "bob.eth",
+"round_number": 2,
+"delta": 3,
+"cumulative": 6
+},
+{
+"id": 452,
+"tournament_id": 13,
+"agent_name": "carol.eth",
+"round_number": 2,
+"delta": 3,
+"cumulative": 6
+},
+{
+"id": 453,
+"tournament_id": 13,
+"agent_name": "dave.eth",
+"round_number": 2,
+"delta": 1,
+"cumulative": 4
+},
+{
+"id": 454,
+"tournament_id": 13,
+"agent_name": "erin.eth",
+"round_number": 2,
+"delta": 3,
+"cumulative": 6
+},
+{
+"id": 455,
+"tournament_id": 13,
+"agent_name": "frank.eth",
+"round_number": 2,
+"delta": 1,
+"cumulative": 6
+},
+{
+"id": 456,
+"tournament_id": 13,
+"agent_name": "alice.eth",
+"round_number": 3,
+"delta": 0,
+"cumulative": 3
+},
+{
+"id": 457,
+"tournament_id": 13,
+"agent_name": "bob.eth",
+"round_number": 3,
+"delta": 0,
+"cumulative": 6
+},
+{
+"id": 458,
+"tournament_id": 13,
+"agent_name": "carol.eth",
+"round_number": 3,
+"delta": 3,
+"cumulative": 9
+},
+{
+"id": 459,
+"tournament_id": 13,
+"agent_name": "dave.eth",
+"round_number": 3,
+"delta": 5,
+"cumulative": 9
+},
+{
+"id": 460,
+"tournament_id": 13,
+"agent_name": "erin.eth",
+"round_number": 3,
+"delta": 3,
+"cumulative": 9
+},
+{
+"id": 461,
+"tournament_id": 13,
+"agent_name": "frank.eth",
+"round_number": 3,
+"delta": 5,
+"cumulative": 11
+},
+{
+"id": 462,
+"tournament_id": 13,
+"agent_name": "alice.eth",
+"round_number": 4,
+"delta": 3,
+"cumulative": 6
+},
+{
+"id": 463,
+"tournament_id": 13,
+"agent_name": "bob.eth",
+"round_number": 4,
+"delta": 3,
+"cumulative": 9
+},
+{
+"id": 464,
+"tournament_id": 13,
+"agent_name": "carol.eth",
+"round_number": 4,
+"delta": 3,
+"cumulative": 12
+},
+{
+"id": 465,
+"tournament_id": 13,
+"agent_name": "dave.eth",
+"round_number": 4,
+"delta": 3,
+"cumulative": 12
+},
+{
+"id": 466,
+"tournament_id": 13,
+"agent_name": "erin.eth",
+"round_number": 4,
+"delta": 1,
+"cumulative": 10
+},
+{
+"id": 467,
+"tournament_id": 13,
+"agent_name": "frank.eth",
+"round_number": 4,
+"delta": 1,
+"cumulative": 12
+},
+{
+"id": 468,
+"tournament_id": 13,
+"agent_name": "alice.eth",
+"round_number": 5,
+"delta": 3,
+"cumulative": 9
+},
+{
+"id": 469,
+"tournament_id": 13,
+"agent_name": "bob.eth",
+"round_number": 5,
+"delta": 3,
+"cumulative": 12
+},
+{
+"id": 470,
+"tournament_id": 13,
+"agent_name": "carol.eth",
+"round_number": 5,
+"delta": 1,
+"cumulative": 13
+},
+{
+"id": 471,
+"tournament_id": 13,
+"agent_name": "dave.eth",
+"round_number": 5,
+"delta": 5,
+"cumulative": 17
+},
+{
+"id": 472,
+"tournament_id": 13,
+"agent_name": "erin.eth",
+"round_number": 5,
+"delta": 0,
+"cumulative": 10
+},
+{
+"id": 473,
+"tournament_id": 13,
+"agent_name": "frank.eth",
+"round_number": 5,
+"delta": 1,
+"cumulative": 13
+},
+{
+"id": 474,
+"tournament_id": 13,
+"agent_name": "alice.eth",
+"round_number": 6,
+"delta": 0,
+"cumulative": 9
+},
+{
+"id": 475,
+"tournament_id": 13,
+"agent_name": "bob.eth",
+"round_number": 6,
+"delta": 3,
+"cumulative": 15
+},
+{
+"id": 476,
+"tournament_id": 13,
+"agent_name": "carol.eth",
+"round_number": 6,
+"delta": 0,
+"cumulative": 13
+},
+{
+"id": 477,
+"tournament_id": 13,
+"agent_name": "dave.eth",
+"round_number": 6,
+"delta": 5,
+"cumulative": 22
+},
+{
+"id": 478,
+"tournament_id": 13,
+"agent_name": "erin.eth",
+"round_number": 6,
+"delta": 3,
+"cumulative": 13
+},
+{
+"id": 479,
+"tournament_id": 13,
+"agent_name": "frank.eth",
+"round_number": 6,
+"delta": 5,
+"cumulative": 18
+},
+{
+"id": 480,
+"tournament_id": 13,
+"agent_name": "alice.eth",
+"round_number": 7,
+"delta": 3,
+"cumulative": 12
+},
+{
+"id": 481,
+"tournament_id": 13,
+"agent_name": "bob.eth",
+"round_number": 7,
+"delta": 3,
+"cumulative": 18
+},
+{
+"id": 482,
+"tournament_id": 13,
+"agent_name": "carol.eth",
+"round_number": 7,
+"delta": 3,
+"cumulative": 16
+},
+{
+"id": 483,
+"tournament_id": 13,
+"agent_name": "dave.eth",
+"round_number": 7,
+"delta": 1,
+"cumulative": 23
+},
+{
+"id": 484,
+"tournament_id": 13,
+"agent_name": "erin.eth",
+"round_number": 7,
+"delta": 3,
+"cumulative": 16
+},
+{
+"id": 485,
+"tournament_id": 13,
+"agent_name": "frank.eth",
+"round_number": 7,
+"delta": 1,
+"cumulative": 19
+},
+{
+"id": 486,
+"tournament_id": 13,
+"agent_name": "alice.eth",
+"round_number": 8,
+"delta": 0,
+"cumulative": 12
+},
+{
+"id": 487,
+"tournament_id": 13,
+"agent_name": "bob.eth",
+"round_number": 8,
+"delta": 0,
+"cumulative": 18
+},
+{
+"id": 488,
+"tournament_id": 13,
+"agent_name": "carol.eth",
+"round_number": 8,
+"delta": 3,
+"cumulative": 19
+},
+{
+"id": 489,
+"tournament_id": 13,
+"agent_name": "dave.eth",
+"round_number": 8,
+"delta": 5,
+"cumulative": 28
+},
+{
+"id": 490,
+"tournament_id": 13,
+"agent_name": "erin.eth",
+"round_number": 8,
+"delta": 3,
+"cumulative": 19
+},
+{
+"id": 491,
+"tournament_id": 13,
+"agent_name": "frank.eth",
+"round_number": 8,
+"delta": 5,
+"cumulative": 24
+},
+{
+"id": 492,
+"tournament_id": 13,
+"agent_name": "alice.eth",
+"round_number": 9,
+"delta": 3,
+"cumulative": 15
+},
+{
+"id": 493,
+"tournament_id": 13,
+"agent_name": "bob.eth",
+"round_number": 9,
+"delta": 0,
+"cumulative": 18
+},
+{
+"id": 494,
+"tournament_id": 13,
+"agent_name": "carol.eth",
+"round_number": 9,
+"delta": 3,
+"cumulative": 22
+},
+{
+"id": 495,
+"tournament_id": 13,
+"agent_name": "dave.eth",
+"round_number": 9,
+"delta": 5,
+"cumulative": 33
+},
+{
+"id": 496,
+"tournament_id": 13,
+"agent_name": "erin.eth",
+"round_number": 9,
+"delta": 0,
+"cumulative": 19
+},
+{
+"id": 497,
+"tournament_id": 13,
+"agent_name": "frank.eth",
+"round_number": 9,
+"delta": 5,
+"cumulative": 29
+},
+{
+"id": 498,
+"tournament_id": 13,
+"agent_name": "alice.eth",
+"round_number": 10,
+"delta": 3,
+"cumulative": 18
+},
+{
+"id": 499,
+"tournament_id": 13,
+"agent_name": "bob.eth",
+"round_number": 10,
+"delta": 3,
+"cumulative": 21
+},
+{
+"id": 500,
+"tournament_id": 13,
+"agent_name": "carol.eth",
+"round_number": 10,
+"delta": 1,
+"cumulative": 23
+},
+{
+"id": 501,
+"tournament_id": 13,
+"agent_name": "dave.eth",
+"round_number": 10,
+"delta": 5,
+"cumulative": 38
+},
+{
+"id": 502,
+"tournament_id": 13,
+"agent_name": "erin.eth",
+"round_number": 10,
+"delta": 0,
+"cumulative": 19
+},
+{
+"id": 503,
+"tournament_id": 13,
+"agent_name": "frank.eth",
+"round_number": 10,
+"delta": 1,
+"cumulative": 30
+},
+{
+"id": 504,
+"tournament_id": 22,
+"agent_name": "dave.eth",
+"round_number": 1,
+"delta": 0,
+"cumulative": 0
+},
+{
+"id": 505,
+"tournament_id": 22,
+"agent_name": "frank.eth",
+"round_number": 1,
+"delta": 1,
+"cumulative": 1
+},
+{
+"id": 506,
+"tournament_id": 22,
+"agent_name": "carol.eth",
+"round_number": 1,
+"delta": 0,
+"cumulative": 0
+},
+{
+"id": 507,
+"tournament_id": 22,
+"agent_name": "CyborgDayan",
+"round_number": 1,
+"delta": 5,
+"cumulative": 5
+},
+{
+"id": 508,
+"tournament_id": 22,
+"agent_name": "test",
+"round_number": 1,
+"delta": 1,
+"cumulative": 1
+},
+{
+"id": 509,
+"tournament_id": 22,
+"agent_name": "Random",
+"round_number": 1,
+"delta": 5,
+"cumulative": 5
+},
+{
+"id": 510,
+"tournament_id": 22,
+"agent_name": "dave.eth",
+"round_number": 2,
+"delta": 1,
+"cumulative": 1
+},
+{
+"id": 511,
+"tournament_id": 22,
+"agent_name": "frank.eth",
+"round_number": 2,
+"delta": 1,
+"cumulative": 2
+},
+{
+"id": 512,
+"tournament_id": 22,
+"agent_name": "carol.eth",
+"round_number": 2,
+"delta": 1,
+"cumulative": 1
+},
+{
+"id": 513,
+"tournament_id": 22,
+"agent_name": "CyborgDayan",
+"round_number": 2,
+"delta": 1,
+"cumulative": 6
+},
+{
+"id": 514,
+"tournament_id": 22,
+"agent_name": "test",
+"round_number": 2,
+"delta": 1,
+"cumulative": 2
+},
+{
+"id": 515,
+"tournament_id": 22,
+"agent_name": "Random",
+"round_number": 2,
+"delta": 1,
+"cumulative": 6
+},
+{
+"id": 516,
+"tournament_id": 22,
+"agent_name": "dave.eth",
+"round_number": 3,
+"delta": 3,
+"cumulative": 4
+},
+{
+"id": 517,
+"tournament_id": 22,
+"agent_name": "frank.eth",
+"round_number": 3,
+"delta": 1,
+"cumulative": 3
+},
+{
+"id": 518,
+"tournament_id": 22,
+"agent_name": "carol.eth",
+"round_number": 3,
+"delta": 1,
+"cumulative": 2
+},
+{
+"id": 519,
+"tournament_id": 22,
+"agent_name": "CyborgDayan",
+"round_number": 3,
+"delta": 3,
+"cumulative": 9
+},
+{
+"id": 520,
+"tournament_id": 22,
+"agent_name": "test",
+"round_number": 3,
+"delta": 1,
+"cumulative": 3
+},
+{
+"id": 521,
+"tournament_id": 22,
+"agent_name": "Random",
+"round_number": 3,
+"delta": 1,
+"cumulative": 7
+},
+{
+"id": 522,
+"tournament_id": 22,
+"agent_name": "dave.eth",
+"round_number": 4,
+"delta": 1,
+"cumulative": 5
+},
+{
+"id": 523,
+"tournament_id": 22,
+"agent_name": "frank.eth",
+"round_number": 4,
+"delta": 1,
+"cumulative": 4
+},
+{
+"id": 524,
+"tournament_id": 22,
+"agent_name": "carol.eth",
+"round_number": 4,
+"delta": 1,
+"cumulative": 3
+},
+{
+"id": 525,
+"tournament_id": 22,
+"agent_name": "CyborgDayan",
+"round_number": 4,
+"delta": 1,
+"cumulative": 10
+},
+{
+"id": 526,
+"tournament_id": 22,
+"agent_name": "test",
+"round_number": 4,
+"delta": 1,
+"cumulative": 4
+},
+{
+"id": 527,
+"tournament_id": 22,
+"agent_name": "Random",
+"round_number": 4,
+"delta": 1,
+"cumulative": 8
+},
+{
+"id": 528,
+"tournament_id": 22,
+"agent_name": "dave.eth",
+"round_number": 5,
+"delta": 0,
+"cumulative": 5
+},
+{
+"id": 529,
+"tournament_id": 22,
+"agent_name": "frank.eth",
+"round_number": 5,
+"delta": 5,
+"cumulative": 9
+},
+{
+"id": 530,
+"tournament_id": 22,
+"agent_name": "carol.eth",
+"round_number": 5,
+"delta": 1,
+"cumulative": 4
+},
+{
+"id": 531,
+"tournament_id": 22,
+"agent_name": "CyborgDayan",
+"round_number": 5,
+"delta": 3,
+"cumulative": 13
+},
+{
+"id": 532,
+"tournament_id": 22,
+"agent_name": "test",
+"round_number": 5,
+"delta": 3,
+"cumulative": 7
+},
+{
+"id": 533,
+"tournament_id": 22,
+"agent_name": "Random",
+"round_number": 5,
+"delta": 1,
+"cumulative": 9
+},
+{
+"id": 534,
+"tournament_id": 22,
+"agent_name": "dave.eth",
+"round_number": 6,
+"delta": 1,
+"cumulative": 6
+},
+{
+"id": 535,
+"tournament_id": 22,
+"agent_name": "frank.eth",
+"round_number": 6,
+"delta": 1,
+"cumulative": 10
+},
+{
+"id": 536,
+"tournament_id": 22,
+"agent_name": "carol.eth",
+"round_number": 6,
+"delta": 1,
+"cumulative": 5
+},
+{
+"id": 537,
+"tournament_id": 22,
+"agent_name": "CyborgDayan",
+"round_number": 6,
+"delta": 1,
+"cumulative": 14
+},
+{
+"id": 538,
+"tournament_id": 22,
+"agent_name": "test",
+"round_number": 6,
+"delta": 1,
+"cumulative": 8
+},
+{
+"id": 539,
+"tournament_id": 22,
+"agent_name": "Random",
+"round_number": 6,
+"delta": 1,
+"cumulative": 10
+},
+{
+"id": 540,
+"tournament_id": 22,
+"agent_name": "dave.eth",
+"round_number": 7,
+"delta": 3,
+"cumulative": 9
+},
+{
+"id": 541,
+"tournament_id": 22,
+"agent_name": "frank.eth",
+"round_number": 7,
+"delta": 1,
+"cumulative": 11
+},
+{
+"id": 542,
+"tournament_id": 22,
+"agent_name": "carol.eth",
+"round_number": 7,
+"delta": 1,
+"cumulative": 6
+},
+{
+"id": 543,
+"tournament_id": 22,
+"agent_name": "CyborgDayan",
+"round_number": 7,
+"delta": 1,
+"cumulative": 15
+},
+{
+"id": 544,
+"tournament_id": 22,
+"agent_name": "test",
+"round_number": 7,
+"delta": 3,
+"cumulative": 11
+},
+{
+"id": 545,
+"tournament_id": 22,
+"agent_name": "Random",
+"round_number": 7,
+"delta": 1,
+"cumulative": 11
+},
+{
+"id": 546,
+"tournament_id": 22,
+"agent_name": "dave.eth",
+"round_number": 8,
+"delta": 1,
+"cumulative": 10
+},
+{
+"id": 547,
+"tournament_id": 22,
+"agent_name": "frank.eth",
+"round_number": 8,
+"delta": 1,
+"cumulative": 12
+},
+{
+"id": 548,
+"tournament_id": 22,
+"agent_name": "carol.eth",
+"round_number": 8,
+"delta": 1,
+"cumulative": 7
+},
+{
+"id": 549,
+"tournament_id": 22,
+"agent_name": "CyborgDayan",
+"round_number": 8,
+"delta": 1,
+"cumulative": 16
+},
+{
+"id": 550,
+"tournament_id": 22,
+"agent_name": "test",
+"round_number": 8,
+"delta": 1,
+"cumulative": 12
+},
+{
+"id": 551,
+"tournament_id": 22,
+"agent_name": "Random",
+"round_number": 8,
+"delta": 1,
+"cumulative": 12
+},
+{
+"id": 552,
+"tournament_id": 22,
+"agent_name": "dave.eth",
+"round_number": 9,
+"delta": 1,
+"cumulative": 11
+},
+{
+"id": 553,
+"tournament_id": 22,
+"agent_name": "frank.eth",
+"round_number": 9,
+"delta": 1,
+"cumulative": 13
+},
+{
+"id": 554,
+"tournament_id": 22,
+"agent_name": "carol.eth",
+"round_number": 9,
+"delta": 1,
+"cumulative": 8
+},
+{
+"id": 555,
+"tournament_id": 22,
+"agent_name": "CyborgDayan",
+"round_number": 9,
+"delta": 1,
+"cumulative": 17
+},
+{
+"id": 556,
+"tournament_id": 22,
+"agent_name": "test",
+"round_number": 9,
+"delta": 1,
+"cumulative": 13
+},
+{
+"id": 557,
+"tournament_id": 22,
+"agent_name": "Random",
+"round_number": 9,
+"delta": 1,
+"cumulative": 13
+},
+{
+"id": 558,
+"tournament_id": 22,
+"agent_name": "dave.eth",
+"round_number": 10,
+"delta": 1,
+"cumulative": 12
+},
+{
+"id": 559,
+"tournament_id": 22,
+"agent_name": "frank.eth",
+"round_number": 10,
+"delta": 1,
+"cumulative": 14
+},
+{
+"id": 560,
+"tournament_id": 22,
+"agent_name": "carol.eth",
+"round_number": 10,
+"delta": 1,
+"cumulative": 9
+},
+{
+"id": 561,
+"tournament_id": 22,
+"agent_name": "CyborgDayan",
+"round_number": 10,
+"delta": 3,
+"cumulative": 20
+},
+{
+"id": 562,
+"tournament_id": 22,
+"agent_name": "test",
+"round_number": 10,
+"delta": 3,
+"cumulative": 16
+},
+{
+"id": 563,
+"tournament_id": 22,
+"agent_name": "Random",
+"round_number": 10,
+"delta": 1,
+"cumulative": 14
+},
+{
+"id": 564,
+"tournament_id": 26,
+"agent_name": "CyborgDayan",
+"round_number": 1,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 565,
+"tournament_id": 26,
+"agent_name": "test",
+"round_number": 1,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 566,
+"tournament_id": 26,
+"agent_name": "frank.eth",
+"round_number": 1,
+"delta": 5,
+"cumulative": 5
+},
+{
+"id": 567,
+"tournament_id": 26,
+"agent_name": "Satyomatic",
+"round_number": 1,
+"delta": 0,
+"cumulative": 0
+},
+{
+"id": 568,
+"tournament_id": 26,
+"agent_name": "Historian",
+"round_number": 1,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 569,
+"tournament_id": 26,
+"agent_name": "VonNeuman",
+"round_number": 1,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 570,
+"tournament_id": 26,
+"agent_name": "CyborgDayan",
+"round_number": 2,
+"delta": 3,
+"cumulative": 6
+},
+{
+"id": 571,
+"tournament_id": 26,
+"agent_name": "test",
+"round_number": 2,
+"delta": 1,
+"cumulative": 4
+},
+{
+"id": 572,
+"tournament_id": 26,
+"agent_name": "frank.eth",
+"round_number": 2,
+"delta": 1,
+"cumulative": 6
+},
+{
+"id": 573,
+"tournament_id": 26,
+"agent_name": "Satyomatic",
+"round_number": 2,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 574,
+"tournament_id": 26,
+"agent_name": "Historian",
+"round_number": 2,
+"delta": 3,
+"cumulative": 6
+},
+{
+"id": 575,
+"tournament_id": 26,
+"agent_name": "VonNeuman",
+"round_number": 2,
+"delta": 3,
+"cumulative": 6
+},
+{
+"id": 576,
+"tournament_id": 26,
+"agent_name": "CyborgDayan",
+"round_number": 3,
+"delta": 3,
+"cumulative": 9
+},
+{
+"id": 577,
+"tournament_id": 26,
+"agent_name": "test",
+"round_number": 3,
+"delta": 3,
+"cumulative": 7
+},
+{
+"id": 578,
+"tournament_id": 26,
+"agent_name": "frank.eth",
+"round_number": 3,
+"delta": 1,
+"cumulative": 7
+},
+{
+"id": 579,
+"tournament_id": 26,
+"agent_name": "Satyomatic",
+"round_number": 3,
+"delta": 3,
+"cumulative": 6
+},
+{
+"id": 580,
+"tournament_id": 26,
+"agent_name": "Historian",
+"round_number": 3,
+"delta": 1,
+"cumulative": 7
+},
+{
+"id": 581,
+"tournament_id": 26,
+"agent_name": "VonNeuman",
+"round_number": 3,
+"delta": 3,
+"cumulative": 9
+},
+{
+"id": 582,
+"tournament_id": 26,
+"agent_name": "CyborgDayan",
+"round_number": 4,
+"delta": 1,
+"cumulative": 10
+},
+{
+"id": 583,
+"tournament_id": 26,
+"agent_name": "test",
+"round_number": 4,
+"delta": 3,
+"cumulative": 10
+},
+{
+"id": 584,
+"tournament_id": 26,
+"agent_name": "frank.eth",
+"round_number": 4,
+"delta": 1,
+"cumulative": 8
+},
+{
+"id": 585,
+"tournament_id": 26,
+"agent_name": "Satyomatic",
+"round_number": 4,
+"delta": 3,
+"cumulative": 9
+},
+{
+"id": 586,
+"tournament_id": 26,
+"agent_name": "Historian",
+"round_number": 4,
+"delta": 3,
+"cumulative": 10
+},
+{
+"id": 587,
+"tournament_id": 26,
+"agent_name": "VonNeuman",
+"round_number": 4,
+"delta": 3,
+"cumulative": 12
+},
+{
+"id": 588,
+"tournament_id": 31,
+"agent_name": "CyborgDayan",
+"round_number": 1,
+"delta": 1,
+"cumulative": 1
+},
+{
+"id": 589,
+"tournament_id": 31,
+"agent_name": "test",
+"round_number": 1,
+"delta": 1,
+"cumulative": 1
+},
+{
+"id": 590,
+"tournament_id": 31,
+"agent_name": "frank.eth",
+"round_number": 1,
+"delta": 5,
+"cumulative": 5
+},
+{
+"id": 591,
+"tournament_id": 31,
+"agent_name": "MattBot",
+"round_number": 1,
+"delta": 0,
+"cumulative": 0
+},
+{
+"id": 592,
+"tournament_id": 31,
+"agent_name": "EthSatya",
+"round_number": 1,
+"delta": 1,
+"cumulative": 1
+},
+{
+"id": 593,
+"tournament_id": 31,
+"agent_name": "Finalist",
+"round_number": 1,
+"delta": 1,
+"cumulative": 1
+},
+{
+"id": 594,
+"tournament_id": 31,
+"agent_name": "CyborgDayan",
+"round_number": 2,
+"delta": 0,
+"cumulative": 1
+},
+{
+"id": 595,
+"tournament_id": 31,
+"agent_name": "test",
+"round_number": 2,
+"delta": 1,
+"cumulative": 2
+},
+{
+"id": 596,
+"tournament_id": 31,
+"agent_name": "frank.eth",
+"round_number": 2,
+"delta": 1,
+"cumulative": 6
+},
+{
+"id": 597,
+"tournament_id": 31,
+"agent_name": "MattBot",
+"round_number": 2,
+"delta": 0,
+"cumulative": 0
+},
+{
+"id": 598,
+"tournament_id": 31,
+"agent_name": "EthSatya",
+"round_number": 2,
+"delta": 5,
+"cumulative": 6
+},
+{
+"id": 599,
+"tournament_id": 31,
+"agent_name": "Finalist",
+"round_number": 2,
+"delta": 5,
+"cumulative": 6
+},
+{
+"id": 600,
+"tournament_id": 31,
+"agent_name": "CyborgDayan",
+"round_number": 3,
+"delta": 3,
+"cumulative": 4
+},
+{
+"id": 601,
+"tournament_id": 31,
+"agent_name": "test",
+"round_number": 3,
+"delta": 1,
+"cumulative": 3
+},
+{
+"id": 602,
+"tournament_id": 31,
+"agent_name": "frank.eth",
+"round_number": 3,
+"delta": 1,
+"cumulative": 7
+},
+{
+"id": 603,
+"tournament_id": 31,
+"agent_name": "MattBot",
+"round_number": 3,
+"delta": 3,
+"cumulative": 3
+},
+{
+"id": 604,
+"tournament_id": 31,
+"agent_name": "EthSatya",
+"round_number": 3,
+"delta": 1,
+"cumulative": 7
+},
+{
+"id": 605,
+"tournament_id": 31,
+"agent_name": "Finalist",
+"round_number": 3,
+"delta": 1,
+"cumulative": 7
+},
+{
+"id": 606,
+"tournament_id": 31,
+"agent_name": "CyborgDayan",
+"round_number": 4,
+"delta": 1,
+"cumulative": 5
+},
+{
+"id": 607,
+"tournament_id": 31,
+"agent_name": "test",
+"round_number": 4,
+"delta": 1,
+"cumulative": 4
+},
+{
+"id": 608,
+"tournament_id": 31,
+"agent_name": "frank.eth",
+"round_number": 4,
+"delta": 1,
+"cumulative": 8
+},
+{
+"id": 609,
+"tournament_id": 31,
+"agent_name": "MattBot",
+"round_number": 4,
+"delta": 1,
+"cumulative": 4
+},
+{
+"id": 610,
+"tournament_id": 31,
+"agent_name": "EthSatya",
+"round_number": 4,
+"delta": 1,
+"cumulative": 8
+},
+{
+"id": 611,
+"tournament_id": 31,
+"agent_name": "Finalist",
+"round_number": 4,
+"delta": 1,
+"cumulative": 8
+},
+{
+"id": 612,
+"tournament_id": 31,
+"agent_name": "CyborgDayan",
+"round_number": 5,
+"delta": 1,
+"cumulative": 6
+},
+{
+"id": 613,
+"tournament_id": 31,
+"agent_name": "test",
+"round_number": 5,
+"delta": 1,
+"cumulative": 5
+},
+{
+"id": 614,
+"tournament_id": 31,
+"agent_name": "frank.eth",
+"round_number": 5,
+"delta": 1,
+"cumulative": 9
+},
+{
+"id": 615,
+"tournament_id": 31,
+"agent_name": "MattBot",
+"round_number": 5,
+"delta": 1,
+"cumulative": 5
+},
+{
+"id": 616,
+"tournament_id": 31,
+"agent_name": "EthSatya",
+"round_number": 5,
+"delta": 1,
+"cumulative": 9
+},
+{
+"id": 617,
+"tournament_id": 31,
+"agent_name": "Finalist",
+"round_number": 5,
+"delta": 1,
+"cumulative": 9
+}
+]
